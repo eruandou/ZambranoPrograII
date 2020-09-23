@@ -51,20 +51,26 @@ public class LifeController
 
     public void GetDamage (int damage)
     {
-        currentLife -= damage;
-        OnGetDamage?.Invoke(currentLife, damage);
-        //change anim
+        if (invincibilityTime > InvincibilityTimeStart)
+        {
+            CurrentLife -= damage;
+            invincibilityTime = 0;
+            OnGetDamage?.Invoke(CurrentLife, damage);
+        }
     }
 
     public void GetHeal (int heal)
     {
-        currentLife += heal;
+        CurrentLife += heal;
         OnGetHeal?.Invoke(currentLife, heal);
         //change anim
     }
 
 
-
+    public void Update()
+    {
+        invincibilityTime += Time.deltaTime;
+    }
 
 
 
