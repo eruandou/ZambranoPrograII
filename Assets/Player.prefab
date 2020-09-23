@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de15c45f988afd4d83855781828494d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullets: []
+  timeBetweenBulletChange: 0.2
 --- !u!1 &3461010647737449777
 GameObject:
   m_ObjectHideFlags: 0

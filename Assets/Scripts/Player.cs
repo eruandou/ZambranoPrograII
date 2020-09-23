@@ -17,7 +17,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Color normalColor;
 
     private int equippedBullet;
-    
+
+    public float ShootCooldownStart { get; private set; }
+    private float shootCooldown;
+
+    private PlayerShootingController playerShootingController;
 
 
 
@@ -29,6 +33,7 @@ public class Player : MonoBehaviour
         lifeController.OnGetDamage += OnGetDamageHandler;
         lifeController.OnGetHeal += OnGetHealHandler;
         sprRend = GetComponent<SpriteRenderer>();
+        playerShootingController = GetComponent<PlayerShootingController>();
     }
 
 
@@ -47,8 +52,12 @@ public class Player : MonoBehaviour
 
     private void CheckShoot()
     {
+        if (Input.GetKey(KeyCode.J) && shootCooldown >= ShootCooldownStart)
+        {
+            playerShootingController.Shoot(transform.position);
+        }
 
-
+        shootCooldown += Time.deltaTime;
 
 
 

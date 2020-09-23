@@ -4,51 +4,46 @@ using UnityEngine;
 
 public class PlayerShootingController : MonoBehaviour
 {
-    [SerializeField] private Bullet [] bullets;
+   
+    private Bullet activeBullet;
 
+    public Stacker bulletsStack;
 
+    [SerializeField] private float timeBetweenBulletChange;
 
+    private bool activeFiring;
 
-
-
-    /*
-    public void Shoot(bool isEnemy, int bulletNumber, Vector2 startPosition)
+    private void Start()
     {
-        GameObject bulletToSpawn;
-
-       
-            switch (bulletNumber)
-            {
-
-                case 1:
-                    bulletToSpawn = bulletPlayer1;
-                    break;
-                case 2:
-                    bulletToSpawn = bulletPlayer2;
-                    break;
-                case 3:
-                    bulletToSpawn = bulletPlayer3;
-                    break;
-                case 4:
-                    bulletToSpawn = bulletPlayer4;
-                    break;
-                default:
-                    bulletToSpawn = bulletPlayer1;
-                    break;
-            }
-
-       
-        GameObject bullet = Instantiate(bulletToSpawn, startPosition, Quaternion.identity);
-
-
+        bulletsStack = new Stacker();
+        bulletsStack.InitializeStack();
     }
 
+    public void Shoot( Vector2 startPosition)
+    {
+        Instantiate(activeBullet, startPosition, Quaternion.identity);
+    }
 
-    */
+    public void CombineBullets()
+    {
+        if (!activeFiring)
+        {
+            //Combination code
+            activeFiring = true;
+        }
+    }
 
+    private IEnumerator BulletChangeOverTime()
+    {
+        //Preguntar alternativa para un For
 
-
-
+        while (!bulletsStack.IsStackEmpty())
+        {
+            activeBullet = bulletsStack.First();
+            yield return new WaitForSeconds(timeBetweenBulletChange);
+            bulletsStack.Unstack();
+        }
+    }
 
 
 }
