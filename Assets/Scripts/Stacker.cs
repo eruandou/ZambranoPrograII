@@ -23,7 +23,7 @@ public class Stacker : Istacker
 
     BulletNode top;
 
-    [SerializeField] private int StackLimit;
+    public int StackLimit { get; private set; } = 10;
     private int stackedItems;
 
 
@@ -41,17 +41,20 @@ public class Stacker : Istacker
             newNode.nextNode = top;
 
             top = newNode;
+
+            stackedItems++;
         }
     }
 
     public void Unstack()
     {
         top = top.nextNode;
+        stackedItems--;
     }
 
     public void InitializeStack()
     {
-        top = null;
+        top = null;       
     }
 
 
@@ -64,12 +67,6 @@ public class Stacker : Istacker
     {
         return (top == null);
     }
-
-
-
-
-
-
 
 
 }
