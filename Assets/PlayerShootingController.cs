@@ -11,7 +11,7 @@ public class PlayerShootingController : MonoBehaviour
 
 
 
-
+    /*
     public void Shoot(bool isEnemy, int bulletNumber, Vector2 startPosition)
     {
         GameObject bulletToSpawn;
@@ -44,7 +44,7 @@ public class PlayerShootingController : MonoBehaviour
     }
 
 
-
+    */
 
 
 

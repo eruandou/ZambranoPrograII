@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 964053401420265713}
   - component: {fileID: 964053401420265712}
   - component: {fileID: 964053401420265715}
+  - component: {fileID: 1329256816}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -47,6 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  maxLife: 10
+  damagedColor: {r: 1, g: 0, b: 0, a: 0.81960785}
+  healedColor: {r: 0, g: 0.7462217, b: 0.8867924, a: 0.85490197}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &964053401420265712
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -82,8 +87,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1747186269
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300014, guid: a0e7f1167efba544bb8d6e3198ae44f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,6 +120,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1329256816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964053401420265711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de15c45f988afd4d83855781828494d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullets: []
 --- !u!1 &3461010647737449777
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,8 +280,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1747186269
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300018, guid: a0e7f1167efba544bb8d6e3198ae44f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
