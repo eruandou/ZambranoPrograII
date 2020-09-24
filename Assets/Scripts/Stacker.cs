@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 
 public interface Istacker
 {
@@ -18,13 +18,19 @@ public interface Istacker
 
 }
 
-public class Stacker : Istacker
+public class Stacker : Istacker 
 {
 
     BulletNode top;
 
-    public int StackLimit { get; private set; } = 10;
-    private int stackedItems;
+    private int stackLimit = 10;
+    public int StackedItems { get; private set; }
+
+    public event Action <int> OnStack; 
+    public event Action <int> OnUnStack; 
+
+
+
 
 
 
@@ -33,23 +39,28 @@ public class Stacker : Istacker
     {
         //Check maxed stacked items
 
-        if (stackedItems < StackLimit)
+        if (StackedItems < stackLimit)
         {
-
+            
             BulletNode newNode = new BulletNode(newBullet);
 
             newNode.nextNode = top;
 
             top = newNode;
 
-            stackedItems++;
+            StackedItems++;
+
+            OnStack?.Invoke(top.storedBullet.bulletNumber);
         }
     }
 
     public void Unstack()
     {
         top = top.nextNode;
-        stackedItems--;
+        StackedItems--;
+
+        OnUnStack?.Invoke(StackedItems);
+        //Update UI Elements
     }
 
     public void InitializeStack()
@@ -63,10 +74,21 @@ public class Stacker : Istacker
         return top.storedBullet;
     }
 
+    public BulletNode FirstNode()
+    {
+        return top;
+    }
+
+
     public bool IsStackEmpty()
     {
         return (top == null);
     }
+
+    
+
+
+
 
 
 }
