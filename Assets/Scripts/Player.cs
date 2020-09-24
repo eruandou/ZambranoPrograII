@@ -18,10 +18,12 @@ public class Player : MonoBehaviour
 
     private int equippedBullet;
 
-    public float ShootCooldownStart { get; private set; }
+    [SerializeField] private float ShootCooldownStart;
     private float shootCooldown;
 
     private PlayerShootingController playerShootingController;
+
+    private Vector2 lastDirection;
 
 
 
@@ -54,9 +56,16 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.J) && shootCooldown >= ShootCooldownStart)
         {
-            playerShootingController.Shoot(transform.position);
+            
+            playerShootingController.Shoot(lastDirection.normalized);
+            Debug.Log($"Direction normalized is {lastDirection.normalized}");
+            shootCooldown = 0;
         }
 
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            playerShootingController.CombineBullets();
+        }
         shootCooldown += Time.deltaTime;
 
 
@@ -70,15 +79,22 @@ public class Player : MonoBehaviour
 
     private void CheckMovement()
     {
-        float moveX = Mathf.Abs(Input.GetAxis("Horizontal")) * speed * Time.deltaTime ;
-        float moveY = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        float moveX = Input.GetAxisRaw ("Horizontal") *speed * Time.deltaTime;
+
+        float moveXAbs = Mathf.Abs(moveX);
+
+        float moveY = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
 
         if (Input.GetAxisRaw("Horizontal") < 0) transform.rotation = Quaternion.LookRotation(-Vector3.forward);
         else if (Input.GetAxisRaw("Horizontal") > 0) transform.rotation = Quaternion.LookRotation(Vector3.forward);
 
-        transform.position += transform.right * speed * Time.deltaTime * moveX + Vector3.up * moveY * speed * Time.deltaTime;
+        transform.position += transform.right * speed * Time.deltaTime * moveXAbs + Vector3.up * moveY * speed * Time.deltaTime;
 
-        if (moveX != 0 || moveY != 0) anim.SetBool("Walking", true);
+        if (moveXAbs != 0 || moveY != 0)
+        {
+            anim.SetBool("Walking", true);
+            lastDirection = new Vector2(moveX, moveY);
+        }
         else anim.SetBool("Walking", false);
     }
 
