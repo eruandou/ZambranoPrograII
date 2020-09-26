@@ -26,11 +26,7 @@ public class Player : MonoBehaviour
 
     private Vector2 lastDirection;
 
-    public event Action<Items> OnGetItem;
-   
-
-
-
+    public event Action<Items> OnGetItem;   
 
     private void Start()
     {
@@ -144,5 +140,22 @@ public class Player : MonoBehaviour
             
         
     }
+
+    public void ChangeSpeedItem(float newSpeed, float duration)
+    {
+        StartCoroutine(ChangeSpeed(newSpeed, duration));
+    }
+
+    private IEnumerator ChangeSpeed (float extraSpeedValue, float duration)
+    {
+        
+        speed += extraSpeedValue;
+
+        yield return new WaitForSeconds(3f);
+
+        speed -= extraSpeedValue;
+    }
+
+
 
 }

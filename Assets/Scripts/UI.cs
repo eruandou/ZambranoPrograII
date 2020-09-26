@@ -11,7 +11,9 @@ public class UI : MonoBehaviour
 
     private Dictionary<int, GameObject> bulletDictionary = new Dictionary<int, GameObject>();
 
-    [SerializeField] private Vector3 position0;
+    [SerializeField] private Vector3 position0Bullets;
+
+    [SerializeField] private Vector3 position0Items;
 
     private List<Vector3> stackPosition;
 
@@ -23,10 +25,7 @@ public class UI : MonoBehaviour
 
     private DynArray itemsArray = new DynArray();
 
-    private int currentSelectedItem = 0;
-
-    [SerializeField] private Transform item1, item2, item3;
-
+    private int currentSelectedItem = -1;   
  
 
     private void Start()
@@ -46,9 +45,8 @@ public class UI : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            Vector3 position = new Vector3(position0.x, position0.y + i * offsetYBullets, position0.z);
-            stackPosition.Add(position);
-            Debug.Log($"Stack positions are {stackPosition[i]}");            
+            Vector3 position = new Vector3(position0Bullets.x, position0Bullets.y + i * offsetYBullets, position0Bullets.z);
+            stackPosition.Add(position);                    
         }
 
         playerShoot.bulletsStack.OnStack += OnStackHandler;
@@ -76,7 +74,10 @@ public class UI : MonoBehaviour
     private void OnGetItemHandler(Items newItem)
     {
         itemsArray.Add(newItem);
-        UpdateItemUI();
+        Debug.Log("Got item");
+        //if (itemsArray.HeldItems <=1)
+        currentSelectedItem++;
+            UpdateItemUI();
     }
 
 
@@ -109,7 +110,34 @@ public class UI : MonoBehaviour
 
     public void UpdateItemUI()
     {
-       
+        if (itemsArray.Retrieve(currentSelectedItem) != null)
+        {
+            Items itemOnCurrentSpot = itemsArray.Retrieve(currentSelectedItem);
+
+            if (itemOnCurrentSpot.transform.parent != Camera.main.transform)
+            {
+               itemOnCurrentSpot.transform.SetParent(Camera.main.transform);
+            }
+
+            itemOnCurrentSpot.MoveToActive(position0Items);
+
+            Debug.Log($"Expected transform is {position0Items} and is {itemOnCurrentSpot.transform.position}");
+            Debug.Log("Showing Item");
+        }
+
+        //Set extra items as inactive
+
+        ItemNode currentNode = itemsArray.root;
+        while (currentNode != null)
+        {
+            if (currentNode.Index != currentSelectedItem) currentNode.storedItem.Deactivate();
+            currentNode = currentNode.nextNode;
+        }
+
+
+
+
+
     }
 
 
@@ -126,14 +154,17 @@ public class UI : MonoBehaviour
     {
 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && itemsArray.HeldItems >1)
         {
             ItemsToLeft();
+            UpdateItemUI();
+
         }
 
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(KeyCode.RightShift) && itemsArray.HeldItems > 1)
         {
             ItemsToRight();
+            UpdateItemUI();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -147,14 +178,14 @@ public class UI : MonoBehaviour
         currentSelectedItem--;
         if (currentSelectedItem < 0)
         {
-            currentSelectedItem = itemsArray.HeldItems;
+            currentSelectedItem = itemsArray.HeldItems - 1;
         }
     }
 
     private void ItemsToRight()
     {
         currentSelectedItem++;
-        if (currentSelectedItem > itemsArray.HeldItems)
+        if (currentSelectedItem == itemsArray.HeldItems)
         {
             currentSelectedItem = 0;
         }
@@ -167,13 +198,13 @@ public class UI : MonoBehaviour
         //Remove item from list
         itemsArray.Remove(currentSelectedItem);
 
-        if (currentSelectedItem > itemsArray.HeldItems)
+        if (currentSelectedItem == itemsArray.HeldItems)
         {
-            currentSelectedItem = itemsArray.HeldItems;
+            currentSelectedItem = itemsArray.HeldItems - 1;
         }
 
+        UpdateItemUI();
 
-        
         Debug.Log("Using item");
     }
 
