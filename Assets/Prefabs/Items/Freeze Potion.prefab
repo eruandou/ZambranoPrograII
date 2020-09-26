@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1858232651581974432}
   - component: {fileID: 1858232651581974433}
   - component: {fileID: 1858232651581974438}
+  - component: {fileID: 1858232651277830527}
   m_Layer: 0
   m_Name: Freeze Potion
   m_TagString: Untagged
@@ -100,3 +101,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1858232651277830527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858232651581974439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fca828e73bffc4586aa8ebb1320465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potionType: 1
+  timeEnemiesAreFrozen: 0
+  timeToNormalSpeed: 0

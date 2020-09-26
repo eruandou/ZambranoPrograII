@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4332514674935999990}
   - component: {fileID: 4332514674935999991}
   - component: {fileID: 4332514674935999976}
+  - component: {fileID: 374853263}
   m_Layer: 0
   m_Name: Move Potion
   m_TagString: Untagged
@@ -100,3 +101,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &374853263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4332514674935999977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fca828e73bffc4586aa8ebb1320465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potionType: 2
+  healingPoints: 2
+  speedBoost: 5
+  timeEnemiesAreFrozen: 8
+  timeToNormalSpeed: 4
