@@ -15,7 +15,7 @@ public class PlayerShootingController : MonoBehaviour
 
     private int extraDamage;
 
-    private bool activeFiring;
+    public bool ActiveFiring { get; private set; }
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class PlayerShootingController : MonoBehaviour
     {
         if (activeBullet != null)
         {
-           Bullet bullet = Instantiate(activeBullet, bulletSpawner.position,Quaternion.identity);
+            Bullet bullet = Instantiate(activeBullet, bulletSpawner.position, Quaternion.identity);
             bullet.direction = direction;
             bullet.ExtraDamage += extraDamage;
 
@@ -37,7 +37,7 @@ public class PlayerShootingController : MonoBehaviour
 
     public void CombineBullets()
     {
-        if (!activeFiring && bulletsStack.StackedItems >= 3)
+        if (!ActiveFiring && bulletsStack.StackedItems >= 3)
         {
             Bullet bullet1;
             Bullet bullet2;
@@ -50,7 +50,7 @@ public class PlayerShootingController : MonoBehaviour
 
             CombineBullets(bullet1, bullet2, bullet3);
 
-            activeFiring = true;
+            ActiveFiring = true;
             StartCoroutine(BulletChangeOverTime());
         }
     }
@@ -63,9 +63,13 @@ public class PlayerShootingController : MonoBehaviour
         {
             activeBullet = bulletsStack.First();
             yield return new WaitForSeconds(timeBetweenBulletChange);
-            bulletsStack.Unstack();
+            bulletsStack.Unstack();          
         }
+
         activeBullet = null;
+        ActiveFiring = false;
+        Gamemanager.instance.UI.ClearList();
+
     }
 
 

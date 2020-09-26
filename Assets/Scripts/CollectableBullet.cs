@@ -17,7 +17,7 @@ public class CollectableBullet : MonoBehaviour
     {
         PlayerShootingController playerShootController = collision.GetComponent<PlayerShootingController>();
 
-        if (playerShootController != null)
+        if (playerShootController != null && playerShootController.ActiveFiring == false)
         {
             playerShootController.bulletsStack.Stack(bulletToCollect);
             Destroy(this.gameObject);

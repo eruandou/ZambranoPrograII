@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class Player : MonoBehaviour
 
     private Vector2 lastDirection;
 
+    public event Action<Items> OnGetItem;
+   
+
 
 
 
@@ -48,7 +52,10 @@ public class Player : MonoBehaviour
     }
 
 
-
+   public void GetItem(Items newItem)
+    {
+        OnGetItem?.Invoke(newItem);
+    }
 
 
 
