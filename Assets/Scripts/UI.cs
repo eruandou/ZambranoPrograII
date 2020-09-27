@@ -173,24 +173,9 @@ public class UI : MonoBehaviour
         UpdateItemUI();
     }
 
-    public void UseItem()
+    public void UseItem(Player player)
     {
-        /*
-        //Item effect
-        Debug.Log("Item in effect");
-        //Remove item from list
-        itemsArray.Remove(currentSelectedItem);
-
-        if (currentSelectedItem == itemsArray.HeldItems)
-        {
-            currentSelectedItem = itemsArray.HeldItems - 1;
-        }
-
-        UpdateItemUI();
-
-        Debug.Log("Using item");*/
-
-
+        itemsArray.Retrieve(currentSelectedItem).ActivateItem(player);
 
         itemsArray.Remove(currentSelectedItem);
 

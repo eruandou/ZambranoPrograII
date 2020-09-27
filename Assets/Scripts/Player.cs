@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Gamemanager.instance.UI.UseItem();
+            Gamemanager.instance.UI.UseItem(this);
         }
 
     }

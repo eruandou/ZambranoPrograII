@@ -14,6 +14,7 @@ public class Items : MonoBehaviour
 
     public PotionType potionType;
 
+
     private int healingPoints = 2,
                 speedBoost = 5;
 
@@ -28,15 +29,20 @@ public class Items : MonoBehaviour
         {
             case PotionType.Heal:
 
-                player.lifeController.GetHeal(healingPoints);                
+                player.lifeController.GetHeal(healingPoints);
+                Debug.Log($"I healed {healingPoints} of the player's life");
                 break;
 
             case PotionType.Freeze:
 
+                Gamemanager.instance.enemiesController.FreezeEnemiesActivator();
+                Debug.Log($"I'm freezing enemies");
                 break;
+
             case PotionType.Speed:
 
                 player.ChangeSpeedItem(speedBoost, timeToNormalSpeed);
+                Debug.Log($"I gave the player a {speedBoost} speed boost");
                 break;
 
             default:
@@ -53,6 +59,7 @@ public class Items : MonoBehaviour
         {
             player.GetItem(this);
             //Destroy(this.gameObject);
+            
         }
     }
 
@@ -74,10 +81,7 @@ public class Items : MonoBehaviour
     }
 
 
-
-
-
-
+   
 
 
 }
