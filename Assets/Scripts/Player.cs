@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     private Vector2 lastDirection;
 
-    public event Action<Items> OnGetItem;   
+    public event Action<ActivateableItems> OnGetItem;   
 
     private void Start()
     {
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     }
 
 
-   public void GetItem(Items newItem)
+   public void GetItem(ActivateableItems newItem)
     {
         OnGetItem?.Invoke(newItem);
     }

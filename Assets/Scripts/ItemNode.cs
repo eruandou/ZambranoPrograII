@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemNode 
 {
 
-    public Items storedItem;
+    public ActivateableItems storedItem;
 
     public ItemNode nextNode;
 
@@ -13,7 +13,7 @@ public class ItemNode
 
 
 
-    public ItemNode (Items newItem)
+    public ItemNode (ActivateableItems newItem)
     {
         storedItem = newItem;        
     }

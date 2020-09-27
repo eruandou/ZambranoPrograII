@@ -8,6 +8,10 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private int damage;
+    [SerializeField] bool piercerBullet;
+
+    [SerializeField] private float lifetime;
+   
     public int bulletNumber;
     public Vector2 direction { get; set; }
     public int ExtraDamage { get; set; }
@@ -20,13 +24,25 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         transform.position += new Vector3(direction.x, direction.y, 0) * speed * Time.deltaTime;
+
+        lifetime -= Time.deltaTime;
+        if (lifetime <= 0) Destroy(gameObject);
+
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Damage enemies
-        Destroy(this.gameObject);
+        Enemy enemy = collision.GetComponent<Enemy>();
+
+        if (enemy != null)
+        {
+            enemy.LifeController.GetDamage(damage);
+           
+        }
+
+       if (!piercerBullet) Destroy(this.gameObject);
+
     }
 
     public void SetDirection(Vector2 newDirection)

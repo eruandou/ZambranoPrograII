@@ -4,11 +4,11 @@ using UnityEngine;
 
 public interface IDynArray
 {
-    void Add(Items item);
+    void Add(ActivateableItems item);
 
     void Remove(int index);
 
-    Items Retrieve(int index);
+    ActivateableItems Retrieve(int index);
 
     ItemNode RetrieveNode(int index);
     ItemNode PreviousNode(int index);
@@ -39,7 +39,7 @@ public class DynArray : IDynArray
         emptyNode = new ItemNode(null);
     }
 
-    public void Add (Items newItem)
+    public void Add (ActivateableItems newItem)
     {
         
         
@@ -73,7 +73,7 @@ public class DynArray : IDynArray
 
 
 
-    public Items Retrieve(int index)
+    public ActivateableItems Retrieve(int index)
     {
       
         if (IsArrayEmpty())
@@ -169,7 +169,7 @@ public class DynArray : IDynArray
                 }
 
                 PreviousNode(index).nextNode = currentNode.nextNode;
-                Items itemToDelete = currentNode.storedItem;
+                ActivateableItems itemToDelete = currentNode.storedItem;
                 itemToDelete.DestroyItem();
                 currentNode = currentNode.nextNode;
 

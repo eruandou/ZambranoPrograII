@@ -95,4 +95,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   damage: 2
+  piercerBullet: 0
+  lifetime: 2
   bulletNumber: 1

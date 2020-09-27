@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
  
-
+    public LifeController LifeController { get; private set; }
 
 
 

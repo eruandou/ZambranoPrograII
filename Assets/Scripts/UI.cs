@@ -73,7 +73,7 @@ public class UI : MonoBehaviour
         UpdateBulletUI(true,0);
     }
 
-    private void OnGetItemHandler(Items newItem)
+    private void OnGetItemHandler(ActivateableItems newItem)
     {
         if (itemsArray.HeldItems > itemsArray.ItemLimit)
         {
@@ -119,7 +119,7 @@ public class UI : MonoBehaviour
     {
         if (itemsArray.Retrieve(currentSelectedItem) != null)
         {
-            Items itemOnCurrentSpot = itemsArray.Retrieve(currentSelectedItem);
+            ActivateableItems itemOnCurrentSpot = itemsArray.Retrieve(currentSelectedItem);
 
             if (itemOnCurrentSpot.transform.parent != Camera.main.transform)
             {
