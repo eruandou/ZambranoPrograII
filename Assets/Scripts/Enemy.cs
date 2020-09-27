@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
 
     private Animator anim;
 
+    private float timerToDie = 1;
+
     private void Start()
     {
         LifeController = new LifeController(maxLife);
@@ -103,5 +105,40 @@ public class Enemy : MonoBehaviour
             ChangeState(EnemyStates.Die);
         }
 
+
+        switch (CurrentState)
+        {
+            case EnemyStates.Idle:
+                break;
+            case EnemyStates.Patrolling:
+                break;
+            case EnemyStates.Damaged:
+                break;
+            case EnemyStates.Attacking:
+                break;
+            case EnemyStates.Persuing:
+                break;
+            case EnemyStates.Die:
+                timerToDie -= Time.deltaTime;
+                if (timerToDie <= 0)
+                {
+                    Die();
+                }
+                break;
+            default:
+                break;
+        }
+
+
+
+
+    }
+
+
+
+
+    private void Die()
+    {
+        Destroy(this.gameObject);
     }
 }
