@@ -78,19 +78,22 @@ public class DynArray : IDynArray
 
     public Items Retrieve(int index)
     {
-        //if (index < HeldItems) return emptyNode.storedItem;
-        //else
-        
-            ItemNode currentNode = root;
+      
+        if (IsArrayEmpty())
+        {
+            return emptyNode.storedItem;
+        }
 
 
-            while (currentNode.Index != index)
-            {
-                currentNode = currentNode.nextNode;
-            }
+        ItemNode currentNode = root;
 
-            //if (currentNode == null) return emptyNode.storedItem;
-            return currentNode.storedItem;
+
+        while (currentNode.Index != index)
+        {
+            currentNode = currentNode.nextNode;
+        }
+
+        return currentNode.storedItem;
 
         
 
@@ -142,43 +145,69 @@ public class DynArray : IDynArray
     public void Remove(int index)
     {
 
-        if (HeldItems <= 0)
+        if (HeldItems >=1)
         {
-            return;
-        }
-
-        if (index != 0)
-        {
-            ItemNode currentNode = root;
-            while (currentNode.Index < index - 1)
+            if (index != 0)
             {
+                ItemNode currentNode = root;
+                /*
+                while (currentNode.Index < index - 1)
+                {
+                    currentNode = currentNode.nextNode;
+                }
+
+                currentNode.nextNode = currentNode.nextNode.nextNode;
+
+                while (currentNode != null)
+                {
+                    currentNode = currentNode.nextNode;
+                    currentNode.Index -= 1;
+                }
+                */
+
+
+                while (currentNode.Index < index)
+                {
+                    currentNode = currentNode.nextNode;
+                }
+
+                PreviousNode(index).nextNode = currentNode.nextNode;
+                Items itemToDelete = currentNode.storedItem;
+                itemToDelete.DestroyItem();
                 currentNode = currentNode.nextNode;
+
+                
+
+                while (currentNode != null)
+                {
+                    currentNode.Index--;
+                    currentNode = currentNode.nextNode;
+                }
+
+
+
             }
 
-            currentNode.nextNode = currentNode.nextNode.nextNode;
-
-            while (currentNode != null)
+            else
             {
-                currentNode = currentNode.nextNode;
-                currentNode.Index -= 1;
+                root.storedItem.DestroyItem();
+                root = root.nextNode;
+                ItemNode currentNode = root;
+
+                while (currentNode != null)
+                {
+                    currentNode.Index -= 1;
+                    currentNode = currentNode.nextNode;
+                }
             }
 
+
+            HeldItems--;
         }
+            
+        
 
-        else
-        {
-            root = root.nextNode;
-            ItemNode currentNode = root;
-
-            while (currentNode != null)
-            {
-                currentNode.Index -= 1;
-                currentNode = currentNode.nextNode;
-            }
-        }
-
-
-        HeldItems--;
+       
     }
 
     public bool IsArrayEmpty()

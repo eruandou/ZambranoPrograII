@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     {
         CheckMovement();
         CheckShoot();
+        CheckItemUsage();
     
     }
 
@@ -78,7 +79,28 @@ public class Player : MonoBehaviour
     }
 
 
+    private void CheckItemUsage()
+    {
 
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Gamemanager.instance.UI.ItemsArray.HeldItems > 1)
+        {
+            Gamemanager.instance.UI.ItemsToLeft();
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightShift) && Gamemanager.instance.UI.ItemsArray.HeldItems > 1)
+        {
+            Gamemanager.instance.UI.ItemsToRight();
+           
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Gamemanager.instance.UI.UseItem();
+        }
+
+    }
 
     private void CheckMovement()
     {

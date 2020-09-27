@@ -25,6 +25,8 @@ public class UI : MonoBehaviour
 
     private DynArray itemsArray = new DynArray();
 
+    public DynArray ItemsArray => itemsArray;
+
     private int currentSelectedItem = -1;   
  
 
@@ -108,7 +110,7 @@ public class UI : MonoBehaviour
    
 
 
-    public void UpdateItemUI()
+    private void UpdateItemUI()
     {
         if (itemsArray.Retrieve(currentSelectedItem) != null)
         {
@@ -120,9 +122,8 @@ public class UI : MonoBehaviour
             }
 
             itemOnCurrentSpot.MoveToActive(position0Items);
+           
 
-            Debug.Log($"Expected transform is {position0Items} and is {itemOnCurrentSpot.transform.position}");
-            Debug.Log("Showing Item");
         }
 
         //Set extra items as inactive
@@ -141,58 +142,40 @@ public class UI : MonoBehaviour
     }
 
 
-
-
-    private void Update()
-    {
-        ItemsInput();   
-    }
-
-
-
-    private void ItemsInput()
+    public void ItemsToLeft()
     {
 
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && itemsArray.HeldItems >1)
+        if (currentSelectedItem == 0)
         {
-            ItemsToLeft();
-            UpdateItemUI();
-
+            currentSelectedItem = itemsArray.HeldItems;
         }
 
-        if (Input.GetKeyDown(KeyCode.RightShift) && itemsArray.HeldItems > 1)
-        {
-            ItemsToRight();
-            UpdateItemUI();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UseItem();
-        }
-    }
-
-    private void ItemsToLeft()
-    {
         currentSelectedItem--;
-        if (currentSelectedItem < 0)
-        {
-            currentSelectedItem = itemsArray.HeldItems - 1;
-        }
+
+        Debug.Log($"{currentSelectedItem} is the current selected item");
+
+        UpdateItemUI();
     }
 
-    private void ItemsToRight()
+    public void ItemsToRight()
     {
         currentSelectedItem++;
+
         if (currentSelectedItem == itemsArray.HeldItems)
         {
             currentSelectedItem = 0;
         }
+
+        
+
+
+        Debug.Log($"{currentSelectedItem} is the current selected item");
+        UpdateItemUI();
     }
 
-    private void UseItem()
+    public void UseItem()
     {
+        /*
         //Item effect
         Debug.Log("Item in effect");
         //Remove item from list
@@ -205,7 +188,20 @@ public class UI : MonoBehaviour
 
         UpdateItemUI();
 
-        Debug.Log("Using item");
+        Debug.Log("Using item");*/
+
+
+
+        itemsArray.Remove(currentSelectedItem);
+
+        if (currentSelectedItem == itemsArray.HeldItems)
+        {
+            currentSelectedItem = itemsArray.HeldItems - 1;
+        }
+        UpdateItemUI();
+
+
+
     }
 
 }

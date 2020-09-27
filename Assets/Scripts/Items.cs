@@ -28,10 +28,8 @@ public class Items : MonoBehaviour
         {
             case PotionType.Heal:
 
-
                 player.lifeController.GetHeal(healingPoints);                
                 break;
-
 
             case PotionType.Freeze:
 
@@ -39,8 +37,8 @@ public class Items : MonoBehaviour
             case PotionType.Speed:
 
                 player.ChangeSpeedItem(speedBoost, timeToNormalSpeed);
-
                 break;
+
             default:
                 break;
         }
@@ -70,7 +68,10 @@ public class Items : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-
+    public void DestroyItem()
+    {
+        Destroy(this.gameObject);
+    }
 
 
 
