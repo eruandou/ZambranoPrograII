@@ -8,7 +8,7 @@ public class Gamemanager : MonoBehaviour
 
     public UI UI;
 
-
+    public EnemiesController enemiesController;
 
 
     private void Start()

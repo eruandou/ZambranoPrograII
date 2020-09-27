@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Background
   - Item
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Player
   - BackGround
   - Items
-  - 
-  - 
+  - Enemy
+  - Managers
   - 
   - 
   - 
@@ -48,4 +49,7 @@ TagManager:
     locked: 0
   - name: Items
     uniqueID: 2023056045
+    locked: 0
+  - name: Enemy
+    uniqueID: 3667910457
     locked: 0
