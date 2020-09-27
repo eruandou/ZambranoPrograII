@@ -41,10 +41,7 @@ public class DynArray : IDynArray
 
     public void Add (Items newItem)
     {
-        if (HeldItems > ItemLimit)
-        {
-            return;
-        }
+        
         
         ItemNode newNode = new ItemNode(newItem);
 

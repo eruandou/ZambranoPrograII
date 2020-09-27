@@ -75,6 +75,11 @@ public class UI : MonoBehaviour
 
     private void OnGetItemHandler(Items newItem)
     {
+        if (itemsArray.HeldItems > itemsArray.ItemLimit)
+        {
+            return;
+        }
+
         itemsArray.Add(newItem);
         Debug.Log("Got item");
         //if (itemsArray.HeldItems <=1)
