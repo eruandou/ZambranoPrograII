@@ -32,6 +32,7 @@ public class LifeController
             if (currentLife <= 0)
             {
                 OnDead?.Invoke();
+                Debug.Log("I'm dead");
             }
 
 
@@ -55,6 +56,7 @@ public class LifeController
         {
             CurrentLife -= damage;
             invincibilityTime = 0;
+            Debug.Log($"{currentLife} is my current life");
             OnGetDamage?.Invoke(CurrentLife, damage);
         }
     }
