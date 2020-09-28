@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float outOfAttackTimeStart;
     private float outOfAttackTime;
 
+    public Color neutralColor;
+
     private void Start()
     {
         LifeController = new LifeController(maxLife);
