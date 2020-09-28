@@ -31,7 +31,7 @@ public class EnemiesController : MonoBehaviour
         foreach (Enemy enemy in enemies)
         {
             enemy.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            enemy.enabled = false;
+            enemy.ChangeState(Enemy.EnemyStates.Frozen);
             enemy.GetComponent<Animator>().enabled = false;
             enemy.GetComponent<SpriteRenderer>().color = Color.blue;
         }
@@ -42,7 +42,7 @@ public class EnemiesController : MonoBehaviour
         foreach (Enemy enemy in enemies)
         {
             enemy.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-            enemy.enabled = true;
+            enemy.ChangeState(Enemy.EnemyStates.Idle);
             enemy.GetComponent<Animator>().enabled = true;
             enemy.GetComponent<SpriteRenderer>().color = Color.white;
         }

@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     public bool isActiveFramesOnAttack2 ;
 
-    private AIController aIController;
+    public AIController AIController { get; private set; }
 
     [SerializeField] private float stunTimeStart;
     private float stunTime;
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     {
         LifeController = new LifeController(maxLife);
         anim = GetComponent<Animator>();
-        aIController = GetComponent<AIController>();
+        AIController = GetComponent<AIController>();
         LifeController.OnGetDamage += OnGetDamageHandler;
         LifeController.OnDead += OnDeadHandler;
         checkNearPlayer.enabled = true;
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
         Damaged,
         Attacking,
         Persuing,
+        Frozen,
         Die
     }
 
@@ -58,7 +59,7 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Idle", true);
                 anim.SetBool("Move", false);
                 checkNearPlayer.enabled = true;
-               
+
                 Debug.Log("Idle");
                 break;
 
@@ -67,13 +68,13 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Idle", false);
                 anim.SetBool("Move", true);
                 checkNearPlayer.enabled = false;
-              
+
                 Debug.Log("Patrol");
                 break;
 
             case EnemyStates.Damaged:
 
-                anim.SetBool ("Idle", false);
+                anim.SetBool("Idle", false);
                 anim.SetBool("Move", false);
                 anim.SetTrigger("Damaged");
                 checkNearPlayer.enabled = false;
@@ -82,28 +83,28 @@ public class Enemy : MonoBehaviour
 
             case EnemyStates.Attacking:
 
-          
+
                 if (Random.value <= 0.7f)
                 {
                     anim.SetTrigger("Attack1");
-                    aIController.Attack1();                 
+                    AIController.Attack1();
                 }
 
                 else
                 {
                     anim.SetTrigger("Attack2");
-                    aIController.Attack2();
+                    AIController.Attack2();
                 }
                 checkNearPlayer.enabled = false;
                 Debug.Log("Attacking");
                 break;
 
             case EnemyStates.Persuing:
-              
+
                 anim.SetBool("Idle", false);
                 anim.SetBool("Move", true);
                 checkNearPlayer.enabled = false;
-             
+
                 Debug.Log("Persue");
                 break;
 
@@ -111,9 +112,11 @@ public class Enemy : MonoBehaviour
                 Debug.Log("Die");
                 anim.SetTrigger("Death");
                 checkNearPlayer.enabled = false;
-             
-                break;
 
+                break;
+            case EnemyStates.Frozen:
+
+                break;
             default:
                 break;
         }
@@ -125,19 +128,19 @@ public class Enemy : MonoBehaviour
     {
         LifeController.Update();
 
-        
-       // Debug.Log($"out of attack {outOfAttackTime} with {outOfAttackTimeStart} as start");
+
+        // Debug.Log($"out of attack {outOfAttackTime} with {outOfAttackTimeStart} as start");
 
 
         switch (CurrentState)
         {
             case EnemyStates.Idle:
-                
-                
+
+
                 break;
             case EnemyStates.Patrolling:
-          
-                aIController.AIUpdate();
+
+                AIController.AIUpdate();
 
                 break;
             case EnemyStates.Damaged:
@@ -151,7 +154,7 @@ public class Enemy : MonoBehaviour
                     stunTime = 0;
                     ChangeState(EnemyStates.Idle);
                 }
-               
+
 
                 break;
             case EnemyStates.Attacking:
@@ -160,27 +163,29 @@ public class Enemy : MonoBehaviour
 
                 if (outOfAttackTime >= outOfAttackTimeStart)
                 {
-                    aIController.DeactivateHurtBox();
+                    AIController.DeactivateHurtBox();
                     outOfAttackTime = 0;
                     ChangeState(EnemyStates.Idle);
 
                 }
-             
+
                 break;
             case EnemyStates.Persuing:
-              
-                aIController.AIUpdate();
+
+                AIController.AIUpdate();
 
                 break;
             case EnemyStates.Die:
-               
+
                 timerToDie -= Time.deltaTime;
                 if (timerToDie <= 0)
                 {
                     Die();
                 }
                 break;
+            case EnemyStates.Frozen:
 
+                break;
             default:
                 break;
         }
