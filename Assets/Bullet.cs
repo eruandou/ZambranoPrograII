@@ -38,6 +38,7 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             enemy.LifeController.GetDamage(damage);
+            Debug.Log("Damaging enemy");
            
         }
 
