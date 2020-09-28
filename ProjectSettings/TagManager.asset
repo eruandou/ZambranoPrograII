@@ -7,6 +7,7 @@ TagManager:
   - Background
   - Item
   - Enemy
+  - Player Bullets
   layers:
   - Default
   - TransparentFX
@@ -21,9 +22,9 @@ TagManager:
   - Items
   - Enemy
   - Managers
-  - 
-  - 
-  - 
+  - PlayerBullets
+  - DetectionAreas
+  - EnemyBullets
   - 
   - 
   - 
