@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7823099237705909421}
   - component: {fileID: 7823099237705909420}
   - component: {fileID: 7823099236519026624}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Heal Potion
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,5 +114,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potionType: 0
-  timeEnemiesAreFrozen: 0
-  timeToNormalSpeed: 0
