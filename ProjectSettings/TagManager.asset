@@ -8,6 +8,8 @@ TagManager:
   - Item
   - Enemy
   - Player Bullets
+  - Spawn Points
+  - Enemy Spawners
   layers:
   - Default
   - TransparentFX
@@ -25,8 +27,8 @@ TagManager:
   - PlayerBullets
   - DetectionAreas
   - EnemyBullets
-  - 
-  - 
+  - EnemySpawners
+  - SpawnPoints
   - 
   - 
   - 

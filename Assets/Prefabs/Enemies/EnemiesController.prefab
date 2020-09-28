@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f9059c52faf2541b512ae0f270ac5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRef: {fileID: 0}
+  enemy1: {fileID: 5519543543022779722, guid: 29fe82631562f61478559e2287a9b7b7, type: 3}
+  enemy2: {fileID: 6048375814090252682, guid: ec63dfd4b9310154896aef3dc5d31ed8, type: 3}
+  enemy3: {fileID: 388573376205938832, guid: d939ee102d3c5cb4a897fbe612243484, type: 3}
+  spawnLimit: 60
+  retrieveTimeStart: 0.3
