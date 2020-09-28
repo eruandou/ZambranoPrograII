@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
         lifeController = new LifeController(maxLife);
         lifeController.OnGetDamage += OnGetDamageHandler;
         lifeController.OnGetHeal += OnGetHealHandler;
+        lifeController.OnDead += OnDeadHandler;
         sprRend = GetComponent<SpriteRenderer>();
         playerShootingController = GetComponent<PlayerShootingController>();
     }
@@ -45,7 +46,8 @@ public class Player : MonoBehaviour
         CheckMovement();
         CheckShoot();
         CheckItemUsage();
-    
+        lifeController.Update();
+
     }
 
 
@@ -139,7 +141,7 @@ public class Player : MonoBehaviour
         lifeController.OnGetHeal -= OnGetHealHandler;
         lifeController.OnGetDamage -= OnGetDamageHandler;
 
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
 
