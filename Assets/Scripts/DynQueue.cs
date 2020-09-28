@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 public interface IDynQueue
@@ -23,6 +24,8 @@ public class DynQueue
     EnemyNode first;
 
     EnemyNode last;
+
+    public event Action OnDequeue;
 
 
     public DynQueue()
@@ -68,6 +71,8 @@ public class DynQueue
         {
             last = null;
         }
+
+        
     }
 
 
@@ -76,9 +81,19 @@ public class DynQueue
         return (last == null);
     }
 
-    public Enemy First()
+    public Enemy First(bool doesItRemove)
     {
-        return first.EnemyData;
+        Enemy currentFirst = first.EnemyData;
+
+        if (doesItRemove)
+        {
+            Dequeue();
+            return currentFirst;
+        }
+
+        return currentFirst;
+
+        
     }
 
     public EnemyNode FirstNode()
