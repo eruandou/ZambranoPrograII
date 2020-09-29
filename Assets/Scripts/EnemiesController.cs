@@ -101,4 +101,15 @@ public class EnemiesController : MonoBehaviour
     {
         return spawnedEnemies;
     }
+
+    public void OnPlayerDeadHandler()
+    {
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.enabled = false;
+            enemy.GetComponent<AIController>().enabled = false;
+        }
+    }
 }
