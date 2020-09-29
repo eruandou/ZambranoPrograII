@@ -7,10 +7,12 @@ using System.IO;
 
 
 public static class DataSaver
-{   
+{
+    
+
     private static Dictionary<int, HighscorePlayer> playerHighscoresDictionary = new Dictionary<int, HighscorePlayer>();
 
-    private static BST BSTHighScores;
+    public static BST BSTHighScores;
 
     public static void SavePlayers(int score, string nickname)
     {
@@ -45,6 +47,8 @@ public static class DataSaver
         formatter.Serialize(newStream, playerHighscoresDictionary);
         
         newStream.Close();
+
+        Debug.Log($"data path is {dataPath}");
     }
 
 
