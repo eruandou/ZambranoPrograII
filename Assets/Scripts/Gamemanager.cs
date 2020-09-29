@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Gamemanager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Gamemanager : MonoBehaviour
     public int ActualPoints { get; private set; }
 
 
-    private void Start()
+    private void Awake()
     {
         if (instance == null)
         {
@@ -27,15 +28,25 @@ public class Gamemanager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-
+    public void OnLevelLoad()
+    {
+        ActualPoints = 0;
+    }
 
     public void GetPoints(int points)
     {
         ActualPoints += points;
+        Debug.Log($"got {points} points and now I have {ActualPoints}");
+        //play sound
+        UI.UpdatePoints();
     }
 
 
-
+    public void LoadGameOver()
+    {
+        SceneManager.LoadScene("GameOverScene");
+        Debug.Log("Loaded scene");
+    }
 
 
 
