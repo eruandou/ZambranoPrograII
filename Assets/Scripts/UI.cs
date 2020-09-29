@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class UI : MonoBehaviour
 {
 
@@ -27,7 +27,9 @@ public class UI : MonoBehaviour
 
     public DynArray ItemsArray => itemsArray;
 
-    private int currentSelectedItem = -1;   
+    private int currentSelectedItem = -1;
+
+    [SerializeField] private TextMeshProUGUI pointsText;
  
 
     private void Start()
@@ -42,6 +44,8 @@ public class UI : MonoBehaviour
         stackPosition = new List<Vector3>();
 
         playerShoot = player.GetComponent<PlayerShootingController>();
+
+        UpdatePoints();
 
 
 
@@ -194,4 +198,8 @@ public class UI : MonoBehaviour
 
     }
 
+    public void UpdatePoints()
+    {
+        pointsText.text = $"Points : {Gamemanager.instance.ActualPoints}";
+    }
 }
