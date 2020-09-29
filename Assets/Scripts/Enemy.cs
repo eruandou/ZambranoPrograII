@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
 
     public bool isActiveFramesOnAttack2 ;
 
+    [SerializeField] private int pointsToGive;
+
     public AIController AIController { get; private set; }
 
     [SerializeField] private float stunTimeStart;
@@ -196,6 +198,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        Gamemanager.instance.GetPoints(pointsToGive);
         Destroy(this.gameObject);
     }
 

@@ -10,6 +10,8 @@ public class Gamemanager : MonoBehaviour
 
     public EnemiesController enemiesController;
 
+    public int ActualPoints { get; private set; }
+
 
     private void Start()
     {
@@ -23,14 +25,14 @@ public class Gamemanager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this);
-
-
-
     }
 
 
 
-
+    public void GetPoints(int points)
+    {
+        ActualPoints += points;
+    }
 
 
 

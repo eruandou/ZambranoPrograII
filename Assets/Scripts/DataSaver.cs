@@ -67,6 +67,8 @@ public static class DataSaver
                 HighscorePlayer playerToAdd = playerHighscoresDictionary[i];
 
                 BSTHighScores.AddElement(ref BSTHighScores.root, playerToAdd);
+
+                Debug.Log($"element added is {playerToAdd.Nickname} with a score of {playerToAdd.Score} and is at position {i}");
             }
 
         }
@@ -74,8 +76,11 @@ public static class DataSaver
         {
             Debug.Log("No highscore data found yet");
         }
-
+        
     }
+
+
+
 
 
 }
