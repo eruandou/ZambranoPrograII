@@ -14,6 +14,27 @@ public class ActivateableItems : MonoBehaviour
 
     public PotionType potionType;
 
+    public int potionTypeValue;
+
+
+    private void Start()
+    {
+        switch (potionType)
+        {
+            case PotionType.Heal:
+                potionTypeValue = 0;
+                break;
+            case PotionType.Freeze:
+                potionTypeValue = 1;
+                break;
+            case PotionType.Speed:
+                potionTypeValue = 2;
+                break;
+            default:
+                break;
+        }
+    }
+
 
     private int healingPoints = 2,
                 speedBoost = 5;
