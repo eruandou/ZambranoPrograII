@@ -141,6 +141,8 @@ public class Player : MonoBehaviour
         lifeController.OnGetHeal -= OnGetHealHandler;
         lifeController.OnGetDamage -= OnGetDamageHandler;
 
+        Gamemanager.instance.enemiesController.OnPlayerDeadHandler();
+
         Destroy(this.gameObject);
     }
 
