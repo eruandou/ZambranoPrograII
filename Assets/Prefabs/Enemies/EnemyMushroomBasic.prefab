@@ -109,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 10
   isActiveFramesOnAttack2: 0
+  pointsToGive: 100
   stunTimeStart: 0.7
   checkNearPlayer: {fileID: 438670555}
   outOfAttackTimeStart: 1
