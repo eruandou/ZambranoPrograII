@@ -82,8 +82,7 @@ public class EnemiesController : MonoBehaviour
         for (int i = 0; i < spawnLimit; i++)
         {           
             enemiesToSpawnQueue.Enqueue(enemiesDictionary[Random.Range(1, 4)]);
-            spawnedEnemies++;
-            Debug.Log(enemiesToSpawnQueue);
+            spawnedEnemies++;            
         }
     }
 

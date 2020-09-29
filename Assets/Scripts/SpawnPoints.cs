@@ -14,8 +14,6 @@ public class SpawnPoints : MonoBehaviour
         anim = GetComponent<Animator>();        
     }
 
-
-
     public void ActivatePortal()
     {
         StartCoroutine(ActivateAnimation());
@@ -34,7 +32,7 @@ public class SpawnPoints : MonoBehaviour
         anim.SetBool("Appear", false);
         anim.SetBool("Dissapear", true);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
 
         anim.enabled = false;
 
