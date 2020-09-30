@@ -9,15 +9,14 @@ public class HighscorePlayer
 {
 
 
-    public int Score { get; set; }
+    public int score;
 
-    public string Nickname { get; set; }
-
+    public string nickname;
 
     public HighscorePlayer(int highscore, string nickname)
     {
-        this.Score = highscore;
-        this.Nickname = nickname;
+        this.score = highscore;
+        this.nickname = nickname;
     }
 
 

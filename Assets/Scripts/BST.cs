@@ -25,6 +25,7 @@ public class BST : IBST
 {
     public BSTNode root;
 
+    public int nodeCount;
     //Constructor
 
     public BST()
@@ -58,7 +59,7 @@ public class BST : IBST
         root = null;
     }
 
-
+   
     public void AddElement(ref BSTNode node, HighscorePlayer HSPlayer)
     {
         //Check root
@@ -66,18 +67,23 @@ public class BST : IBST
         if (node == null)
         {
             node = new BSTNode(HSPlayer);
+            nodeCount++;
         }
 
         //Root's already ocupied, check left and right children
         //to fit new data
 
-        else if (node.playerInfo.Score > HSPlayer.Score)
+
+        //I consider an equal score to be a left child
+        //Just because of being the first person to achieve a specific score
+        //deserves to be over someone who got the same score later
+        else if (node.playerInfo.score >= HSPlayer.score)
         {
             Debug.Log("I'm adding to the left branch");
             AddElement(ref node.leftchild, HSPlayer);
 
         }
-        else if (node.playerInfo.Score < HSPlayer.Score)
+        else if (node.playerInfo.score < HSPlayer.score)
         {
             AddElement(ref node.rightchild, HSPlayer);
             Debug.Log("I'm adding to the right branch");
@@ -91,7 +97,7 @@ public class BST : IBST
         {
             //if selected node has no children, just make it null
 
-            if (node.playerInfo.Score == HSPlayer.Score && (node.leftchild == null) && (node.rightchild == null))
+            if (node.playerInfo.score == HSPlayer.score && (node.leftchild == null) && (node.rightchild == null))
             {
                 node = null;
                 Debug.Log($"Deleted node");
@@ -99,7 +105,7 @@ public class BST : IBST
             }
 
             //Reorder left side branch
-            else if (node.playerInfo.Score == HSPlayer.Score && node.leftchild != null)
+            else if (node.playerInfo.score == HSPlayer.score && node.leftchild != null)
             {
                 node.playerInfo = this.Bigger(node.leftchild);
                 DeleteElement(ref node.leftchild, node.playerInfo);
@@ -107,7 +113,7 @@ public class BST : IBST
             }
 
             //Reorder right side branch
-            else if (node.playerInfo.Score == HSPlayer.Score && node.leftchild == null)
+            else if (node.playerInfo.score == HSPlayer.score && node.leftchild == null)
             {
                 root.playerInfo = this.Smaller(node.rightchild);
                 DeleteElement(ref node.rightchild, node.playerInfo);
@@ -115,7 +121,7 @@ public class BST : IBST
             }
 
             //Desired deleteable node is the right children
-            else if (node.playerInfo.Score < HSPlayer.Score)
+            else if (node.playerInfo.score < HSPlayer.score)
             {
                 DeleteElement(ref node.rightchild, HSPlayer);
                 Debug.Log("Check right children");
@@ -164,15 +170,14 @@ public class BST : IBST
 
     //Search methods
 
-    public List<HighscorePlayer> InReverseOrder(BSTNode node)
+    public List<HighscorePlayer> InReverseOrder(BSTNode node, List <HighscorePlayer> HSPlayers)
     {
-        List<HighscorePlayer> HSPlayers = new List<HighscorePlayer>();
-
+       
         if (node != null)
         {
-            InReverseOrder(node.rightchild);
+            InReverseOrder(node.rightchild, HSPlayers);
             HSPlayers.Add(node.playerInfo);
-            InReverseOrder(node.leftchild);
+            InReverseOrder(node.leftchild,HSPlayers);
         }
 
         return HSPlayers;
@@ -180,6 +185,19 @@ public class BST : IBST
     }
 
 
+    public List<HighscorePlayer> InOrder(BSTNode node, List<HighscorePlayer> HSPlayers)
+    {
+       
 
+        if (node != null)
+        {
+            InOrder(node.leftchild, HSPlayers);            
+            HSPlayers.Add(node.playerInfo);
+            InOrder(node.rightchild, HSPlayers);
+        }
+
+        return HSPlayers;
+
+    }
 
 }
