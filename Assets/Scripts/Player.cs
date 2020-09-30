@@ -142,8 +142,7 @@ public class Player : MonoBehaviour
         lifeController.OnGetDamage -= OnGetDamageHandler;
 
         Gamemanager.instance.enemiesController.OnPlayerDeadHandler();
-        Gamemanager.instance.LoadGameOver();
-        Destroy(this.gameObject);
+        Gamemanager.instance.LoadGameOver();      
     }
 
 

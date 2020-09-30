@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 964053401420265712}
   - component: {fileID: 964053401420265715}
   - component: {fileID: 1329256816}
-  - component: {fileID: 3994992565953819867}
   - component: {fileID: 8846949230190232451}
   - component: {fileID: 1329256817}
   m_Layer: 8
@@ -138,18 +137,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawner: {fileID: 6377410667780835689}
   timeBetweenBulletChange: 1.5
---- !u!114 &3994992565953819867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964053401420265711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d775a69c6dc87fe40aff8ada408fbd82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &8846949230190232451
 Rigidbody2D:
   serializedVersion: 4

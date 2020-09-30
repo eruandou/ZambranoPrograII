@@ -34,7 +34,7 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-
+        Gamemanager.instance.LoadUI(this);
 
         bulletDictionary.Add(1, bullet1);
         bulletDictionary.Add(2, bullet2);
@@ -42,7 +42,7 @@ public class UI : MonoBehaviour
         bulletDictionary.Add(4, bullet4);
 
         stackPosition = new List<Vector3>();
-
+        player = FindObjectOfType<Player>();
         playerShoot = player.GetComponent<PlayerShootingController>();
 
         UpdatePoints();
@@ -96,8 +96,11 @@ public class UI : MonoBehaviour
     {
         bulletsSpawned.Clear();
     }
-    
 
+    private void Update()
+    {
+        if (Input.GetKeyDown (KeyCode.F1)) DynArrayToArray();
+    }
 
     public void UpdateBulletUI(bool isErase, int newBulletType = 0)
     {
@@ -194,12 +197,98 @@ public class UI : MonoBehaviour
         }
         UpdateItemUI();
 
-
-
     }
 
     public void UpdatePoints()
     {
         pointsText.text = $"Points : {Gamemanager.instance.ActualPoints}";
     }
+
+
+    //Quicksort related
+
+    private ItemNode[] DynArrayToArray()
+    {
+        ItemNode currentNode = itemsArray.root;
+        ItemNode[] itemarray = new ItemNode[itemsArray.HeldItems];
+
+        for (int i = 0; i < itemsArray.HeldItems; i++)
+        {
+            itemarray[i] = currentNode;
+            currentNode = currentNode.nextNode;
+        }
+
+
+        Debug.Log("Disorganized list");
+
+        for (int i = 0; i < itemsArray.HeldItems; i++)
+        {
+            Debug.Log($"{itemarray[i].storedItem.potionType}");
+        }
+
+        quickSort(itemarray, 0, 2);
+
+
+        for (int i = 0; i < itemsArray.HeldItems; i++)
+        {
+            Debug.Log($"{itemarray[i].storedItem.potionType}");
+        }
+
+        return itemarray;
+    }
+
+
+    public int Partition(ItemNode[] arr, int left, int right)
+    {
+        int pivot;
+        int aux = (left + right) / 2;
+        pivot = arr[aux].storedItem.potionTypeValue;
+
+
+
+        while (true)
+        {
+            while (arr[left].storedItem.potionTypeValue < pivot)
+            {
+                left++;
+            }
+            while (arr[right].storedItem.potionTypeValue > pivot)
+            {
+                right--;
+            }
+            if (left < right)
+            {
+                int temp = arr[right].storedItem.potionTypeValue;
+                arr[right] = arr[left];
+                arr[left].storedItem.potionTypeValue = temp;
+            }
+            else
+            {
+                // este es el valor que devuelvo como proxima posicion de
+                // la particion en el siguiente paso del algoritmo
+                return right;
+            }
+        }
+
+    }
+    public void quickSort(ItemNode[] arr, int left, int right)
+    {
+        int pivot;
+        if (left < right)
+        {
+            pivot = Partition(arr, left, right);
+            if (pivot > 1)
+            {
+                // mitad del lado izquierdo del vector
+                quickSort(arr, left, pivot - 1);
+            }
+            if (pivot + 1 < right)
+            {
+                // mitad del lado derecho del vector
+                quickSort(arr, pivot + 1, right);
+            }
+        }
+    }
+
 }
+

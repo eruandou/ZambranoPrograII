@@ -31,6 +31,17 @@ public class Gamemanager : MonoBehaviour
     public void OnLevelLoad()
     {
         ActualPoints = 0;
+        Debug.Log("On level load used");  
+    }
+
+    public void LoadUI(UI UI)
+    {
+        this.UI = UI;
+    }
+
+    public void LoadEnemiesController (EnemiesController eC)
+    {
+        this.enemiesController = eC;
     }
 
     public void GetPoints(int points)

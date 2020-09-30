@@ -2969,18 +2969,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1849174845 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1415554311030380522, guid: dca62748c53d51e4baf0d5fe3089fc25,
-    type: 3}
-  m_PrefabInstance: {fileID: 1415554310322076887}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f9059c52faf2541b512ae0f270ac5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1966275800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3024,8 +3012,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d482ba23c708ba4c8f575009d60ef1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI: {fileID: 1788892387}
-  enemiesController: {fileID: 1849174845}
+  UI: {fileID: 0}
+  playerRef: {fileID: 0}
+  enemiesController: {fileID: 0}
 --- !u!1001 &1989078062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3534,6 +3523,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemiesController
       objectReference: {fileID: 0}
+    - target: {fileID: 1415554311030380522, guid: dca62748c53d51e4baf0d5fe3089fc25,
+        type: 3}
+      propertyPath: playerRef
+      value: 
+      objectReference: {fileID: 2071496725}
     - target: {fileID: 1415554311030380523, guid: dca62748c53d51e4baf0d5fe3089fc25,
         type: 3}
       propertyPath: m_LocalPosition.x

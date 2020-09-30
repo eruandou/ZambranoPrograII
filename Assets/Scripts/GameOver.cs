@@ -3,30 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public  class GameOver : MonoBehaviour
+public class GameOver: MonoBehaviour
 {
 
-    private string nickEntered;
 
-    [SerializeField] private Text text;
-
+    [SerializeField] private Text nick;
     public void Save()
     {
-        DataSaver.SavePlayers(Gamemanager.instance.ActualPoints, nickEntered);
-        
+        DataSaver.Save(Gamemanager.instance.ActualPoints, nick.text);
+        SceneManager.LoadScene("MainMenu");
     }
 
-
-    public void Load()
-    {
-        DataSaver.LoadPlayers();
-    }
-
-    public void ChangeNameEntered()
-    {
-        nickEntered = text.text;
-        Debug.Log($"new name is {nickEntered}");
-    }
-
+  
 }

@@ -28,7 +28,7 @@ public class EnemiesController : MonoBehaviour
 
     private void Start()
     {
-        playerRef = FindObjectOfType<Player>();
+        Gamemanager.instance.LoadEnemiesController(this);
         enemiesToSpawnQueue = new DynQueue();
 
         enemiesDictionary.Add(1, enemy1);
@@ -39,7 +39,7 @@ public class EnemiesController : MonoBehaviour
 
         enemiesToSpawnQueue.OnDequeue += OnDequeueHandler;
 
-
+        playerRef = FindObjectOfType<Player>();
     }
 
 
