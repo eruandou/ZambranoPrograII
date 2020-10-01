@@ -15,6 +15,8 @@ public class EnemiesController : MonoBehaviour
 
     private Dictionary <int,Enemy> enemiesDictionary = new Dictionary <int, Enemy>();
 
+    [SerializeField] private ActivateableItems[] itemsToDrop;
+
 
     private int spawnedEnemies;
     [SerializeField] private int spawnLimit;
@@ -111,5 +113,17 @@ public class EnemiesController : MonoBehaviour
             enemy.enabled = false;
             enemy.GetComponent<AIController>().enabled = false;
         }
+    }
+
+    public void ItemToDrop(Vector2 positionToSpawn, int spawnChance)
+    {
+        Debug.Log($"random value is {Random.value}");
+
+        if (Random.value <= (float) spawnChance /100)
+        {
+            Instantiate(itemsToDrop[Random.Range(0, itemsToDrop.Length)], positionToSpawn, Quaternion.identity);
+            Debug.Log("Enemy dropped an item");
+        }
+       
     }
 }

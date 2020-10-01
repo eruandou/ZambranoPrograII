@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 
     private Animator anim;
 
-    private float timerToDie = 1;
+    private float timerToDie;
 
     public bool isActiveFramesOnAttack2 ;
 
@@ -27,6 +27,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float outOfAttackTimeStart;
     private float outOfAttackTime;
 
+    [Range(0, 100)] public int chanceToSpawnItem;
+
+
+
+    [SerializeField] private AudioClip dieSound;
+    [SerializeField] private AudioClip grunt;
+    private float timerToGrunt;
+
+    private AudioSource audioSrc;
+
     public Color neutralColor;
 
     private void Start()
@@ -37,6 +47,9 @@ public class Enemy : MonoBehaviour
         LifeController.OnGetDamage += OnGetDamageHandler;
         LifeController.OnDead += OnDeadHandler;
         checkNearPlayer.enabled = true;
+        audioSrc = GetComponent<AudioSource>();
+        timerToDie = dieSound.length;
+        NewTimerToGrunt();
     }
 
     public enum EnemyStates
@@ -64,7 +77,7 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Move", false);
                 checkNearPlayer.enabled = true;
 
-                Debug.Log("Idle");
+            
                 break;
 
             case EnemyStates.Patrolling:
@@ -73,7 +86,7 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Move", true);
                 checkNearPlayer.enabled = false;
 
-                Debug.Log("Patrol");
+              
                 break;
 
             case EnemyStates.Damaged:
@@ -82,7 +95,7 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Move", false);
                 anim.SetTrigger("Damaged");
                 checkNearPlayer.enabled = false;
-                Debug.Log("Damaged");
+              
                 break;
 
             case EnemyStates.Attacking:
@@ -100,7 +113,7 @@ public class Enemy : MonoBehaviour
                     AIController.Attack2();
                 }
                 checkNearPlayer.enabled = false;
-                Debug.Log("Attacking");
+             
                 break;
 
             case EnemyStates.Persuing:
@@ -108,14 +121,18 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Idle", false);
                 anim.SetBool("Move", true);
                 checkNearPlayer.enabled = false;
+                audioSrc.clip = grunt;
 
-                Debug.Log("Persue");
+               
                 break;
 
             case EnemyStates.Die:
-                Debug.Log("Die");
+
                 anim.SetTrigger("Death");
                 checkNearPlayer.enabled = false;
+                audioSrc.clip = dieSound;
+                audioSrc.pitch = 1;
+                audioSrc.Play();
 
                 break;
             case EnemyStates.Frozen:
@@ -149,7 +166,7 @@ public class Enemy : MonoBehaviour
                 break;
             case EnemyStates.Damaged:
 
-                Debug.Log($"stun time {stunTime} with {stunTimeStart} as start");
+
 
                 stunTime += Time.deltaTime;
 
@@ -177,6 +194,14 @@ public class Enemy : MonoBehaviour
             case EnemyStates.Persuing:
 
                 AIController.AIUpdate();
+                timerToGrunt -= Time.deltaTime;
+                if (timerToGrunt <= 0)
+                {
+                    audioSrc.pitch = Random.Range(0.7f, 1.1f);
+                    audioSrc.Play();
+                    NewTimerToGrunt();
+                }
+
 
                 break;
             case EnemyStates.Die:
@@ -199,6 +224,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         Gamemanager.instance.GetPoints(pointsToGive);
+        Gamemanager.instance.enemiesController.ItemToDrop(this.transform.position, chanceToSpawnItem);
         Destroy(this.gameObject);
     }
 
@@ -221,6 +247,11 @@ public class Enemy : MonoBehaviour
         {
             ChangeState(EnemyStates.Persuing);
         }
+    }
+
+    private void NewTimerToGrunt()
+    {
+        timerToGrunt = Random.Range(5f, 9f);
     }
 
 }

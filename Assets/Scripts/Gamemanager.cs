@@ -11,6 +11,8 @@ public class Gamemanager : MonoBehaviour
 
     public EnemiesController enemiesController;
 
+    
+
     public int ActualPoints { get; private set; }
 
 
