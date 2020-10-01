@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActivateableItems : MonoBehaviour
 {
-
+    private bool isPickedUp;
     public enum PotionType
     {
         Heal,
@@ -76,9 +76,10 @@ public class ActivateableItems : MonoBehaviour
     {
         Player player = collision.GetComponent<Player>();
 
-        if (player != null)
+        if (player != null && !isPickedUp)
         {
             player.GetItem(this);
+            isPickedUp = true;
             //Destroy(this.gameObject);
             
         }

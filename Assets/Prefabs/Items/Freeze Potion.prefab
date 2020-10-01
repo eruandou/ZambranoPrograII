@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1858232651581974433}
   - component: {fileID: 1858232651581974438}
   - component: {fileID: 1858232651277830527}
+  - component: {fileID: 6628759112453628556}
   m_Layer: 10
   m_Name: Freeze Potion
   m_TagString: Item
@@ -87,8 +88,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2023056045
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 0.23137255, g: 0.2509804, b: 0.9529412, a: 1}
@@ -114,3 +115,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potionType: 1
+  potionTypeValue: 1
+--- !u!61 &6628759112453628556
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858232651581974439}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 0.86}
+  m_EdgeRadius: 0
