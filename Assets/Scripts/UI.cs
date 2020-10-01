@@ -31,7 +31,8 @@ public class UI : MonoBehaviour
 
     public bool IHaveItems => itemsArray.HeldItems > 1;
 
-    [SerializeField] private TextMeshProUGUI pointsText;
+    [SerializeField] private TextMeshProUGUI pointsText, healthText;
+    
  
 
     private void Start()
@@ -202,6 +203,10 @@ public class UI : MonoBehaviour
         pointsText.text = $"Points : {Gamemanager.instance.ActualPoints}";
     }
 
+    public void UpdateHealth(int currentHealth)
+    {
+        healthText.text = $"health : { currentHealth}";
+    }
 
     //Quicksort related
 

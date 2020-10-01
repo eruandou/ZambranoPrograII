@@ -40,7 +40,8 @@ public class Player : MonoBehaviour
         lifeController.OnDead += OnDeadHandler;
         sprRend = GetComponent<SpriteRenderer>();
         playerShootingController = GetComponent<PlayerShootingController>();
-      
+        Gamemanager.instance.UI.UpdateHealth(lifeController.CurrentLife);
+
     }
 
 
@@ -147,11 +148,13 @@ public class Player : MonoBehaviour
 
     private void OnGetDamageHandler(int currentLife, int damage)
     {
+        Gamemanager.instance.UI.UpdateHealth(currentLife);
         StartCoroutine(ChangeColor(damagedColor, 10));
     }
 
     private void OnGetHealHandler (int currentLife, int heal)
     {
+        Gamemanager.instance.UI.UpdateHealth(currentLife);
         StartCoroutine(ChangeColor(healedColor, 10));
     }
 
