@@ -13,7 +13,9 @@ public class CollectableBullet : MonoBehaviour
 
         if (playerShootController != null && playerShootController.ActiveFiring == false)
         {
+            //Throw this in an event
             playerShootController.bulletsStack.Stack(bulletToCollect);
+            playerShootController.CollectBulletSound();
             FindObjectOfType<BulletSpawner>().BulletDestroyed();
             Destroy(this.gameObject);
         }

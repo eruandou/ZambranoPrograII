@@ -55,7 +55,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12, y: 10}
+  m_Size: {x: 35, y: 35}
   m_EdgeRadius: 0
 --- !u!1 &6048375814090252684
 GameObject:
@@ -227,7 +227,7 @@ MonoBehaviour:
   enemyLevel: 1
   hurtBox: {fileID: 2263479212995894678}
   distanceToAttack: 1.4
-  maxFollowDistance: 15
+  maxFollowDistance: 35
   enemyType: 0
 --- !u!61 &2263479212995894678
 BoxCollider2D:
@@ -253,7 +253,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.38, y: 2.05}
+  m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
 --- !u!61 &6757408259138150396
 BoxCollider2D:

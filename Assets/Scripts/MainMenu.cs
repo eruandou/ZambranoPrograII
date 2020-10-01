@@ -14,14 +14,20 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private PlayersFromHighScoreRow[] hallOfInfamy;
 
     [SerializeField] private GameObject warning;
+    
+    private AudioSource audioSrc;
 
     private void Start()
     {
+        audioSrc = GetComponent<AudioSource>();
+
         ToMainMenu();
 
         DataSaver.Load();
 
         PopulateHighscoreLists();
+
+        
     }
 
     private void PopulateHighscoreLists()
@@ -71,6 +77,8 @@ public class MainMenu : MonoBehaviour
         creditsPanel.SetActive(false);
         highScorePanel.SetActive(false);
         lowScoresPanel.SetActive(false);
+        ButtonPressed();
+
     }
 
     public void ToCredits()
@@ -79,6 +87,7 @@ public class MainMenu : MonoBehaviour
         creditsPanel.SetActive(true);
         highScorePanel.SetActive(false);
         lowScoresPanel.SetActive(false);
+        ButtonPressed();
     }
 
     public void ToHighscores()
@@ -86,18 +95,21 @@ public class MainMenu : MonoBehaviour
         mainMenuPanel.SetActive(false);
         creditsPanel.SetActive(false);
         highScorePanel.SetActive(true);
+        ButtonPressed();
     }
 
     public void ToHallOfInfamy()
     {
         highScorePanel.SetActive(false);
         lowScoresPanel.SetActive(true);
+        ButtonPressed();
     }
 
     public void ToHallOfFame()
     {
         highScorePanel.SetActive(true);
         lowScoresPanel.SetActive(false);
+        ButtonPressed();
     }
     
     public void Exit()
@@ -112,7 +124,12 @@ public class MainMenu : MonoBehaviour
         lowScoresPanel.SetActive(false);
         warning.SetActive(true);
         warning.GetComponent<Warning>().warning.SetActive(true);
+        ButtonPressed();
     }
 
+    public void ButtonPressed()
+    {
+        audioSrc.Play();
+    }
 
 }

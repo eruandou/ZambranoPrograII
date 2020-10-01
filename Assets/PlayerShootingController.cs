@@ -15,6 +15,12 @@ public class PlayerShootingController : MonoBehaviour
 
     private int extraDamage;
 
+   
+
+    [SerializeField] private AudioSource audioSrc;
+
+    [SerializeField] private AudioClip shootSound, combineSound, bulletCollect;
+    
     public bool ActiveFiring { get; private set; }
 
     private void Awake()
@@ -30,6 +36,9 @@ public class PlayerShootingController : MonoBehaviour
             Bullet bullet = Instantiate(activeBullet, bulletSpawner.position, Quaternion.identity);
             bullet.direction = direction;
             bullet.ExtraDamage += extraDamage;
+            ResetAudioSource();
+            audioSrc.clip = shootSound;
+            audioSrc.Play();
 
 
         }
@@ -43,6 +52,10 @@ public class PlayerShootingController : MonoBehaviour
             Bullet bullet2;
             Bullet bullet3;
 
+            audioSrc.clip = combineSound;
+            ResetAudioSource();
+            audioSrc.Play();
+
             //Automation THIS
             bullet1 = bulletsStack.First();
             bullet2 = bulletsStack.FirstNode().nextNode.storedBullet;
@@ -55,6 +68,13 @@ public class PlayerShootingController : MonoBehaviour
         }
     }
 
+    public void CollectBulletSound()
+    {
+        audioSrc.clip = bulletCollect;
+        audioSrc.volume = 0.5f;
+        audioSrc.pitch = 0.8f;
+        audioSrc.Play();
+    }
     private IEnumerator BulletChangeOverTime()
     {
         //Preguntar alternativa para un For
@@ -352,5 +372,9 @@ public class PlayerShootingController : MonoBehaviour
     }
 
 
-
+    private void ResetAudioSource()
+    {
+        audioSrc.volume = 1;
+        audioSrc.pitch = 1;
+    }
 }

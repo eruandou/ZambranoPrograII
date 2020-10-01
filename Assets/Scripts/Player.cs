@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Color healedColor;
     [SerializeField] private Color normalColor;
 
+    [SerializeField] private AudioSource audioSrc;
+    private float timeBetweenSteps = 0.25f;
+
     private int equippedBullet;
 
     [SerializeField] private float ShootCooldownStart;
@@ -37,6 +40,7 @@ public class Player : MonoBehaviour
         lifeController.OnDead += OnDeadHandler;
         sprRend = GetComponent<SpriteRenderer>();
         playerShootingController = GetComponent<PlayerShootingController>();
+      
     }
 
 
@@ -126,8 +130,19 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("Walking", true);
             lastDirection = new Vector2(moveX, moveY);
+            timeBetweenSteps -= Time.deltaTime;
+            if (timeBetweenSteps <= 0)
+            {
+                audioSrc.Play();
+                timeBetweenSteps = 0.20f;
+            }
+
         }
-        else anim.SetBool("Walking", false);
+        else
+        {
+            anim.SetBool("Walking", false);
+            timeBetweenSteps = 0;
+        }
     }
 
     private void OnGetDamageHandler(int currentLife, int damage)
