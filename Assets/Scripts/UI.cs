@@ -99,7 +99,7 @@ public class UI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown (KeyCode.F1)) DynArrayToArray();
+         AutomaticReorganizeInventory();
     }
 
     public void UpdateBulletUI(bool isErase, int newBulletType = 0)
@@ -225,29 +225,33 @@ public class UI : MonoBehaviour
         {
             Debug.Log($"{itemarray[i].storedItem.potionType}");
         }
+        
 
-        quickSort(itemarray, 0, 2);
+        QuickSort(itemarray, 0, itemarray.Length - 1);
 
+        Debug.Log("Just organized list");
 
         for (int i = 0; i < itemsArray.HeldItems; i++)
         {
             Debug.Log($"{itemarray[i].storedItem.potionType}");
         }
+        
 
         return itemarray;
     }
 
 
-    public int Partition(ItemNode[] arr, int left, int right)
+    private int Partition(ItemNode[] arr, int left, int right)
     {
         int pivot;
         int aux = (left + right) / 2;
         pivot = arr[aux].storedItem.potionTypeValue;
-
-
-
+       
+        
+        
         while (true)
         {
+            
             while (arr[left].storedItem.potionTypeValue < pivot)
             {
                 left++;
@@ -256,11 +260,17 @@ public class UI : MonoBehaviour
             {
                 right--;
             }
+
+            
             if (left < right)
             {
-                int temp = arr[right].storedItem.potionTypeValue;
+                if (arr[left].storedItem.potionTypeValue == arr[right].storedItem.potionTypeValue)
+                {
+                    right--;
+                }
+                ItemNode temp = arr[right];
                 arr[right] = arr[left];
-                arr[left].storedItem.potionTypeValue = temp;
+                arr[left] = temp;
             }
             else
             {
@@ -268,10 +278,13 @@ public class UI : MonoBehaviour
                 // la particion en el siguiente paso del algoritmo
                 return right;
             }
-        }
+            
 
+            
+        }
+        
     }
-    public void quickSort(ItemNode[] arr, int left, int right)
+    private void QuickSort(ItemNode[] arr, int left, int right)
     {
         int pivot;
         if (left < right)
@@ -280,15 +293,37 @@ public class UI : MonoBehaviour
             if (pivot > 1)
             {
                 // mitad del lado izquierdo del vector
-                quickSort(arr, left, pivot - 1);
+                QuickSort(arr, left, pivot - 1);
             }
             if (pivot + 1 < right)
             {
                 // mitad del lado derecho del vector
-                quickSort(arr, pivot + 1, right);
+                QuickSort(arr, pivot + 1, right);
             }
         }
     }
+    
+
+    public void AutomaticReorganizeInventory()
+    {
+
+        ItemNode[] arr = DynArrayToArray();
+        itemsArray.Initialize();
+        
+        for (int i = 0; i < arr.Length; i++)
+        {
+            itemsArray.Add(arr[i].storedItem);
+        }
+
+        currentSelectedItem = 0;
+        UpdateItemUI();
+            
+
+
+
+
+    }
+
 
 }
 
