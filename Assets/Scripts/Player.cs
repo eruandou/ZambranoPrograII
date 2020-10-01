@@ -84,23 +84,29 @@ public class Player : MonoBehaviour
     private void CheckItemUsage()
     {
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Gamemanager.instance.UI.ItemsArray.HeldItems > 1)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Gamemanager.instance.UI.IHaveItems)
         {
             Gamemanager.instance.UI.ItemsToLeft();
             
         }
 
-        if (Input.GetKeyDown(KeyCode.RightShift) && Gamemanager.instance.UI.ItemsArray.HeldItems > 1)
+        if (Input.GetKeyDown(KeyCode.RightShift) && Gamemanager.instance.UI.IHaveItems)
         {
             Gamemanager.instance.UI.ItemsToRight();
            
         }
 
+        if (Input.GetKeyDown(KeyCode.R) && Gamemanager.instance.UI.IHaveItems)
+        {
+            Gamemanager.instance.UI.AutomaticReorganizeInventory();
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Gamemanager.instance.UI.UseItem(this);
         }
+
+
 
     }
 
