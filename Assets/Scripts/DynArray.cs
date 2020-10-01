@@ -215,6 +215,7 @@ public class DynArray : IDynArray
     public void Initialize()
     {
         root = null;
+        HeldItems = 0;
     }
     
 

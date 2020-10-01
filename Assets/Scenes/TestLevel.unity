@@ -2179,7 +2179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1499095506
 Transform:
   m_ObjectHideFlags: 0
@@ -3013,7 +3013,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 0}
-  playerRef: {fileID: 0}
   enemiesController: {fileID: 0}
 --- !u!1001 &1989078062
 PrefabInstance:
