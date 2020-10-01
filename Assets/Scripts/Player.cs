@@ -64,7 +64,6 @@ public class Player : MonoBehaviour
         {
             
             playerShootingController.Shoot(lastDirection.normalized);
-            Debug.Log($"Direction normalized is {lastDirection.normalized}");
             shootCooldown = 0;
         }
 
@@ -112,11 +111,11 @@ public class Player : MonoBehaviour
 
     private void CheckMovement()
     {
-        float moveX = Input.GetAxisRaw ("Horizontal") *speed * Time.deltaTime;
+        float moveX = Input.GetAxisRaw ("Horizontal");
 
         float moveXAbs = Mathf.Abs(moveX);
 
-        float moveY = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
+        float moveY = Input.GetAxisRaw("Vertical");
 
         if (Input.GetAxisRaw("Horizontal") < 0) transform.rotation = Quaternion.LookRotation(-Vector3.forward);
         else if (Input.GetAxisRaw("Horizontal") > 0) transform.rotation = Quaternion.LookRotation(Vector3.forward);
@@ -187,6 +186,9 @@ public class Player : MonoBehaviour
         speed -= extraSpeedValue;
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("I collisioned");
+    }
 
 }

@@ -87,7 +87,6 @@ public class UI : MonoBehaviour
         }
 
         itemsArray.Add(newItem);
-        Debug.Log("Got item");
         //if (itemsArray.HeldItems <=1)
         currentSelectedItem++;
             UpdateItemUI();
@@ -115,7 +114,7 @@ public class UI : MonoBehaviour
         else
         {            
             Destroy(bulletsSpawned[playerShoot.bulletsStack.StackedItems]);
-            Debug.Log("Erasing");
+
         }
     }
    
