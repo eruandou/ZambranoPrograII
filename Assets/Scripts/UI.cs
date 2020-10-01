@@ -29,6 +29,8 @@ public class UI : MonoBehaviour
 
     private int currentSelectedItem = -1;
 
+    public bool IHaveItems => itemsArray.HeldItems > 1;
+
     [SerializeField] private TextMeshProUGUI pointsText;
  
 
@@ -97,10 +99,7 @@ public class UI : MonoBehaviour
         bulletsSpawned.Clear();
     }
 
-    private void Update()
-    {
-         AutomaticReorganizeInventory();
-    }
+    
 
     public void UpdateBulletUI(bool isErase, int newBulletType = 0)
     {
