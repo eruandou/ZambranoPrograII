@@ -162,22 +162,22 @@ public class PlayerShootingController : MonoBehaviour
         }
 
 
-        if (value1Counter == 4)
+        if (value1Counter == 3)
         {
             PlusDamageBullet(1);
         }
 
-        if (value2Counter == 4)
+        if (value2Counter == 3)
         {
             KillEverythingOnScreen();
         }
 
-        if (value3Counter == 4)
+        if (value3Counter == 3)
         {
             PlusDamageBullet(2);
         }
 
-        if (value4Counter == 4)
+        if (value4Counter == 3)
         {
             EightDirectionBullet();
         }
