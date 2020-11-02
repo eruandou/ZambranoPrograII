@@ -74,7 +74,10 @@ public class LevelSelectionManager : MonoBehaviour
 
     }
 
-
+    public LevelNode WhatIsDestinyNode()
+    {
+        return destinyNode;
+    }
 
     public void SelectDestination(LevelNode selectedLevelNode)
     {
@@ -114,9 +117,12 @@ public class LevelSelectionManager : MonoBehaviour
         }
 
         ship.GetNewRoad(roadConnection);
-
     }
 
+    public bool CanSelectNewNode()
+    {
+        return !ship.ShipIsMoving;
+    }
 
     public void ReachedDestination()
     {
@@ -131,11 +137,12 @@ public class LevelSelectionManager : MonoBehaviour
 
     private void CheckUnlockState()
     {
-        bool [] levels = LevelsSaver.Load();
+        (bool [] levels,bool [] isComplete) = LevelsSaver.Load();
 
         for (int i = 1; i <= NODES_AMOUNT; i++)
         {
-            vertexDictionary[i].UnlockLevel(levels[i - 1]);           
+            vertexDictionary[i].UnlockLevel(levels[i - 1]);
+            vertexDictionary[i].ChangeCompleteness(isComplete[i - 1]);
         }
     }
 }
