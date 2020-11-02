@@ -8,29 +8,33 @@ public class LevelNode : MonoBehaviour
     private bool selectable;
     private bool unlocked;
 
-    private bool complete;
-
     private Animator anim;
     private SpriteRenderer sprRend;
-    private BoxCollider2D boxColl;
+    private BoxCollider2D boxColl; 
 
     private LevelSelectionManager lvlSelectManager;
+    private GameObject connectionToPreviousNode;
+    
 
-    public int id;
+    public int id;  
 
-    public enum CompletitionState
-    {
-        Complete,
-        NotComplete
-    }
-
-    public CompletitionState CurrentState { get; private set; }
+ 
 
     private void Awake()
     {
 
         sprRend = GetComponent<SpriteRenderer>();
         boxColl = GetComponent<BoxCollider2D>();
+
+        try
+        {
+            connectionToPreviousNode = GetComponentInChildren<ParticleSystem>().gameObject;
+            connectionToPreviousNode.SetActive(false);
+        }
+        catch (System.Exception)
+        {
+            Debug.LogError("No particle system attached");
+        }
     }
 
 
@@ -48,6 +52,9 @@ public class LevelNode : MonoBehaviour
             anim = GetComponent<Animator>();
             lvlSelectManager = FindObjectOfType<LevelSelectionManager>();
             ChangeSelectableness(true);
+            if (connectionToPreviousNode != null) connectionToPreviousNode.SetActive(true);
+             
+            
         }
         else
         {
@@ -62,43 +69,35 @@ public class LevelNode : MonoBehaviour
     }
 
     private void OnMouseDown()
-    {
-       
+    {       
         if (selectable)
         {
             ChangeSelectableness(false);
             lvlSelectManager.SelectDestination(this);
         }
-    }
-
-
-    public void ChangeCompleteness(CompletitionState newState)
-    {
-        CurrentState = newState;
-
-        switch (CurrentState)
+        else
         {
-            case CompletitionState.Complete:
-                anim.SetBool("Complete", true);
-                break;
-            case CompletitionState.NotComplete:
-                anim.SetBool("Complete", false);
-                break;
-            default:
-                break;
+           if (lvlSelectManager.CanSelectNewNode() && this == lvlSelectManager.WhatIsDestinyNode())
+            {
+                Gamemanager.instance.LoadLevel (id);                
+            }
         }
-
     }
 
+    
+    public void ChangeCompleteness(bool isComplete)
+    {
+       if (!unlocked) return;
 
+       if (isComplete)
+        {
+            anim.SetBool("Complete", true);
+        }
+        else
+        {
+            anim.SetBool("Complete", false);
 
-
-
-
-
-
-
-
-
+        }                
+    }
 
 }
