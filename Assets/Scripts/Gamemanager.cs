@@ -11,6 +11,8 @@ public class Gamemanager : MonoBehaviour
 
     public EnemiesController enemiesController;
 
+    public int lastAccessedLevel = 1;
+
     
 
     public int ActualPoints { get; private set; }
@@ -30,10 +32,15 @@ public class Gamemanager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void OnLevelLoad()
+    public void OnGameStart()
     {
         ActualPoints = 0;
         Debug.Log("On level load used");  
+    }
+
+    public void OnLevelLoad(int nodeID)
+    {
+        lastAccessedLevel = nodeID;
     }
 
     public void LoadUI(UI UI)
@@ -61,6 +68,7 @@ public class Gamemanager : MonoBehaviour
         Debug.Log("Loaded scene");
     }
 
+   
 
 
 
