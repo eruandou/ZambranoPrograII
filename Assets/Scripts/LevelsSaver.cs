@@ -9,7 +9,7 @@ public static class LevelsSaver
 
     private const string UNLOCKED_LEVELS_DATA_PATH = "/unlockedLevels.json";
 
-    public static void SaveNewUnlockedLevel(int nodeID)
+    public static void SaveNewUnlockedLevel(int nodeID, bool isComplete)
     {
         if (File.Exists(Application.dataPath + UNLOCKED_LEVELS_DATA_PATH))
         {
@@ -26,7 +26,8 @@ public static class LevelsSaver
             Debug.Log("There was NOT a file");
         }
 
-        levelNodesState.unlockStates[nodeID - 1] = true;       
+        levelNodesState.unlockStates[nodeID - 1] = true;
+        levelNodesState.completedStates[nodeID - 1] = isComplete;
 
         string modifiedJson = JsonUtility.ToJson(levelNodesState);
 
@@ -34,8 +35,8 @@ public static class LevelsSaver
 
     }
 
-
-    public static bool [] Load()
+    
+    public static (bool [], bool []) Load()
     {
 
         Debug.Log("loading");
@@ -53,7 +54,7 @@ public static class LevelsSaver
             ClearData();
         }
 
-        return levelNodesState.unlockStates;
+        return (levelNodesState.unlockStates,levelNodesState.completedStates);
       
     }
 
@@ -65,7 +66,7 @@ public static class LevelsSaver
             File.Delete(Application.dataPath + UNLOCKED_LEVELS_DATA_PATH);           
         }
 
-        SaveNewUnlockedLevel(1);
+        SaveNewUnlockedLevel(1, false);
 
     }
 
