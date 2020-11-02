@@ -11,6 +11,7 @@ public class Ship : MonoBehaviour
     private Vector2 currentGoal;
     [SerializeField] private float rotationTime;
     private float starTime;
+    public bool ShipIsMoving { get; private set; }
     
 
     private LevelSelectionManager lvlSelectionManager;
@@ -25,7 +26,8 @@ public class Ship : MonoBehaviour
     public void GetNewRoad(List <Vector2> roadConnection)
     {
         roadIndex = 1;
-        starTime = Time.time;       
+        starTime = Time.time;
+        ShipIsMoving = true;
         StartCoroutine(WalkRoad(roadConnection));
     }
 
@@ -61,7 +63,7 @@ public class Ship : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-
+        ShipIsMoving = false;
 
 
 
