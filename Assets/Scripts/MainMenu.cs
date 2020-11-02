@@ -68,7 +68,7 @@ public class MainMenu : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadScene("TestLevel");
-        if (Gamemanager.instance != null) Gamemanager.instance.OnLevelLoad();
+        if (Gamemanager.instance != null) Gamemanager.instance.OnGameStart();
     }
 
     public void ToMainMenu()
