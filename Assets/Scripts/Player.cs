@@ -204,9 +204,6 @@ public class Player : MonoBehaviour
         speed -= extraSpeedValue;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("I collisioned");
-    }
+   
 
 }

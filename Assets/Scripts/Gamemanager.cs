@@ -153,8 +153,7 @@ public class Gamemanager : MonoBehaviour
     
     public void Lose()
     {
-        SceneManager.LoadScene("GameOverScene");
-        Debug.Log("Loaded scene");
+        LoadScene("GameOverScene");       
     }
 
    

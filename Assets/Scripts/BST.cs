@@ -78,15 +78,13 @@ public class BST : IBST
         //Just because of being the first person to achieve a specific score
         //deserves to be over someone who got the same score later
         else if (node.playerInfo.score >= HSPlayer.score)
-        {
-            Debug.Log("I'm adding to the left branch");
+        {            
             AddElement(ref node.leftchild, HSPlayer);
 
         }
         else if (node.playerInfo.score < HSPlayer.score)
         {
-            AddElement(ref node.rightchild, HSPlayer);
-            Debug.Log("I'm adding to the right branch");
+            AddElement(ref node.rightchild, HSPlayer);           
         }
 
     }
@@ -100,7 +98,7 @@ public class BST : IBST
             if (node.playerInfo.score == HSPlayer.score && (node.leftchild == null) && (node.rightchild == null))
             {
                 node = null;
-                Debug.Log($"Deleted node");
+              
 
             }
 
@@ -109,7 +107,7 @@ public class BST : IBST
             {
                 node.playerInfo = this.Bigger(node.leftchild);
                 DeleteElement(ref node.leftchild, node.playerInfo);
-                Debug.Log($"Reorder left branch");
+               
             }
 
             //Reorder right side branch
@@ -117,26 +115,26 @@ public class BST : IBST
             {
                 root.playerInfo = this.Smaller(node.rightchild);
                 DeleteElement(ref node.rightchild, node.playerInfo);
-                Debug.Log($"Reorder right branch");
+             
             }
 
             //Desired deleteable node is the right children
             else if (node.playerInfo.score < HSPlayer.score)
             {
                 DeleteElement(ref node.rightchild, HSPlayer);
-                Debug.Log("Check right children");
+             
             }
 
             //Desired deleteable node is the left children
             else
             {
                 DeleteElement(ref node.leftchild, HSPlayer);
-                Debug.Log("Check left children");
+         
             }
 
         }
 
-        Debug.Log("Deleted something from Tree");
+       
 
     }
 
