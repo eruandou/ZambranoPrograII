@@ -37,9 +37,10 @@ public class EnemiesController : MonoBehaviour
         enemiesDictionary.Add(2, enemy2);
         enemiesDictionary.Add(3, enemy3);
 
+        spawnLimit = Gamemanager.instance.MaxEnemies;    
+        
         GenerateNewBatchOfEnemies();
 
-        spawnLimit = Gamemanager.instance.MaxEnemies;
 
         enemiesToSpawnQueue.OnDequeue += OnDequeueHandler;
 
@@ -56,28 +57,20 @@ public class EnemiesController : MonoBehaviour
     private IEnumerator FreezeEnemies()
     {
 
-        Debug.Log("Freezing enemies");
         Enemy[] enemies = FindObjectsOfType<Enemy>();
 
         foreach (Enemy enemy in enemies)
-        {
-            enemy.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        {           
             enemy.ChangeState(Enemy.EnemyStates.Frozen);
-            enemy.GetComponent<Animator>().enabled = false;
-            enemy.GetComponent<SpriteRenderer>().color = Color.blue;
         }
 
         yield return new WaitForSeconds(4);
 
-        Debug.Log("Defrosting enemies");
         foreach (Enemy enemy in enemies)
-        {
-            enemy.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        {           
             enemy.ChangeState(Enemy.EnemyStates.Idle);
-            enemy.GetComponent<Animator>().enabled = true;
-            enemy.GetComponent<SpriteRenderer>().color = enemy.neutralColor;
         }
-        Debug.Log("Coroutine ended succesfully");
+     
     }
 
 
