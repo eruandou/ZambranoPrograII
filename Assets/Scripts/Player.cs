@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
         lifeController.OnGetDamage -= OnGetDamageHandler;
 
         Gamemanager.instance.enemiesController.OnPlayerDeadHandler();
-        Gamemanager.instance.LoadGameOver();      
+        Gamemanager.instance.Lose();      
     }
 
 
