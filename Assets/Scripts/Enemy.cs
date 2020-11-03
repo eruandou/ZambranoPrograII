@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int maxLife;
 
     private Animator anim;
+    private SpriteRenderer sprRend;
+    private Rigidbody2D rb;   
 
     private float timerToDie;
 
@@ -48,6 +50,8 @@ public class Enemy : MonoBehaviour
         LifeController.OnDead += OnDeadHandler;
         checkNearPlayer.enabled = true;
         audioSrc = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody2D>();
+        sprRend = GetComponent<SpriteRenderer>();        
         timerToDie = dieSound.length;
         NewTimerToGrunt();
     }
@@ -75,18 +79,22 @@ public class Enemy : MonoBehaviour
             case EnemyStates.Idle:
                 anim.SetBool("Idle", true);
                 anim.SetBool("Move", false);
-                checkNearPlayer.enabled = true;
+                ChangeDetectionState(true);
 
-            
+                rb.constraints = RigidbodyConstraints2D.None;
+                anim.enabled = true;
+                sprRend.color = neutralColor;
+                
+
                 break;
 
             case EnemyStates.Patrolling:
 
                 anim.SetBool("Idle", false);
                 anim.SetBool("Move", true);
-                checkNearPlayer.enabled = false;
+                ChangeDetectionState(false);
 
-              
+
                 break;
 
             case EnemyStates.Damaged:
@@ -94,8 +102,9 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Idle", false);
                 anim.SetBool("Move", false);
                 anim.SetTrigger("Damaged");
-                checkNearPlayer.enabled = false;
-              
+                ChangeDetectionState(false);
+
+
                 break;
 
             case EnemyStates.Attacking:
@@ -112,8 +121,8 @@ public class Enemy : MonoBehaviour
                     anim.SetTrigger("Attack2");
                     AIController.Attack2();
                 }
-                checkNearPlayer.enabled = false;
-             
+                ChangeDetectionState(false);
+
                 break;
 
             case EnemyStates.Persuing:
@@ -136,6 +145,10 @@ public class Enemy : MonoBehaviour
 
                 break;
             case EnemyStates.Frozen:
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;               
+                anim.enabled = false;
+                sprRend.color = Color.blue;                
+                ChangeDetectionState(false);
 
                 break;
             default:
@@ -144,6 +157,12 @@ public class Enemy : MonoBehaviour
 
     }
 
+
+    private void ChangeDetectionState(bool isDetecting)
+    {
+        checkNearPlayer.enabled = isDetecting;
+        AIController.detectPlayerBoxEnabled = isDetecting;
+    }
 
     private void Update()
     {
