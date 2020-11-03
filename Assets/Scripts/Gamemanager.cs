@@ -15,11 +15,17 @@ public class Gamemanager : MonoBehaviour
 
     private TextAsset levelData;
 
+    private const string LEVEL_SELECT_SCENE_PATH = "LevelSelect";
+
     public int MaxEnemies { get; private set; }
+
+    private int killedEnemies;
 
     public float TimeLimit { get; private set; }
 
     public int ActualPoints { get; private set; }
+
+    private List<int> levelsToUnlock = new List<int>();
 
 
     private void Awake()
@@ -49,6 +55,41 @@ public class Gamemanager : MonoBehaviour
         lastAccessedLevel = nodeID;
     }
 
+    public void OnEnemyDie(int pointsToRecieve)
+    {
+        GetPoints(pointsToRecieve);
+        killedEnemies++;
+        if (killedEnemies >= MaxEnemies)
+        {
+            Win();
+        }
+    }
+
+    public void Win()
+    {     
+           
+        if (LevelsSaver.GetLevelCompletitionState(lastAccessedLevel) == (false))
+        {
+            //Check level as complete
+            LevelsSaver.SaveNewUnlockedLevel(lastAccessedLevel, true);
+            //Unlock next levels
+            foreach (int levelID in levelsToUnlock )
+            {
+                LevelsSaver.SaveNewUnlockedLevel(levelID, false);
+            }
+
+        }
+
+
+
+        //return to Hub
+
+        LoadScene(LEVEL_SELECT_SCENE_PATH);
+   
+    }
+
+ 
+
     public void LoadUI(UI UI)
     {
         this.UI = UI;
@@ -74,22 +115,43 @@ public class Gamemanager : MonoBehaviour
 
     public void LoadLevel (int levelToLoad)
     {
-        string[] data = levelData.text.Split(new char[] {'\n' });
+        //Clear list from before the level
+        levelsToUnlock.Clear();
 
-       string [] row = data[levelToLoad].Split(new char[] { ',' });
+        //Get data from the CSV
 
+        string[] data = levelData.text.Split(new char[] { '\n' });
+
+        string[] row = data[levelToLoad].Split(new char[] { ',' });
+
+        //Pass that data into corresponding variables
         int.TryParse(row[1], out int maxEnemies);
         MaxEnemies = maxEnemies;
 
         float.TryParse(row[2], out float timeLimit);
         TimeLimit = timeLimit;
 
-        lastAccessedLevel = levelToLoad;
+        //Add levels to unlock to list      
 
+
+        //Separate the multiple level values this could have
+        //in each cell, so that each value, individually,
+        //gets added to the corresponding list
+        string[] cell = row[3].Split(new char[] { ' ' });
+
+        for (int i = 0; i < cell.Length; i++)
+        {
+            int.TryParse(cell[i], out int level);
+            levelsToUnlock.Add(level);
+        }      
+
+        lastAccessedLevel = levelToLoad;
+        
+        //Load corresponding level
         LoadScene($"Level{levelToLoad}");
     }
     
-    public void LoadGameOver()
+    public void Lose()
     {
         SceneManager.LoadScene("GameOverScene");
         Debug.Log("Loaded scene");
