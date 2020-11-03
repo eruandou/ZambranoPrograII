@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
 
@@ -31,7 +32,11 @@ public class UI : MonoBehaviour
 
     public bool IHaveItems => itemsArray.HeldItems > 1;
 
-    [SerializeField] private TextMeshProUGUI pointsText, healthText;
+    [SerializeField] private TextMeshProUGUI pointsText;
+    [SerializeField] private Slider healthSlider;
+
+    [SerializeField] private Color safeHealthColor, cautionHealthColor, dangerHealthColor;
+    [SerializeField] private Image healthBarFill;
     
  
 
@@ -49,8 +54,6 @@ public class UI : MonoBehaviour
         playerShoot = player.GetComponent<PlayerShootingController>();
 
         UpdatePoints();
-
-
 
         for (int i = 0; i < 10; i++)
         {
@@ -205,7 +208,13 @@ public class UI : MonoBehaviour
 
     public void UpdateHealth(int currentHealth)
     {
-        healthText.text = $"health : { currentHealth}";
+        healthSlider.value = currentHealth;
+
+        if (currentHealth > 6) healthBarFill.color = safeHealthColor;
+
+        else if (currentHealth <=2) healthBarFill.color = dangerHealthColor;
+
+        else  healthBarFill.color = cautionHealthColor;
     }
 
     //Quicksort related
