@@ -19,7 +19,7 @@ public class EnemiesController : MonoBehaviour
 
 
     private int spawnedEnemies;
-    [SerializeField] private int spawnLimit;
+    private int spawnLimit;
 
     [SerializeField] private float retrieveTimeStart;
     private float retrieveTime;
@@ -38,6 +38,8 @@ public class EnemiesController : MonoBehaviour
         enemiesDictionary.Add(3, enemy3);
 
         GenerateNewBatchOfEnemies();
+
+        spawnLimit = Gamemanager.instance.MaxEnemies;
 
         enemiesToSpawnQueue.OnDequeue += OnDequeueHandler;
 
