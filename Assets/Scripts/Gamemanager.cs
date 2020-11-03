@@ -64,6 +64,7 @@ public class Gamemanager : MonoBehaviour
             Win();
         }
     }
+    
 
     public void Win()
     {     
@@ -103,7 +104,6 @@ public class Gamemanager : MonoBehaviour
     public void GetPoints(int points)
     {
         ActualPoints += points;
-        Debug.Log($"got {points} points and now I have {ActualPoints}");
         //play sound
         UI.UpdatePoints();
     }

@@ -112,12 +112,11 @@ public class EnemiesController : MonoBehaviour
 
     public void ItemToDrop(Vector2 positionToSpawn, int spawnChance)
     {
-        Debug.Log($"random value is {Random.value}");
+
 
         if (Random.value <= (float) spawnChance /100)
         {
-            Instantiate(itemsToDrop[Random.Range(0, itemsToDrop.Length)], positionToSpawn, Quaternion.identity);
-            Debug.Log("Enemy dropped an item");
+            Instantiate(itemsToDrop[Random.Range(0, itemsToDrop.Length)], positionToSpawn, Quaternion.identity);           
         }
        
     }
