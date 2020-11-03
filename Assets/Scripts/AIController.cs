@@ -20,7 +20,8 @@ public class AIController : MonoBehaviour
     [SerializeField] private float distanceToAttack;
     [SerializeField] private float maxFollowDistance;
 
-    private SpriteRenderer sprRend;  
+    private SpriteRenderer sprRend;
+    public bool detectPlayerBoxEnabled;
 
     private int selectedAttack;
 
@@ -144,11 +145,29 @@ public class AIController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
-        if (player != null && hurtBox.enabled == true)
+
+        switch (enemyType)
         {
-            if (selectedAttack == 1) player.lifeController.GetDamage(attack1Damage);
-            else player.lifeController.GetDamage(attack2Damage);
+            case EnemyType.Mushroom:
+
+                if (player != null && hurtBox.enabled == true && !detectPlayerBoxEnabled)
+                {
+                    if (selectedAttack == 1) player.lifeController.GetDamage(attack1Damage);
+                    else player.lifeController.GetDamage(attack2Damage);
+                }
+
+                break;
+            case EnemyType.FlyingDemon:
+                break;
+            case EnemyType.Skeleton:
+                break;
+            default:
+                break;
         }
+
+
+        
+        
     }
 
     public void DeactivateHurtBox()
