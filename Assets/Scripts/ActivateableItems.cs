@@ -80,9 +80,7 @@ public class ActivateableItems : MonoBehaviour
         {
             player.GetItem(this);
             isPickedUp = true;
-            player.GetComponent <PlayerShootingController>().CollectBulletSound();
-            //Destroy(this.gameObject);
-
+            player.GetComponent <PlayerShootingController>().CollectBulletSound();  
         }
     }
 
