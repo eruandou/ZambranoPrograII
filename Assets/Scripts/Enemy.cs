@@ -241,8 +241,8 @@ public class Enemy : MonoBehaviour
     }
 
     private void Die()
-    {
-        Gamemanager.instance.GetPoints(pointsToGive);
+    {       
+        Gamemanager.instance.OnEnemyDie(pointsToGive);
         Gamemanager.instance.enemiesController.ItemToDrop(this.transform.position, chanceToSpawnItem);
         Destroy(this.gameObject);
     }
