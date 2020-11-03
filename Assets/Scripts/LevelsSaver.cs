@@ -59,6 +59,13 @@ public static class LevelsSaver
     }
 
 
+    public static bool GetLevelCompletitionState(int levelID)
+    {
+        if (levelID <= 0) return false;
+        Load();
+        return (levelNodesState.completedStates[levelID - 1]);
+    }
+
     public static void ClearData()
     {
         if (File.Exists(Application.dataPath + UNLOCKED_LEVELS_DATA_PATH))
