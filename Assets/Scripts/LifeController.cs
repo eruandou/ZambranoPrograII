@@ -8,6 +8,7 @@ public class LifeController
 
     private int currentLife;
     private int maxLife;
+    private bool invincible;
 
     public event Action OnDead;
     public event Action<int, int> OnGetDamage; //int 0 = currentLife, int 1 = damage
@@ -52,7 +53,7 @@ public class LifeController
 
     public void GetDamage (int damage)
     {
-        if (invincibilityTime > InvincibilityTimeStart)
+        if (invincibilityTime > InvincibilityTimeStart && !invincible)
         {
             CurrentLife -= damage;
             invincibilityTime = 0;
@@ -60,7 +61,11 @@ public class LifeController
             OnGetDamage?.Invoke(CurrentLife, damage);
         }
     }
-
+   
+    public void ChangeInvincible (bool isInvincible)
+    {
+        invincible = isInvincible;
+    }
     public void GetHeal (int heal)
     {
         CurrentLife += heal;

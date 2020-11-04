@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
     }
 
-
+    
    public void GetItem(ActivateableItems newItem)
     {
         OnGetItem?.Invoke(newItem);
