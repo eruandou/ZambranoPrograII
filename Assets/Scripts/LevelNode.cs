@@ -33,7 +33,7 @@ public class LevelNode : MonoBehaviour
         }
         catch (System.Exception)
         {
-            Debug.LogError("No particle system attached");
+          
         }
     }
 
