@@ -189,15 +189,23 @@ public class UI : MonoBehaviour
 
     public void UseItem(Player player)
     {
-        itemsArray.Retrieve(currentSelectedItem).ActivateItem(player);
-
-        itemsArray.Remove(currentSelectedItem);
-
-        if (currentSelectedItem == itemsArray.HeldItems)
+        try
         {
-            currentSelectedItem = itemsArray.HeldItems - 1;
+            itemsArray.Retrieve(currentSelectedItem).ActivateItem(player);
+
+            itemsArray.Remove(currentSelectedItem);
+
+            if (currentSelectedItem == itemsArray.HeldItems)
+            {
+                currentSelectedItem = itemsArray.HeldItems - 1;
+            }
+            UpdateItemUI();
         }
-        UpdateItemUI();
+        catch (System.Exception)
+        {
+            Debug.LogError("No item is held");
+        }
+        
 
     }
 
