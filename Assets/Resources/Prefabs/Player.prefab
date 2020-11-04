@@ -56,7 +56,7 @@ MonoBehaviour:
   damagedColor: {r: 1, g: 0, b: 0, a: 0.81960785}
   healedColor: {r: 0, g: 0.7462217, b: 0.8867924, a: 0.85490197}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
-  audioSrc: {fileID: 0}
+  audioSrc: {fileID: 964053400328315267}
   ShootCooldownStart: 0.2
 --- !u!212 &964053401420265712
 SpriteRenderer:
@@ -140,9 +140,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawner: {fileID: 6377410667780835689}
   timeBetweenBulletChange: 1.5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
   audioSrc: {fileID: 964053400328315268}
   shootSound: {fileID: 8300000, guid: a5661210b9eb51b4bb0955e332410e78, type: 3}
   combineSound: {fileID: 8300000, guid: c134bf6bd85561b4b938c913b97b57c9, type: 3}
+  bulletCollect: {fileID: 8300000, guid: 5ab8fc664ca4d604f820e255005a664a, type: 3}
 --- !u!50 &8846949230190232451
 Rigidbody2D:
   serializedVersion: 4
