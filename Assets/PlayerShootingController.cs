@@ -14,12 +14,17 @@ public class PlayerShootingController : MonoBehaviour
     [SerializeField] private float timeBetweenBulletChange;
 
     private int extraDamage;
+    private bool eightDirectionShooting;
 
-   
+    [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField] private AudioSource audioSrc;
 
     [SerializeField] private AudioClip shootSound, combineSound, bulletCollect;
+
+    private int bulletsToShoot = 1;
+
+    private int value1Counter, value2Counter, value3Counter, value4Counter;
     
     public bool ActiveFiring { get; private set; }
 
@@ -33,10 +38,34 @@ public class PlayerShootingController : MonoBehaviour
     {
         if (activeBullet != null)
         {
-            Bullet bullet = Instantiate(activeBullet, bulletSpawner.position, Quaternion.identity);
-            bullet.direction = direction;
-            bullet.ExtraDamage += extraDamage;
             ResetAudioSource();
+
+            Vector2 directionModifier;
+            
+            if (eightDirectionShooting)
+            {
+;
+                for (int i = 0; i < 8; i++)
+                {
+                    Bullet bullet = Instantiate(activeBullet, bulletSpawner.position, Quaternion.identity);
+                    float x = Mathf.Cos(i * (Mathf.PI / 4));
+                    float y = Mathf.Sin(i * (Mathf.PI / 4));
+                    bullet.direction = new Vector2(x, y);
+                }
+            }
+
+            else
+            {
+                for (int i = 0; i < bulletsToShoot; i++)
+                {
+                    Bullet bullet = Instantiate(activeBullet, bulletSpawner.position, Quaternion.identity);
+                    directionModifier = new Vector2(Mathf.Cos(i * (Mathf.PI / 4)), Mathf.Sin(i * (Mathf.PI / 4)));
+                    bullet.direction = (direction + i * directionModifier).normalized;
+                    bullet.ExtraDamage += extraDamage;
+                }
+            }
+                 
+           
             audioSrc.clip = shootSound;
             audioSrc.Play();
 
@@ -86,24 +115,45 @@ public class PlayerShootingController : MonoBehaviour
             bulletsStack.Unstack();          
         }
 
-        activeBullet = null;
-        ActiveFiring = false;
-        Gamemanager.instance.UI.ClearList();
+        ResetFiring();
+        
 
     }
 
 
+    private void ResetFiring()
+    {
+        activeBullet = null;
+        ActiveFiring = false;
+        bulletsToShoot = 1;
+        eightDirectionShooting = false;
+        extraDamage = 0;
+        Gamemanager.instance.UI.ClearList();
+    }
 
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            //Test
+            Debug.Log($"{extraDamage} is extra damage");
+            FreezeEnemies();
+            Debug.Log($"{extraDamage} is new extra damage");
+
+        }
+    }
     private void CombineBullets(Bullet bullet1, Bullet bullet2, Bullet bullet3)
     {
         int bullet1Value = bullet1.bulletNumber;
         int bullet2Value = bullet2.bulletNumber;
         int bullet3Value = bullet3.bulletNumber;
 
-        int value1Counter = 0;
-        int value2Counter = 0;
-        int value3Counter = 0;
-        int value4Counter = 0;
+         value1Counter = 0;
+         value2Counter = 0;
+         value3Counter = 0;
+         value4Counter = 0;
 
         //JSON read this
 
@@ -164,7 +214,7 @@ public class PlayerShootingController : MonoBehaviour
 
         if (value1Counter == 3)
         {
-            PlusDamageBullet(1);
+           PlusDamageBullet(1);
         }
 
         if (value2Counter == 3)
@@ -188,7 +238,7 @@ public class PlayerShootingController : MonoBehaviour
         {
             if (value2Counter == 1)
             {
-                GiveMovePotion(1);
+                GivePotion(PotionDispatcher.PotionRequired.move,1);
             }
 
             if (value3Counter == 1)
@@ -197,8 +247,8 @@ public class PlayerShootingController : MonoBehaviour
             }
 
             if (value4Counter == 1)
-            {
-                GiveFreezingPotion(1);
+            {              
+                GivePotion(PotionDispatcher.PotionRequired.freeze, 1);
             }
         }
 
@@ -207,17 +257,18 @@ public class PlayerShootingController : MonoBehaviour
             
             if (value1Counter == 1)
             {
+                //Make it different from freeze potion
                 FreezeEnemies();
             }
 
             if (value3Counter == 1)
             {
-                GiveMovePotion(2);
+                GivePotion(PotionDispatcher.PotionRequired.move, 2);
             }
 
             if (value4Counter == 1)
             {
-                GiveFreezingPotion(2);
+                GivePotion(PotionDispatcher.PotionRequired.freeze, 2);
             }
 
 
@@ -232,7 +283,7 @@ public class PlayerShootingController : MonoBehaviour
 
             if (value2Counter == 1)
             {
-                GiveHealPotion(2);
+                GivePotion(PotionDispatcher.PotionRequired.heal, 2);
             }
 
             if (value4Counter == 1)
@@ -287,57 +338,77 @@ public class PlayerShootingController : MonoBehaviour
                 Filter4();
             }
         }
-
-
-
-
     }
-
 
     private void EightDirectionBullet()
     {
-        Debug.Log("Shooting eigth directional bullets");
+        eightDirectionShooting = true;        
     }
 
-    private void PlusDamageBullet(int extraDamage)
+
+
+    private void PlusDamageBullet(int exDamage)
     {
-        Debug.Log($"I added {extraDamage} damage to bullets");
-    }
+        this.extraDamage = exDamage;       
 
+        Debug.Log("Extra damage");
+    }
 
     private void KillEverythingOnScreen()
     {
-        Debug.Log("Kill everything on screen");
+        Collider2D[] enemies = Physics2D.OverlapBoxAll(this.transform.position, new Vector2(20, 20), 0, enemyLayer);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().LifeController.GetDamage(100);
+        }
+
+        Debug.Log("Kill in screen");
     }
 
-    private void GiveMovePotion(int amount)
+    private void GivePotion(PotionDispatcher.PotionRequired potion, int amount)
     {
-        Debug.Log($"Give {amount} move potions");
+        for (int i = 0; i < amount; i++)
+        {
+            if (PotionDispatcher.Instance != null) Instantiate(PotionDispatcher.Instance.GetPotion(potion), this.transform.position, Quaternion.identity);
+            //ActivateableItems pot = PotionDispatcher.Instance.GetPotion(potion).GetComponent<ActivateableItems>();
+            //Debug.Log($"{pot.potionTypeValue} is potion type");
+
+        }
+
+        Debug.Log($"Got potions {amount} and potion type {potion}");
     }
 
     private void TwiBullets()
     {
-        Debug.Log("Shooting TwiBullets");
+        bulletsToShoot = 2;
+        Debug.Log("TwiBullets");
     }
 
-    private void GiveFreezingPotion(int amount)
-    {
-        Debug.Log($"Give {amount} freezing potions");
-    }
+   
 
     private void FreezeEnemies()
     {
+       FindObjectOfType<EnemiesController>().FreezeEnemiesActivator();
         Debug.Log("Freeze enemies");
     }
 
     private void TriBullets()
     {
-        Debug.Log("Shooting Tribullets");
+        bulletsToShoot = 3;
+        Debug.Log("tribullet");
     }
 
-    private void Invulnerability()
+    private IEnumerator Invulnerability()
     {
-        Debug.Log("I'm invulnerable");
+        Debug.Log("invulnerable");
+
+        LifeController lc = GetComponentInParent<Player>().lifeController;
+        lc.ChangeInvincible(true);
+
+        yield return new WaitForSeconds(5);
+
+        lc.ChangeInvincible(false);
+
     }
 
 
@@ -361,10 +432,7 @@ public class PlayerShootingController : MonoBehaviour
         Debug.Log("Filter 4");
     }
 
-    private void GiveHealPotion (int amount)
-    {
-        Debug.Log($"Give {amount} healing potions");
-    }
+    
 
     private void Drunk()
     {
