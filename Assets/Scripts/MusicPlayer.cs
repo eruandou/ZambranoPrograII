@@ -10,17 +10,8 @@ public class MusicPlayer : MonoBehaviour
     private AudioSource currentAudioSource;
     private AudioSource nextAudioSource;
 
-    public AudioSource CurrentAudioSource
-    {
-        get
-        {
-            return currentAudioSource;
-        }
-        private set
-        {
-            currentAudioSource = value;
-        }
-    }
+    public bool OnTransition { get; private set; }
+  
     [SerializeField] private float stepTime;
     [SerializeField] private float volumeChangeOverTime;
 
@@ -66,25 +57,36 @@ public class MusicPlayer : MonoBehaviour
         audioSrc[trackToStop].Stop();
     }
 
+    public void StartCrossFade(int newTrackToPlay, float newTargetedVolume)
+    {
+        if (audioSrc[newTrackToPlay] == currentAudioSource) return;
 
+        StartCoroutine(CrossFade(newTrackToPlay, newTargetedVolume));
+    }
 
     public IEnumerator CrossFade(int newTrackToPlay, float newTargetedVolume)
     {
+        OnTransition = true;
+
         //Check new track to play and check volume = 0
         nextAudioSource = audioSrc[newTrackToPlay];
         nextAudioSource.volume = 0;
 
+        if (nextAudioSource == currentAudioSource)
+        {
+            
+        }
 
         //With a while loop, decrease volume of old audio and increment the new audio
         while (nextAudioSource.volume < newTargetedVolume && currentAudioSource.volume >= 0)
         {
             currentAudioSource.volume -= volumeChangeOverTime;
             nextAudioSource.volume += volumeChangeOverTime;
-
-
+            Debug.Log($"current audio volume {currentAudioSource.volume} and next audio {nextAudioSource.volume} and vol change is {volumeChangeOverTime}");
             yield return new WaitForSeconds(stepTime);
         }
 
+       
         //Make sure the old audio is = 0
 
         currentAudioSource.volume = 0;
@@ -97,9 +99,15 @@ public class MusicPlayer : MonoBehaviour
 
         //Better use percentages later
 
+        OnTransition = false;
+
+
     }
 
-
+    public void BackToMainMusic()
+    {
+        StartCrossFade(0, 1);
+    }
 
 
 
