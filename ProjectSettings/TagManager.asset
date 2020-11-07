@@ -10,6 +10,7 @@ TagManager:
   - Player Bullets
   - Spawn Points
   - Enemy Spawners
+  - MusicPlayer
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - EnemySpawners
   - SpawnPoints
   - Walls
-  - 
+  - PostProcess
   - 
   - 
   - 
