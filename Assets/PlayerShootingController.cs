@@ -16,6 +16,8 @@ public class PlayerShootingController : MonoBehaviour
     private int extraDamage;
     private bool eightDirectionShooting;
 
+    [SerializeField] private GameObject potion1, potion2, potion3;
+
     [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField] private AudioSource audioSrc;
@@ -28,10 +30,13 @@ public class PlayerShootingController : MonoBehaviour
     
     public bool ActiveFiring { get; private set; }
 
+    private ScreenEffectManager screenEffectManager;
+
     private void Awake()
     {
         bulletsStack = new Stacker();
         bulletsStack.InitializeStack();
+        screenEffectManager = FindObjectOfType<ScreenEffectManager>();
     }
 
     public void Shoot(Vector2 direction)
@@ -133,17 +138,7 @@ public class PlayerShootingController : MonoBehaviour
 
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            //Test
-            Debug.Log($"{extraDamage} is extra damage");
-            FreezeEnemies();
-            Debug.Log($"{extraDamage} is new extra damage");
-
-        }
-    }
+    
     private void CombineBullets(Bullet bullet1, Bullet bullet2, Bullet bullet3)
     {
         int bullet1Value = bullet1.bulletNumber;
@@ -302,7 +297,7 @@ public class PlayerShootingController : MonoBehaviour
 
             if (value2Counter == 1)
             {
-                Drunk();
+                GivePotion(PotionDispatcher.PotionRequired.heal, 1);
             }
 
             if (value3Counter == 1)
@@ -317,17 +312,17 @@ public class PlayerShootingController : MonoBehaviour
         {
             if (value2Counter ==1 && value3Counter == 1)
             {
-                Filter1();
+                GameBoyFilter();
             }
 
             if (value2Counter ==1 && value4Counter == 1)
             {
-                Filter2();
+                AstigmatismFilter();
             }
 
             if (value3Counter ==1 && value4Counter == 1)
             {
-                Filter3();
+                LSDTripFilter();
             }
         }
 
@@ -335,7 +330,7 @@ public class PlayerShootingController : MonoBehaviour
         {
            if (value3Counter == 1 && value4Counter == 1)
             {
-                Filter4();
+                Drunk();
             }
         }
     }
@@ -369,13 +364,12 @@ public class PlayerShootingController : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            if (PotionDispatcher.Instance != null) Instantiate(PotionDispatcher.Instance.GetPotion(potion), this.transform.position, Quaternion.identity);
-            //ActivateableItems pot = PotionDispatcher.Instance.GetPotion(potion).GetComponent<ActivateableItems>();
-            //Debug.Log($"{pot.potionTypeValue} is potion type");
-
+            if (PotionDispatcher.Instance != null)
+            {
+                Instantiate(PotionDispatcher.Instance.GetPotion(PotionDispatcher.PotionRequired.freeze),this.transform.position, Quaternion.identity);
+            }
         }
 
-        Debug.Log($"Got potions {amount} and potion type {potion}");
     }
 
     private void TwiBullets()
@@ -401,6 +395,7 @@ public class PlayerShootingController : MonoBehaviour
     private IEnumerator Invulnerability()
     {
         Debug.Log("invulnerable");
+        //Works, Give visual feedback
 
         LifeController lc = GetComponentInParent<Player>().lifeController;
         lc.ChangeInvincible(true);
@@ -412,31 +407,25 @@ public class PlayerShootingController : MonoBehaviour
     }
 
 
-    private void Filter1()
+    private void GameBoyFilter()
     {
-        Debug.Log("Filter 1");
+        screenEffectManager.EnableFilter(0);
     }
 
-    private void Filter2()
+    private void AstigmatismFilter()
     {
-        Debug.Log("Filter 2");
+        screenEffectManager.EnableFilter(1);
     }
 
-    private void Filter3()
+    private void LSDTripFilter()
     {
-        Debug.Log("Filter 3");
-    }
+        screenEffectManager.EnableFilter(2);
+    }   
 
-    private void Filter4()
-    {
-        Debug.Log("Filter 4");
-    }
-
-    
 
     private void Drunk()
     {
-        Debug.Log("Drunk effect");
+        screenEffectManager.EnableFilter(3);
     }
 
 
@@ -445,4 +434,23 @@ public class PlayerShootingController : MonoBehaviour
         audioSrc.volume = 1;
         audioSrc.pitch = 1;
     }
+
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GivePotion(PotionDispatcher.PotionRequired.freeze, 2);
+        }
+    }
+
+
+
+
+
+
+
+
+
 }
