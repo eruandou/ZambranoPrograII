@@ -9,7 +9,7 @@ public class NormalScreenEffect : MonoBehaviour, IScreenEffect
     private PostProcessVolume effect;
     [SerializeField] private int trackToPlay;
     private bool active;
-
+    private AudioSource audioSrc;
     public int TrackToPlay
     {
         get
@@ -27,6 +27,7 @@ public class NormalScreenEffect : MonoBehaviour, IScreenEffect
     private void Awake()
     {
         effect = GetComponent<PostProcessVolume>();
+        audioSrc = GetComponent<AudioSource>();
     }
 
 
@@ -35,8 +36,8 @@ public class NormalScreenEffect : MonoBehaviour, IScreenEffect
     {
         effect.enabled = true;
         active = true;
+        audioSrc.Play();
         Gamemanager.instance.musicPlayer.StartCrossFade(TrackToPlay, 1);
-        Debug.Log($"Activate");
     }
     public void DeActivate()
     {

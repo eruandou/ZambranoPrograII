@@ -14,6 +14,7 @@ public class LSDScreenEffect : MonoBehaviour, IScreenEffect
     private FloatParameter y;
     [SerializeField] private float stepTime = 0.05f;
     private bool leftX, leftY;
+    private AudioSource audioSrc;
 
 
     [SerializeField] private int trackToPlay = 2;
@@ -40,14 +41,15 @@ public class LSDScreenEffect : MonoBehaviour, IScreenEffect
         x = new FloatParameter();
         y = new FloatParameter();
         x.value = lens.intensityX;
-        y.value = lens.intensityY;      
+        y.value = lens.intensityY;
+        audioSrc = GetComponent<AudioSource>();
     }
 
     public void Activate()
     {
         ppVol.enabled = true;
         active = true;
-
+        audioSrc.Play();
         Gamemanager.instance.musicPlayer.StartCrossFade(TrackToPlay, 1);
         StartCoroutine(MakeScreenGoCrazy());
     }

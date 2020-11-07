@@ -12,6 +12,7 @@ public class DrunkScreenEffect : MonoBehaviour, IScreenEffect
     private bool active;
     private FloatParameter hueShift;
     [SerializeField] private float stepTime = 0.05f;
+    private AudioSource audioSrc;
 
 
     [SerializeField] private int trackToPlay = 3;
@@ -32,7 +33,8 @@ public class DrunkScreenEffect : MonoBehaviour, IScreenEffect
     {
         ppVol = GetComponent<PostProcessVolume>();
         colorGradingDrunk = ppVol.profile.settings[2] as ColorGrading;
-        hueShift = new FloatParameter();       
+        hueShift = new FloatParameter();
+        audioSrc = GetComponent<AudioSource>();
     }
 
 
@@ -44,6 +46,7 @@ public class DrunkScreenEffect : MonoBehaviour, IScreenEffect
         hueShift.value = 0;
         colorGradingDrunk.hueShift.value = hueShift.value;
         active = true;
+        audioSrc.Play();
         Gamemanager.instance.musicPlayer.StartCrossFade(TrackToPlay, 1);
         StartCoroutine(DrunkScreenProgretion());
     }
