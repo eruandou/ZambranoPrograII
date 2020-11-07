@@ -46,9 +46,9 @@ public class LSDScreenEffect : MonoBehaviour, IScreenEffect
     public void Activate()
     {
         ppVol.enabled = true;
-        active = true;      
-        
-        StartCoroutine(Gamemanager.instance.musicPlayer.CrossFade(TrackToPlay, 1));
+        active = true;
+
+        Gamemanager.instance.musicPlayer.StartCrossFade(TrackToPlay, 1);
         StartCoroutine(MakeScreenGoCrazy());
     }
 
@@ -110,7 +110,7 @@ public class LSDScreenEffect : MonoBehaviour, IScreenEffect
     {
         ppVol.enabled = false;
         active = false;
-        if (Gamemanager.instance.musicPlayer.CurrentAudioSource.volume != 1) StartCoroutine(Gamemanager.instance.musicPlayer.CrossFade(0, 1));
+        Gamemanager.instance.musicPlayer.BackToMainMusic();
     }
 
 

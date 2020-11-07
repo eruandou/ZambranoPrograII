@@ -44,7 +44,7 @@ public class DrunkScreenEffect : MonoBehaviour, IScreenEffect
         hueShift.value = 0;
         colorGradingDrunk.hueShift.value = hueShift.value;
         active = true;
-        StartCoroutine(Gamemanager.instance.musicPlayer.CrossFade(TrackToPlay, 1));
+        Gamemanager.instance.musicPlayer.StartCrossFade(TrackToPlay, 1);
         StartCoroutine(DrunkScreenProgretion());
     }
 
@@ -66,7 +66,7 @@ public class DrunkScreenEffect : MonoBehaviour, IScreenEffect
     {
         ppVol.enabled = false;
         active = false;
-        if (Gamemanager.instance.musicPlayer.CurrentAudioSource.volume != 1) StartCoroutine(Gamemanager.instance.musicPlayer.CrossFade(0, 1));
+        Gamemanager.instance.musicPlayer.BackToMainMusic();
     }
 
 

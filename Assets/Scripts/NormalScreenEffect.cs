@@ -35,13 +35,14 @@ public class NormalScreenEffect : MonoBehaviour, IScreenEffect
     {
         effect.enabled = true;
         active = true;
-        StartCoroutine(Gamemanager.instance.musicPlayer.CrossFade(TrackToPlay, 1));
+        Gamemanager.instance.musicPlayer.StartCrossFade(TrackToPlay, 1);
+        Debug.Log($"Activate");
     }
     public void DeActivate()
     {
         effect.enabled = false;
         active = false;
-        if (Gamemanager.instance.musicPlayer.CurrentAudioSource.volume != 1) StartCoroutine(Gamemanager.instance.musicPlayer.CrossFade(0, 1));
+        Gamemanager.instance.musicPlayer.BackToMainMusic();
     }
 
     
