@@ -7,7 +7,6 @@ public class ScreenEffectManager : MonoBehaviour
 {
 
     private IScreenEffect[] filters;
-    //public GameObject[] filterObjects;  
     [SerializeField] private float timeToDisableEffect;
     private bool canEnableAnotherFilter;
 
@@ -20,12 +19,7 @@ public class ScreenEffectManager : MonoBehaviour
         filters[2] = FindObjectOfType<LSDScreenEffect>();
         filters[3] = FindObjectOfType<DrunkScreenEffect>();
 
-        for (int i = 0; i < filters.Length; i++)
-        {
-            Debug.Log($"{filters[i].TrackToPlay} is the track to play");
-        }
-
-
+        canEnableAnotherFilter = true;
 
         for (int i = 0; i < filters.Length; i++)
         {
@@ -36,15 +30,14 @@ public class ScreenEffectManager : MonoBehaviour
 
     public void EnableFilter(int filterToEnable)
     {
-        if (!canEnableAnotherFilter) return;
+        if (!canEnableAnotherFilter || Gamemanager.instance.musicPlayer.OnTransition ) return;
 
         for (int i = 0; i < filters.Length; i++)
         {
             if (i == filterToEnable)
             {
                 filters[i].Activate();
-                StartCoroutine(DisableEffectAfterTime(filterToEnable));
-                canEnableAnotherFilter = false;
+                StartCoroutine(DisableEffectAfterTime(filterToEnable));                
                 Debug.Log($"Enabled filter {i}");              
             }
             else
@@ -53,6 +46,7 @@ public class ScreenEffectManager : MonoBehaviour
                 Debug.Log($"Disabled filter {i}");
             }
         }
+        canEnableAnotherFilter = false;
     }
 
     private IEnumerator DisableEffectAfterTime(int filterToDisableLater)
