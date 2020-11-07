@@ -37,13 +37,11 @@ public class ScreenEffectManager : MonoBehaviour
             if (i == filterToEnable)
             {
                 filters[i].Activate();
-                StartCoroutine(DisableEffectAfterTime(filterToEnable));                
-                Debug.Log($"Enabled filter {i}");              
+                StartCoroutine(DisableEffectAfterTime(filterToEnable));
             }
             else
             {
                 filters[i].DeActivate();
-                Debug.Log($"Disabled filter {i}");
             }
         }
         canEnableAnotherFilter = false;
