@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class PotionDispatcher: MonoBehaviour
+public class PotionDispatcher
 {
 
     private GameObject moveP, healP, freezeP;
 
-    private static PotionDispatcher instance;
-      
+    //[SerializeField] private GameObject movePotion, HealPotion, FreezePotion;
+
+
+    public static PotionDispatcher instance;
 
     //Create singleton
     public static PotionDispatcher Instance
@@ -20,11 +22,13 @@ public class PotionDispatcher: MonoBehaviour
             }
             return instance;
         }
+       private set
+        {
+            instance = value;
+        }
 
        
     }
-
-    
 
     public enum PotionRequired
     {
@@ -33,28 +37,33 @@ public class PotionDispatcher: MonoBehaviour
         freeze
     }
 
+    public PotionRequired PotionToGiveBack { get; set; }
+
     public PotionDispatcher()
     {
         freezeP = Resources.Load("Prefabs/Items/Freeze Potion") as GameObject;
-        healP = Resources.Load("Prefabs/Items/Heal Potion") as GameObject;    
+        healP = Resources.Load("Prefabs/Items/Heal Potion") as GameObject;
         moveP = Resources.Load("Prefabs/Items/Move Potion") as GameObject;
-        
     }
 
-    public GameObject GetPotion(PotionRequired potionType)
+    public GameObject GetPotion(PotionRequired potionToGiveBack)
     {
-        switch (potionType)
+        switch (potionToGiveBack)
         {
             case PotionRequired.move:
-                return moveP; 
+                Debug.Log($"{moveP.name}");
+                return moveP;
 
             case PotionRequired.heal:
+                Debug.Log($"{healP.name}");
                 return healP;
 
             case PotionRequired.freeze:
+                Debug.Log($"{freezeP.name}");
                 return freezeP;
 
             default:
+                Debug.Log($"Nothing");
                 return moveP;
         }
     }
