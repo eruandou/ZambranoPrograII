@@ -76,7 +76,7 @@ public class ActivateableItems : MonoBehaviour
     {
         Player player = collision.GetComponent<Player>();
 
-        if (player != null && !isPickedUp)
+        if (player != null && !isPickedUp && Gamemanager.instance.UI.ItemsArray.CanPickUp)
         {
             player.GetItem(this);
             isPickedUp = true;

@@ -30,6 +30,8 @@ public class DynArray : IDynArray
     public int HeldItems { get; private set; }
     public int ItemLimit { get; private set; } = 10;
 
+    public bool CanPickUp => HeldItems < ItemLimit;
+
     private ItemNode emptyNode;
 
 
