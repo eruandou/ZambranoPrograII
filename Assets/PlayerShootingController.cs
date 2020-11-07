@@ -441,7 +441,13 @@ public class PlayerShootingController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            GivePotion(PotionDispatcher.PotionRequired.freeze, 2);
+            Debug.Log($"s");
+            AstigmatismFilter();
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GameBoyFilter();
         }
     }
 
