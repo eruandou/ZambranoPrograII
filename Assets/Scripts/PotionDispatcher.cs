@@ -26,8 +26,6 @@ public class PotionDispatcher
         {
             instance = value;
         }
-
-       
     }
 
     public enum PotionRequired
@@ -37,7 +35,6 @@ public class PotionDispatcher
         freeze
     }
 
-    public PotionRequired PotionToGiveBack { get; set; }
 
     public PotionDispatcher()
     {
@@ -51,19 +48,15 @@ public class PotionDispatcher
         switch (potionToGiveBack)
         {
             case PotionRequired.move:
-                Debug.Log($"{moveP.name}");
                 return moveP;
 
-            case PotionRequired.heal:
-                Debug.Log($"{healP.name}");
+            case PotionRequired.heal:                
                 return healP;
 
-            case PotionRequired.freeze:
-                Debug.Log($"{freezeP.name}");
+            case PotionRequired.freeze:               
                 return freezeP;
 
-            default:
-                Debug.Log($"Nothing");
+            default:             
                 return moveP;
         }
     }
