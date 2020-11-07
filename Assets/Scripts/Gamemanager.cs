@@ -9,6 +9,8 @@ public class Gamemanager : MonoBehaviour
 
     public UI UI;
 
+    public MusicPlayer musicPlayer;
+
     public EnemiesController enemiesController;
 
     public int lastAccessedLevel = 1;
@@ -95,7 +97,11 @@ public class Gamemanager : MonoBehaviour
     {
         this.UI = UI;
     }
-
+    
+    public void LoadMusicPlayer (MusicPlayer musicPlayer)
+    {
+        this.musicPlayer = musicPlayer;
+    }
     public void LoadEnemiesController (EnemiesController eC)
     {
         this.enemiesController = eC;
