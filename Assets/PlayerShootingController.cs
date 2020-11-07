@@ -437,26 +437,4 @@ public class PlayerShootingController : MonoBehaviour
 
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Debug.Log($"s");
-            AstigmatismFilter();
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            GameBoyFilter();
-        }
-    }
-
-
-
-
-
-
-
-
-
 }

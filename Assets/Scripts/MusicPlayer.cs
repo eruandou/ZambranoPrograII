@@ -82,7 +82,6 @@ public class MusicPlayer : MonoBehaviour
         {
             currentAudioSource.volume -= volumeChangeOverTime;
             nextAudioSource.volume += volumeChangeOverTime;
-            Debug.Log($"current audio volume {currentAudioSource.volume} and next audio {nextAudioSource.volume} and vol change is {volumeChangeOverTime}");
             yield return new WaitForSeconds(stepTime);
         }
 
