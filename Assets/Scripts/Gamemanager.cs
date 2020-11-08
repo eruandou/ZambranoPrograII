@@ -11,6 +11,8 @@ public class Gamemanager : MonoBehaviour
 
     public MusicPlayer musicPlayer;
 
+    public int chanceToSpawnEnemy1, chanceToSpawnEnemy2, chanceToSpawnEnemy3;
+
     public EnemiesController enemiesController;
 
     public int lastAccessedLevel = 1;
@@ -27,7 +29,7 @@ public class Gamemanager : MonoBehaviour
     private int enemiesLeft;
 
     public int TimeLimit { get; private set; }
-    
+
     public int ActualPoints { get; private set; }
 
     private List<int> levelsToUnlock = new List<int>();
@@ -46,16 +48,16 @@ public class Gamemanager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
-        levelData = Resources.Load<TextAsset>("LevelData");        
+        levelData = Resources.Load<TextAsset>("LevelData");
     }
 
     public void OnGameStart()
     {
         ActualPoints = 0;
-        Debug.Log("On level load used");  
+        Debug.Log("On level load used");
     }
 
-   
+
 
     public void OnEnemyDie(int pointsToRecieve)
     {
@@ -67,8 +69,8 @@ public class Gamemanager : MonoBehaviour
             Win();
         }
     }
-    
-   
+
+
 
     public void Win()
     {
@@ -79,33 +81,30 @@ public class Gamemanager : MonoBehaviour
             //Check level as complete
             LevelsSaver.SaveNewUnlockedLevel(lastAccessedLevel, true);
             //Unlock next levels
-            foreach (int levelID in levelsToUnlock )
+            foreach (int levelID in levelsToUnlock)
             {
                 LevelsSaver.SaveNewUnlockedLevel(levelID, false);
             }
 
         }
-
-
-
         //return to Hub
 
         LoadScene(LEVEL_SELECT_SCENE_PATH);
-   
+
     }
 
-   
+
 
     public void LoadUI(UI UI)
     {
         this.UI = UI;
     }
-    
-    public void LoadMusicPlayer (MusicPlayer musicPlayer)
+
+    public void LoadMusicPlayer(MusicPlayer musicPlayer)
     {
         this.musicPlayer = musicPlayer;
     }
-    public void LoadEnemiesController (EnemiesController eC)
+    public void LoadEnemiesController(EnemiesController eC)
     {
         this.enemiesController = eC;
     }
@@ -122,7 +121,7 @@ public class Gamemanager : MonoBehaviour
         SceneManager.LoadSceneAsync(levelToLoad);
     }
 
-    public void LoadLevel (int levelToLoad)
+    public void LoadLevel(int levelToLoad)
     {
         //Clear list from before the level
         levelsToUnlock.Clear();
@@ -138,8 +137,7 @@ public class Gamemanager : MonoBehaviour
         enemiesLeft = MaxEnemies;
 
         int.TryParse(row[2], out int timeLimit);
-        TimeLimit = timeLimit;
-        Debug.Log($"Time limit is {TimeLimit}");
+        TimeLimit = timeLimit;       
 
         //Add levels to unlock to list      
 
@@ -153,16 +151,22 @@ public class Gamemanager : MonoBehaviour
         {
             int.TryParse(cell[i], out int level);
             levelsToUnlock.Add(level);
-        }      
+        }
+
+        int.TryParse(row[4], out chanceToSpawnEnemy1);
+        int.TryParse(row[5], out chanceToSpawnEnemy2);
+        int.TryParse(row[6], out chanceToSpawnEnemy3);
+
+     
 
         lastAccessedLevel = levelToLoad;
 
-        this.enabled = true;       
+        this.enabled = true;
 
         //Load corresponding level        
         LoadScene($"Level{levelToLoad}");
     }
-    
+       
     public void Lose()
     {
         this.enabled = false;
