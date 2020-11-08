@@ -39371,12 +39371,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116800654}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d482ba23c708ba4c8f575009d60ef1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 0}
+  musicPlayer: {fileID: 0}
   enemiesController: {fileID: 0}
   lastAccessedLevel: 1
 --- !u!4 &1116800656
@@ -49196,7 +49197,7 @@ GameObject:
   - component: {fileID: 1489401094}
   - component: {fileID: 1489401093}
   m_Layer: 19
-  m_Name: Old Look
+  m_Name: Old Look Filter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49214,7 +49215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: f8868e242ee9f9a4b9da959eb83f823a, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 04f69b0f5e61f774a99974900958a847, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -49240,7 +49241,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1489401092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.1922965, y: -16.694496, z: -60.78125}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
