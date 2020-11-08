@@ -79,7 +79,7 @@ public class LevelNode : MonoBehaviour
         {
            if (lvlSelectManager.CanSelectNewNode() && this == lvlSelectManager.WhatIsDestinyNode())
             {
-                Gamemanager.instance.LoadLevel (id);                
+               Gamemanager.instance.LoadLevel (id);                
             }
         }
     }
