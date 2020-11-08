@@ -37,8 +37,14 @@ public class UI : MonoBehaviour
 
     [SerializeField] private Color safeHealthColor, cautionHealthColor, dangerHealthColor;
     [SerializeField] private Image healthBarFill;
-    
- 
+
+    [SerializeField] private TextMeshProUGUI timeLeftText;
+    [SerializeField] private GameObject enemiesLeft;
+    private TextMeshProUGUI enemiesLeftText;
+    private Animator enemiesLeftAnim;
+
+
+
 
     private void Start()
     {
@@ -64,6 +70,9 @@ public class UI : MonoBehaviour
         playerShoot.bulletsStack.OnStack += OnStackHandler;
         playerShoot.bulletsStack.OnUnStack += OnUnstackhandler;
         player.OnGetItem += OnGetItemHandler;
+
+        enemiesLeftText = enemiesLeft.GetComponent<TextMeshProUGUI>();
+        enemiesLeftAnim = enemiesLeft.GetComponent<Animator>();
 
     }
 
@@ -155,6 +164,16 @@ public class UI : MonoBehaviour
 
     }
 
+    public void UpdateTimeUI(int timeLeft)
+    {
+        timeLeftText.text = timeLeft.ToString();
+    }
+
+    public void UpdateEnemiesLeft (int remainingEnemies)
+    {
+        this.enemiesLeftText.text = remainingEnemies.ToString() + " enemies left";
+        this.enemiesLeftAnim.SetTrigger("ValueChanged");
+    }
 
     public void ItemsToLeft()
     {
