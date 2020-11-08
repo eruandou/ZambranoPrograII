@@ -38,15 +38,11 @@ public static class LevelsSaver
     
     public static (bool [], bool []) Load()
     {
-
-        Debug.Log("loading");
         if (File.Exists(Application.dataPath + UNLOCKED_LEVELS_DATA_PATH))
         {
             string json = File.ReadAllText(Application.dataPath + UNLOCKED_LEVELS_DATA_PATH);
 
             levelNodesState = JsonUtility.FromJson<SerializableArrayOfLevelNodes>(json);
-
-            Debug.Log("tried getting the list");
         }
         else
         {
