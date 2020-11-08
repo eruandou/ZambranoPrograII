@@ -13,6 +13,10 @@ public class EnemiesController : MonoBehaviour
     [SerializeField] private Enemy enemy2;
     [SerializeField] private Enemy enemy3;
 
+    public int chancesEnemy1;
+    public int chancesEnemy2;
+    public int chancesEnemy3;
+
     private Dictionary <int,Enemy> enemiesDictionary = new Dictionary <int, Enemy>();
 
     [SerializeField] private ActivateableItems[] itemsToDrop;
@@ -37,7 +41,10 @@ public class EnemiesController : MonoBehaviour
         enemiesDictionary.Add(2, enemy2);
         enemiesDictionary.Add(3, enemy3);
 
-        spawnLimit = Gamemanager.instance.MaxEnemies;    
+        spawnLimit = Gamemanager.instance.MaxEnemies;
+        chancesEnemy1 = Gamemanager.instance.chanceToSpawnEnemy1;
+        chancesEnemy2 = Gamemanager.instance.chanceToSpawnEnemy2;
+        chancesEnemy3 = Gamemanager.instance.chanceToSpawnEnemy3;
         
         GenerateNewBatchOfEnemies();
 
@@ -76,9 +83,27 @@ public class EnemiesController : MonoBehaviour
 
     public void GenerateNewBatchOfEnemies()
     {
+        int maxChances = chancesEnemy1 + chancesEnemy2 + chancesEnemy3;
+        int chance;
+        int enemyToSpawn;
+        int realChance2 = chancesEnemy1 + chancesEnemy2;
+        int realChance3 = realChance2 + chancesEnemy3;
+
         for (int i = 0; i < spawnLimit; i++)
-        {           
-            enemiesToSpawnQueue.Enqueue(enemiesDictionary[Random.Range(1, 4)]);
+        {
+           chance = Random.Range(0, maxChances);
+
+
+
+            //Ask how to automate this or make it more generic
+
+            if (chance < chancesEnemy1) enemyToSpawn = 1;
+            else if (chance >= chancesEnemy1 && chance < realChance2) enemyToSpawn = 2;
+            else  enemyToSpawn = 3;
+
+            Debug.Log($"gonna spawn enemy {enemyToSpawn}");
+
+            enemiesToSpawnQueue.Enqueue(enemiesDictionary[enemyToSpawn]);
             spawnedEnemies++;            
         }
     }
