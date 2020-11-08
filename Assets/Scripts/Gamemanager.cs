@@ -17,14 +17,17 @@ public class Gamemanager : MonoBehaviour
 
     private TextAsset levelData;
 
+    //private bool activeLevel;
+    private float tempTime;
+
     private const string LEVEL_SELECT_SCENE_PATH = "LevelSelect";
 
     public int MaxEnemies { get; private set; }
 
-    private int killedEnemies;
+    private int enemiesLeft;
 
-    public float TimeLimit { get; private set; }
-
+    public int TimeLimit { get; private set; }
+    
     public int ActualPoints { get; private set; }
 
     private List<int> levelsToUnlock = new List<int>();
@@ -52,25 +55,25 @@ public class Gamemanager : MonoBehaviour
         Debug.Log("On level load used");  
     }
 
-    public void OnLevelLoad(int nodeID)
-    {
-        lastAccessedLevel = nodeID;
-    }
+   
 
     public void OnEnemyDie(int pointsToRecieve)
     {
         GetPoints(pointsToRecieve);
-        killedEnemies++;
-        if (killedEnemies >= MaxEnemies)
+        enemiesLeft--;
+        UI.UpdateEnemiesLeft(enemiesLeft);
+        if (enemiesLeft <= 0)
         {
             Win();
         }
     }
     
+   
 
     public void Win()
-    {     
-           
+    {
+        this.enabled = false;
+
         if (LevelsSaver.GetLevelCompletitionState(lastAccessedLevel) == (false))
         {
             //Check level as complete
@@ -91,7 +94,7 @@ public class Gamemanager : MonoBehaviour
    
     }
 
- 
+   
 
     public void LoadUI(UI UI)
     {
@@ -123,7 +126,6 @@ public class Gamemanager : MonoBehaviour
     {
         //Clear list from before the level
         levelsToUnlock.Clear();
-
         //Get data from the CSV
 
         string[] data = levelData.text.Split(new char[] { '\n' });
@@ -133,9 +135,11 @@ public class Gamemanager : MonoBehaviour
         //Pass that data into corresponding variables
         int.TryParse(row[1], out int maxEnemies);
         MaxEnemies = maxEnemies;
+        enemiesLeft = MaxEnemies;
 
-        float.TryParse(row[2], out float timeLimit);
+        int.TryParse(row[2], out int timeLimit);
         TimeLimit = timeLimit;
+        Debug.Log($"Time limit is {TimeLimit}");
 
         //Add levels to unlock to list      
 
@@ -152,18 +156,37 @@ public class Gamemanager : MonoBehaviour
         }      
 
         lastAccessedLevel = levelToLoad;
-        
-        //Load corresponding level
+
+        this.enabled = true;       
+
+        //Load corresponding level        
         LoadScene($"Level{levelToLoad}");
     }
     
     public void Lose()
     {
+        this.enabled = false;
         LoadScene("GameOverScene");       
     }
 
-   
 
+    private void Update()
+    {       
+        tempTime += Time.deltaTime;
+        if (tempTime >= 1)
+        {
+            tempTime = 0;
+            TimeLimit--;
+            Debug.Log(TimeLimit + " is time limit");
+            if (TimeLimit <= 0)
+            {
+                Lose();
+            }
+
+            UI.UpdateTimeUI(TimeLimit);
+
+        }
+    }
 
 
 }
