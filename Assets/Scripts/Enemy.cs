@@ -17,7 +17,8 @@ public class Enemy : MonoBehaviour
 
     public bool isActiveFramesOnAttack2 ;
 
-    [SerializeField] private int pointsToGive;
+    [SerializeField] private int pointsToGive, extraTime;
+  
 
     public AIController AIController { get; private set; }
 
@@ -242,7 +243,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {       
-        Gamemanager.instance.OnEnemyDie(pointsToGive);
+        Gamemanager.instance.OnEnemyDie(pointsToGive, extraTime);
         Gamemanager.instance.enemiesController.ItemToDrop(this.transform.position, chanceToSpawnItem);
         Destroy(this.gameObject);
     }
