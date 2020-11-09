@@ -108,9 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4421c909da251d40ae2d89a7370bc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLife: 10
+  maxLife: 15
   isActiveFramesOnAttack2: 0
   pointsToGive: 300
+  extraTime: 3
   stunTimeStart: 0.7
   checkNearPlayer: {fileID: 2263479212958550043}
   outOfAttackTimeStart: 1
@@ -228,6 +229,7 @@ MonoBehaviour:
   hurtBox: {fileID: 2263479212995894678}
   distanceToAttack: 1.4
   maxFollowDistance: 35
+  detectPlayerBoxEnabled: 0
   enemyType: 0
 --- !u!61 &2263479212995894678
 BoxCollider2D:

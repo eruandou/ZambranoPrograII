@@ -59,10 +59,12 @@ public class Gamemanager : MonoBehaviour
 
 
 
-    public void OnEnemyDie(int pointsToRecieve)
+    public void OnEnemyDie(int pointsToRecieve, int extraTime)
     {
         GetPoints(pointsToRecieve);
         enemiesLeft--;
+        TimeLimit += extraTime;
+        UI.UpdateTimeUI(TimeLimit);
         UI.UpdateEnemiesLeft(enemiesLeft);
         if (enemiesLeft <= 0)
         {
