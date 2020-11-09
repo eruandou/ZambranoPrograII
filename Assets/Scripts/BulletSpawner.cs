@@ -10,8 +10,6 @@ public class BulletSpawner : MonoBehaviour
 
     [SerializeField] private float maxSpawnTime, minSpawnTime;
 
-    [SerializeField] private Transform[] spawnPoints;
-
     [SerializeField] private float maxY, maxX, minY, minX;
 
     private float nextSpawnTime;
