@@ -111,6 +111,7 @@ MonoBehaviour:
   maxLife: 10
   isActiveFramesOnAttack2: 0
   pointsToGive: 100
+  extraTime: 2
   stunTimeStart: 0.7
   checkNearPlayer: {fileID: 438670555}
   outOfAttackTimeStart: 1
@@ -228,6 +229,7 @@ MonoBehaviour:
   hurtBox: {fileID: 433865046}
   distanceToAttack: 1
   maxFollowDistance: 20
+  detectPlayerBoxEnabled: 0
   enemyType: 0
 --- !u!61 &433865046
 BoxCollider2D:
