@@ -366,7 +366,7 @@ public class PlayerShootingController : MonoBehaviour
         {
             if (PotionDispatcher.Instance != null)
             {
-                Instantiate(PotionDispatcher.Instance.GetPotion(PotionDispatcher.PotionRequired.freeze),this.transform.position, Quaternion.identity);
+                Instantiate(PotionDispatcher.Instance.GetPotion(potion),this.transform.position, Quaternion.identity);
             }
         }
 

@@ -12,14 +12,20 @@ public class EnemiesController : MonoBehaviour
     [SerializeField] private Enemy enemy1;
     [SerializeField] private Enemy enemy2;
     [SerializeField] private Enemy enemy3;
+    [SerializeField] private Enemy enemy4;
+    [SerializeField] private Enemy enemy5;
+    [SerializeField] private Enemy enemy6;
 
     public int chancesEnemy1;
     public int chancesEnemy2;
     public int chancesEnemy3;
+    public int chancesEnemy4;
+    public int chancesEnemy5;
+    public int chancesEnemy6;
 
     private Dictionary <int,Enemy> enemiesDictionary = new Dictionary <int, Enemy>();
 
-    [SerializeField] private ActivateableItems[] itemsToDrop;
+    public GameObject[] itemsToDrop;
 
 
     private int spawnedEnemies;
@@ -40,11 +46,24 @@ public class EnemiesController : MonoBehaviour
         enemiesDictionary.Add(1, enemy1);
         enemiesDictionary.Add(2, enemy2);
         enemiesDictionary.Add(3, enemy3);
+        enemiesDictionary.Add(4, enemy4);
+        enemiesDictionary.Add(5, enemy5);
+        enemiesDictionary.Add(6, enemy6);
 
         spawnLimit = Gamemanager.instance.MaxEnemies;
         chancesEnemy1 = Gamemanager.instance.chanceToSpawnEnemy1;
         chancesEnemy2 = Gamemanager.instance.chanceToSpawnEnemy2;
         chancesEnemy3 = Gamemanager.instance.chanceToSpawnEnemy3;
+        chancesEnemy4 = Gamemanager.instance.chanceToSpawnEnemy4;
+        chancesEnemy5 = Gamemanager.instance.chanceToSpawnEnemy5;
+        chancesEnemy6 = Gamemanager.instance.chanceToSpawnEnemy6;
+
+
+        itemsToDrop = new GameObject[3];
+        itemsToDrop[0] = PotionDispatcher.Instance.GetPotion(PotionDispatcher.PotionRequired.heal);
+        itemsToDrop[1] = PotionDispatcher.Instance.GetPotion(PotionDispatcher.PotionRequired.freeze);
+        itemsToDrop[2] = PotionDispatcher.Instance.GetPotion(PotionDispatcher.PotionRequired.move);
+
         
         GenerateNewBatchOfEnemies();
 
@@ -83,11 +102,14 @@ public class EnemiesController : MonoBehaviour
 
     public void GenerateNewBatchOfEnemies()
     {
-        int maxChances = chancesEnemy1 + chancesEnemy2 + chancesEnemy3;
+        int maxChances = chancesEnemy1 + chancesEnemy2 + chancesEnemy3 + chancesEnemy4 + chancesEnemy5 + chancesEnemy6;
         int chance;
         int enemyToSpawn;
         int realChance2 = chancesEnemy1 + chancesEnemy2;
         int realChance3 = realChance2 + chancesEnemy3;
+        int realChance4 = realChance3 + chancesEnemy4;
+        int realChance5 = realChance4 + chancesEnemy5;
+        int realChance6 = realChance5 + chancesEnemy6;
 
         for (int i = 0; i < spawnLimit; i++)
         {
@@ -97,9 +119,14 @@ public class EnemiesController : MonoBehaviour
 
             //Ask how to automate this or make it more generic
 
+            //refactor
+
             if (chance < chancesEnemy1) enemyToSpawn = 1;
             else if (chance >= chancesEnemy1 && chance < realChance2) enemyToSpawn = 2;
-            else  enemyToSpawn = 3;
+            else if (chance >= realChance2 && chance < realChance3) enemyToSpawn = 3;
+            else if (chance >= realChance3 && chance < realChance4) enemyToSpawn = 4;
+            else if (chance >= realChance4 && chance < realChance5) enemyToSpawn = 5;
+            else enemyToSpawn = 6;
 
             Debug.Log($"gonna spawn enemy {enemyToSpawn}");
 
