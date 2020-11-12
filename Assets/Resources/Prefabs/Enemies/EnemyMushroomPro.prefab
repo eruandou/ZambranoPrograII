@@ -57,6 +57,7 @@ MonoBehaviour:
   extraTime: 4
   stunTimeStart: 0.6
   checkNearPlayer: {fileID: 5331460374562867457}
+  collisionBox: {fileID: 816131948953755366}
   outOfAttackTimeStart: 1
   chanceToSpawnItem: 51
   dieSound: {fileID: 8300000, guid: 10fd7e720f9ebb441a9f7a1551afd945, type: 3}

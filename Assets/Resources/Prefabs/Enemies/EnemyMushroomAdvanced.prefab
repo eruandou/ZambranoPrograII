@@ -114,6 +114,7 @@ MonoBehaviour:
   extraTime: 3
   stunTimeStart: 0.7
   checkNearPlayer: {fileID: 2263479212958550043}
+  collisionBox: {fileID: 6757408259138150396}
   outOfAttackTimeStart: 1
   chanceToSpawnItem: 40
   dieSound: {fileID: 8300000, guid: 10fd7e720f9ebb441a9f7a1551afd945, type: 3}
@@ -295,7 +296,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -5883339822988416616, guid: 98d607ddcbb16c9429a863b354369877,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

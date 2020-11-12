@@ -47,9 +47,17 @@ MonoBehaviour:
   enemy1: {fileID: 5519543543022779722, guid: 29fe82631562f61478559e2287a9b7b7, type: 3}
   enemy2: {fileID: 6048375814090252682, guid: ec63dfd4b9310154896aef3dc5d31ed8, type: 3}
   enemy3: {fileID: 388573376205938832, guid: d939ee102d3c5cb4a897fbe612243484, type: 3}
+  enemy4: {fileID: 773275026708919001, guid: 4d7c8140a3ff1144f9e5e41ca8f4e003, type: 3}
+  enemy5: {fileID: 5864837049380175331, guid: 83e51b0ca18347b48ae9b4d24d2d4287, type: 3}
+  enemy6: {fileID: 4543826462835213136, guid: 71c1662ce32b55b4f81b85dac3279660, type: 3}
+  chancesEnemy1: 0
+  chancesEnemy2: 0
+  chancesEnemy3: 0
+  chancesEnemy4: 0
+  chancesEnemy5: 0
+  chancesEnemy6: 0
   itemsToDrop:
-  - {fileID: 7823099236519026624, guid: 2df353bfb677494428b77c77b872fb56, type: 3}
-  - {fileID: 1858232651277830527, guid: 55ddb55f7236e964f8552a5e9ffa980a, type: 3}
-  - {fileID: 374853263, guid: 107ebc0ca14c4694898ff478ccc2ac27, type: 3}
-  spawnLimit: 60
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   retrieveTimeStart: 0.3

@@ -25,7 +25,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float stunTimeStart;
     private float stunTime;
 
-    [SerializeField] private BoxCollider2D checkNearPlayer;
+    [SerializeField] private BoxCollider2D checkNearPlayer,collisionBox;
+    
 
     [SerializeField] private float outOfAttackTimeStart;
     private float outOfAttackTime;
@@ -140,6 +141,7 @@ public class Enemy : MonoBehaviour
 
                 anim.SetTrigger("Death");
                 checkNearPlayer.enabled = false;
+                collisionBox.enabled = false;
                 audioSrc.clip = dieSound;
                 audioSrc.pitch = 1;
                 audioSrc.Play();
