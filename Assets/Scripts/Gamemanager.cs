@@ -11,7 +11,8 @@ public class Gamemanager : MonoBehaviour
 
     public MusicPlayer musicPlayer;
 
-    public int chanceToSpawnEnemy1, chanceToSpawnEnemy2, chanceToSpawnEnemy3;
+    public int chanceToSpawnEnemy1, chanceToSpawnEnemy2, chanceToSpawnEnemy3,chanceToSpawnEnemy4,
+        chanceToSpawnEnemy5,chanceToSpawnEnemy6;
 
     public EnemiesController enemiesController;
 
@@ -158,6 +159,10 @@ public class Gamemanager : MonoBehaviour
         int.TryParse(row[4], out chanceToSpawnEnemy1);
         int.TryParse(row[5], out chanceToSpawnEnemy2);
         int.TryParse(row[6], out chanceToSpawnEnemy3);
+        int.TryParse(row[7], out chanceToSpawnEnemy4);
+        int.TryParse(row[8], out chanceToSpawnEnemy5);
+        int.TryParse(row[9], out chanceToSpawnEnemy6);
+        
 
      
 
