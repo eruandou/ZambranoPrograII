@@ -39944,6 +39944,9 @@ MonoBehaviour:
   chanceToSpawnEnemy1: 0
   chanceToSpawnEnemy2: 0
   chanceToSpawnEnemy3: 0
+  chanceToSpawnEnemy4: 0
+  chanceToSpawnEnemy5: 0
+  chanceToSpawnEnemy6: 0
   enemiesController: {fileID: 0}
   lastAccessedLevel: 1
 --- !u!4 &1116800656
@@ -49768,7 +49771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1489401093
 MonoBehaviour:
   m_ObjectHideFlags: 0

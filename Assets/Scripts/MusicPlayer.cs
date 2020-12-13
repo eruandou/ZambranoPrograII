@@ -44,7 +44,6 @@ public class MusicPlayer : MonoBehaviour
     {
         audioSrc[trackToPlay].Play();
         currentAudioSource = audioSrc[trackToPlay];
-
     }
 
     public void StopMusic()
