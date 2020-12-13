@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class EnemySpawners : MonoBehaviour
     [SerializeField] private float internalSpawnTimeMax;
     [SerializeField] private float internalSpawnTimeMin;
 
+    public event Action<Enemy> OnEnemySpawn;
+
     private float internalSpawnTime;
 
 
@@ -19,6 +22,7 @@ public class EnemySpawners : MonoBehaviour
 
         //Get enemies controller reference
         enemiesController = FindObjectOfType<EnemiesController>();
+        enemiesController.SuscribeToEnemySpawner(this);
         //Get reference of all spawn points in the scene
         spawnPoints = FindObjectsOfType <SpawnPoints>();
     }
@@ -27,9 +31,10 @@ public class EnemySpawners : MonoBehaviour
     private void Spawn()
     {
         //Instantiate dequeued item, in random spawnpoint
-        SpawnPoints nextSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        SpawnPoints nextSpawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
 
-        Instantiate(enemiesController.enemiesToSpawnQueue.First(true), nextSpawnPoint.transform.position, Quaternion.identity);
+        Enemy enemy =  Instantiate(enemiesController.enemiesToSpawnQueue.First(true), nextSpawnPoint.transform.position, Quaternion.identity);
+        OnEnemySpawn?.Invoke(enemy);
 
         nextSpawnPoint.ActivatePortal();
         
@@ -54,7 +59,7 @@ public class EnemySpawners : MonoBehaviour
 
     private void GetNewSpawnTime()
     {
-        internalSpawnTime = Random.Range(internalSpawnTimeMin, internalSpawnTimeMax);
+        internalSpawnTime = UnityEngine.Random.Range(internalSpawnTimeMin, internalSpawnTimeMax);
     }
 
 

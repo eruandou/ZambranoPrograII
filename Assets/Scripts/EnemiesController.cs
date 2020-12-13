@@ -23,9 +23,13 @@ public class EnemiesController : MonoBehaviour
     public int chancesEnemy5;
     public int chancesEnemy6;
 
+
+
     private Dictionary <int,Enemy> enemiesDictionary = new Dictionary <int, Enemy>();
 
     public GameObject[] itemsToDrop;
+
+    private List<Enemy> alreadySpawnedEnemies = new List<Enemy>();
 
 
     private int spawnedEnemies;
@@ -36,7 +40,10 @@ public class EnemiesController : MonoBehaviour
 
     public bool CanRetrieve => retrieveTime <= 0 && !enemiesToSpawnQueue.IsQueueEmpty();
 
-
+    public void SuscribeToEnemySpawner(EnemySpawners eSpawn)
+    {
+        eSpawn.OnEnemySpawn += OnEnemySpawnHandler;
+    }
 
     private void Start()
     {
@@ -73,7 +80,10 @@ public class EnemiesController : MonoBehaviour
         playerRef = FindObjectOfType<Player>();
     }
 
-
+    private void OnEnemySpawnHandler(Enemy enemy)
+    {
+        alreadySpawnedEnemies.Add(enemy);
+    }
 
     public void FreezeEnemiesActivator()
     {
@@ -82,22 +92,35 @@ public class EnemiesController : MonoBehaviour
 
     private IEnumerator FreezeEnemies()
     {
-
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
-
-        foreach (Enemy enemy in enemies)
+        foreach (Enemy enemy in alreadySpawnedEnemies)
         {           
             enemy.ChangeState(Enemy.EnemyStates.Frozen);
         }
 
         yield return new WaitForSeconds(4);
 
-        foreach (Enemy enemy in enemies)
+        foreach (Enemy enemy in alreadySpawnedEnemies)
         {           
             enemy.ChangeState(Enemy.EnemyStates.Idle);
         }
      
     }
+
+    public Enemy ReturnClosestEnemy()
+    {
+        Enemy closestEnemy = alreadySpawnedEnemies[0];
+
+        foreach (Enemy enemy in alreadySpawnedEnemies)
+        {
+            if  (Vector2.Distance (enemy.transform.position, playerRef.transform.position) < Vector2.Distance(closestEnemy.transform.position, playerRef.transform.position))
+            {
+                closestEnemy = enemy;
+            }
+        }
+
+        return closestEnemy;
+    }
+
 
 
     public void GenerateNewBatchOfEnemies()
@@ -113,7 +136,7 @@ public class EnemiesController : MonoBehaviour
 
         for (int i = 0; i < spawnLimit; i++)
         {
-           chance = Random.Range(0, maxChances);
+           chance = UnityEngine.Random.Range(0, maxChances);
 
 
 

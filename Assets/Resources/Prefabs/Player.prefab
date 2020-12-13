@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1036907378}
   - component: {fileID: 964053400328315267}
   - component: {fileID: 964053400328315268}
+  - component: {fileID: 7882293713960196339}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -140,6 +141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawner: {fileID: 6377410667780835689}
   timeBetweenBulletChange: 1.5
+  potion1: {fileID: 0}
+  potion2: {fileID: 0}
+  potion3: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -388,6 +392,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7882293713960196339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964053401420265711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c823f60cb215a034e981b2c89a0def86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radarUi: {fileID: 0}
+  radarPointer: {fileID: 0}
 --- !u!1 &3461010647737449777
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,8 +472,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1747186269
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300022, guid: a0e7f1167efba544bb8d6e3198ae44f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

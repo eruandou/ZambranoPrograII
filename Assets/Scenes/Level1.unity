@@ -559,7 +559,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 76bfc098bc10792439798a53fce6dc98, type: 3}
   - {fileID: 8300000, guid: c770ce44fddde1f429783f72bb9e5dad, type: 3}
   - {fileID: 8300000, guid: 877abc5adefa71a40b9faeff3dd97087, type: 3}
-  - {fileID: 8300000, guid: 7b8d4426a6c5f334094f8ac481b7fc57, type: 3}
+  - {fileID: 8300000, guid: 6dbaf29c325848c46bc9fab5fc176a51, type: 3}
   - {fileID: 8300000, guid: 0394b5388278d8848b6f95c8ec782b88, type: 3}
   stepTime: 0.05
   volumeChangeOverTime: 0.04
@@ -18583,16 +18583,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1858232651581974439, guid: 55ddb55f7236e964f8552a5e9ffa980a,
         type: 3}
-    - target: {fileID: 1092411058648133851, guid: 59aaa66826313ab4eb2c3b9ed0c4ceda,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1747186269
-      objectReference: {fileID: 0}
-    - target: {fileID: 1092411058648133851, guid: 59aaa66826313ab4eb2c3b9ed0c4ceda,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59aaa66826313ab4eb2c3b9ed0c4ceda, type: 3}
 --- !u!1001 &1415554310322076887
