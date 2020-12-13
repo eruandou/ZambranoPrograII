@@ -11,6 +11,7 @@ TagManager:
   - Spawn Points
   - Enemy Spawners
   - MusicPlayer
+  - Radar
   layers:
   - Default
   - TransparentFX
