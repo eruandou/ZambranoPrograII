@@ -3,109 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class LSDScreenEffect : MonoBehaviour, IScreenEffect 
+public class LSDScreenEffect : MonoBehaviour, IScreenEffect
 {
-    private LensDistortion lens;
+
+    private ColorGrading colorGradingDrunk;
+    public PostProcessProfile ppProf;
     private PostProcessVolume ppVol;
-    [SerializeField] private float stepXModifier;
-    [SerializeField] private float stepYModifier;
     private bool active;
-    private FloatParameter x;
-    private FloatParameter y;
+    private FloatParameter hueShift;
     [SerializeField] private float stepTime = 0.05f;
-    private bool leftX, leftY;
     private AudioSource audioSrc;
 
 
-    [SerializeField] private int trackToPlay = 2;
+    [SerializeField] private int trackToPlay = 3;
     public int TrackToPlay
     {
         get
         {
-          return trackToPlay;
+            return trackToPlay;
         }
 
         set
         {
             trackToPlay = value;
         }
-
     }
-    
-
 
     private void Awake()
     {
         ppVol = GetComponent<PostProcessVolume>();
-        lens = ppVol.profile.settings[0] as LensDistortion;      
-        x = new FloatParameter();
-        y = new FloatParameter();
-        x.value = lens.intensityX;
-        y.value = lens.intensityY;
+        colorGradingDrunk = ppVol.profile.settings[2] as ColorGrading;
+        hueShift = new FloatParameter();
         audioSrc = GetComponent<AudioSource>();
     }
+
+
+
 
     public void Activate()
     {
         ppVol.enabled = true;
+        hueShift.value = 0;
+        colorGradingDrunk.hueShift.value = hueShift.value;
         active = true;
         audioSrc.Play();
         Gamemanager.instance.musicPlayer.StartCrossFade(TrackToPlay, 1);
-        StartCoroutine(MakeScreenGoCrazy());
+        StartCoroutine(DrunkScreenProgretion());
     }
 
-    private IEnumerator MakeScreenGoCrazy()
+    private IEnumerator DrunkScreenProgretion()
     {
 
         while (active)
         {
-           
-
-            if (leftX)
-            {
-                x.value -= Time.deltaTime * stepXModifier;
-                
-            }
-            else
-            {
-                x.value += Time.deltaTime * stepXModifier;
-            }
-
-           if (x.value <= 0 || x.value >= 1)
-            {
-                leftX = !leftX;
-            }
-
-            if (leftY)
-            {
-                y.value -= Time.deltaTime * stepYModifier;
-
-            }
-            else
-            {
-                y.value += Time.deltaTime * stepYModifier;
-            }
-
-            if (y.value <= 0 || y.value >= 1)
-            {
-                leftY = !leftY;
-            }
-            
-
-            lens.intensityX.value = x.value;
-            lens.intensityY.value = y.value;
-
-            Debug.Log($"x is {x.value} and y is {y.value}");
-
+            hueShift.value += 1;
+            if (hueShift.value > 180) hueShift.value = -180;
+            colorGradingDrunk.hueShift.value = hueShift.value;
             yield return new WaitForSeconds(stepTime);
         }
-
-
-
-
-
-        
     }
+
 
 
     public void DeActivate()
@@ -114,6 +71,8 @@ public class LSDScreenEffect : MonoBehaviour, IScreenEffect
         active = false;
         Gamemanager.instance.musicPlayer.BackToMainMusic();
     }
+
+
 
 
 

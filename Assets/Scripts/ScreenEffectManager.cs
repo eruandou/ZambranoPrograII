@@ -16,8 +16,8 @@ public class ScreenEffectManager : MonoBehaviour
         filters = new IScreenEffect[4];
         filters[0] = GameObject.Find("GBLookFilter").GetComponent<NormalScreenEffect>();
         filters[1] = GameObject.Find("Astigmatism").GetComponent<NormalScreenEffect>();
-        filters[2] = FindObjectOfType<LSDScreenEffect>();
-        filters[3] = FindObjectOfType<DrunkScreenEffect>();
+        filters[2] = FindObjectOfType<DrunkScreen>();
+        filters[3] = FindObjectOfType<LSDScreenEffect>();
 
         canEnableAnotherFilter = true;
 
