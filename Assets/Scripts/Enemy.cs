@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class Enemy : MonoBehaviour
     public LifeController LifeController { get; private set; }
 
     [SerializeField] private int maxLife;
+
+    public event Action<Enemy> OnDie;
 
     private Animator anim;
     private SpriteRenderer sprRend;
@@ -82,7 +86,7 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Idle", true);
                 anim.SetBool("Move", false);
                 ChangeDetectionState(true);
-
+                AIController.DeactivateHurtBox();
                 rb.constraints = RigidbodyConstraints2D.None;
                 anim.enabled = true;
                 sprRend.color = neutralColor;
@@ -244,8 +248,9 @@ public class Enemy : MonoBehaviour
     }
 
     private void Die()
-    {       
-        Gamemanager.instance.OnEnemyDie(pointsToGive, extraTime);
+    {
+        OnDie?.Invoke(this);
+        Gamemanager.instance.OnEnemyDieHandler(pointsToGive, extraTime);
         Gamemanager.instance.enemiesController.ItemToDrop(this.transform.position, chanceToSpawnItem);
         Destroy(this.gameObject);
     }

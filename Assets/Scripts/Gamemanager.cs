@@ -60,7 +60,7 @@ public class Gamemanager : MonoBehaviour
 
 
 
-    public void OnEnemyDie(int pointsToRecieve, int extraTime)
+    public void OnEnemyDieHandler(int pointsToRecieve, int extraTime)
     {
         GetPoints(pointsToRecieve);
         enemiesLeft--;

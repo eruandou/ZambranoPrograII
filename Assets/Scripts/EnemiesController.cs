@@ -83,6 +83,12 @@ public class EnemiesController : MonoBehaviour
     private void OnEnemySpawnHandler(Enemy enemy)
     {
         alreadySpawnedEnemies.Add(enemy);
+        enemy.OnDie += OnEnemyDieHandler;
+    }
+
+    private void OnEnemyDieHandler (Enemy enemy)
+    {
+        alreadySpawnedEnemies.Remove(enemy);
     }
 
     public void FreezeEnemiesActivator()
