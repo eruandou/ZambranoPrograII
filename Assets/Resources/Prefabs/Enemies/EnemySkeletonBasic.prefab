@@ -52,7 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLife: 6
-  isActiveFramesOnAttack2: 1
   pointsToGive: 300
   extraTime: 2
   stunTimeStart: 0.5
@@ -152,7 +151,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &773275026708918981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +167,7 @@ MonoBehaviour:
   speed: 4.5
   attack1Damage: 1
   attack2Damage: 1
-  spores: {fileID: 0}
+  Projectile: {fileID: 0}
   enemyLevel: 1
   hurtBox: {fileID: 5053709560864984773}
   distanceToAttack: 1
@@ -240,7 +239,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.65
+  m_Volume: 0.388
   m_Pitch: 1
   Loop: 0
   Mute: 0

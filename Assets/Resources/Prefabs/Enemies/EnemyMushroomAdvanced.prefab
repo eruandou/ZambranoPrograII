@@ -109,7 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLife: 15
-  isActiveFramesOnAttack2: 0
   pointsToGive: 300
   extraTime: 3
   stunTimeStart: 0.7
@@ -209,7 +208,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6048375814090252694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,7 +224,8 @@ MonoBehaviour:
   speed: 3
   attack1Damage: 2
   attack2Damage: 1
-  spores: {fileID: 6241615823624043508, guid: e3b3ab6da0e684f4ab57bc632348c817, type: 3}
+  Projectile: {fileID: 6241615823624043504, guid: e3b3ab6da0e684f4ab57bc632348c817,
+    type: 3}
   enemyLevel: 1
   hurtBox: {fileID: 2263479212995894678}
   distanceToAttack: 1.4
