@@ -12,7 +12,7 @@ public class Gamemanager : MonoBehaviour
     public MusicPlayer musicPlayer;
 
     public int chanceToSpawnEnemy1, chanceToSpawnEnemy2, chanceToSpawnEnemy3,chanceToSpawnEnemy4,
-        chanceToSpawnEnemy5,chanceToSpawnEnemy6;
+        chanceToSpawnEnemy5,chanceToSpawnEnemy6, chanceToSpawnEnemy7, chanceToSpawnEnemy8, chanceToSpawnEnemy9;
 
     public EnemiesController enemiesController;
 
@@ -162,8 +162,11 @@ public class Gamemanager : MonoBehaviour
         int.TryParse(row[7], out chanceToSpawnEnemy4);
         int.TryParse(row[8], out chanceToSpawnEnemy5);
         int.TryParse(row[9], out chanceToSpawnEnemy6);
-        
+        int.TryParse(row[10], out chanceToSpawnEnemy7);
+        int.TryParse(row[11], out chanceToSpawnEnemy8);
+        int.TryParse(row[12], out chanceToSpawnEnemy9);
 
+        Debug.Log($"Chance to spawn 7 {chanceToSpawnEnemy7} and 8 {chanceToSpawnEnemy8} and 9 {chanceToSpawnEnemy9}");
      
 
         lastAccessedLevel = levelToLoad;
