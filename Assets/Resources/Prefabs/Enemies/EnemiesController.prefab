@@ -50,12 +50,18 @@ MonoBehaviour:
   enemy4: {fileID: 773275026708919001, guid: 4d7c8140a3ff1144f9e5e41ca8f4e003, type: 3}
   enemy5: {fileID: 5864837049380175331, guid: 83e51b0ca18347b48ae9b4d24d2d4287, type: 3}
   enemy6: {fileID: 4543826462835213136, guid: 71c1662ce32b55b4f81b85dac3279660, type: 3}
+  enemy7: {fileID: 279483985427052998, guid: 70dc6f4583577d44b9b8f3960acbc4a8, type: 3}
+  enemy8: {fileID: 1884906761311180256, guid: ffe4834d55c3fd34e8a6efe876d3ca01, type: 3}
+  enemy9: {fileID: 5451409120071153701, guid: 326ce9b1d5152ab49aa066d618001fc0, type: 3}
   chancesEnemy1: 0
   chancesEnemy2: 0
   chancesEnemy3: 0
   chancesEnemy4: 0
   chancesEnemy5: 0
   chancesEnemy6: 0
+  chancesEnemy7: 0
+  chancesEnemy8: 0
+  chancesEnemy9: 0
   itemsToDrop:
   - {fileID: 0}
   - {fileID: 0}
