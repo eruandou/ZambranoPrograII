@@ -17,8 +17,12 @@ public class AIController : MonoBehaviour
 
     [SerializeField] private BoxCollider2D hurtBox;
 
-    [SerializeField] private float distanceToAttack;
+    [SerializeField] private float distanceToAttack1;
+    [SerializeField] private float distanceToAttack2;
+    private float nextDistanceToAttack;
     [SerializeField] private float maxFollowDistance;
+
+    [Range(0, 1)] [SerializeField] private float chanceToAttack1;
 
     private EnemiesController enemiesCont;
 
@@ -26,6 +30,7 @@ public class AIController : MonoBehaviour
     public bool detectPlayerBoxEnabled;
 
     private int selectedAttack;
+    private int nextAttack;
 
   
     public int EnemyLevel => enemyLevel;
@@ -43,14 +48,28 @@ public class AIController : MonoBehaviour
 
 
 
-
-
     private void Start()
     {
         enemyParentComponent = GetComponent<Enemy>();
         sprRend = GetComponent<SpriteRenderer>();
         enemiesCont = FindObjectOfType<EnemiesController>();
+        DecideNextAttack();
     }
+
+    private void DecideNextAttack()
+    {
+        nextAttack = Random.Range(1, 3);
+        enemyParentComponent.ChangeNextAttack(nextAttack);
+        if (nextAttack == 1)
+        {
+            nextDistanceToAttack = distanceToAttack1;
+        }
+        else
+        {
+            nextDistanceToAttack = distanceToAttack2;
+        }
+    }
+
 
     public void AIUpdate()
     {
@@ -61,31 +80,18 @@ public class AIController : MonoBehaviour
 
         transform.position += new Vector3(direction.x, direction.y, 0) * speed * Time.deltaTime;
 
-        if (Vector2.Distance(enemiesCont.playerRef.transform.position, transform.position) <= distanceToAttack)
-        {
-            enemyParentComponent.ChangeState(Enemy.EnemyStates.Attacking);
-        }
+       
 
         if (Vector2.Distance(enemiesCont.playerRef.transform.position, transform.position) >= maxFollowDistance)
         {
             enemyParentComponent.ChangeState(Enemy.EnemyStates.Idle);
         }
 
-        switch (enemyType)
+        if (Vector2.Distance(enemiesCont.playerRef.transform.position, transform.position) <= nextDistanceToAttack)
         {
-            case EnemyType.Mushroom:
-
-                break;
-            case EnemyType.FlyingDemon:
-                break;
-            case EnemyType.Skeleton:
-
-                break;
-            default:
-                break;
+            enemyParentComponent.ChangeState(Enemy.EnemyStates.Attacking);
+            DecideNextAttack();
         }
-
-        
 
     }
 
@@ -149,8 +155,7 @@ public class AIController : MonoBehaviour
             GameObject newBullet = Instantiate(Projectile, transform.position, Quaternion.identity);
             EnemyBullet bulletRef = newBullet.GetComponent<EnemyBullet>();
             bulletRef.SetChaser(setChaser);
-            bulletRef.ChangeDirection((enemiesCont.playerRef.transform.position - transform.position).normalized);          
-            
+            bulletRef.ChangeDirection((enemiesCont.playerRef.transform.position - transform.position).normalized);
             yield return new WaitForSeconds(delayBetweenBullets);
             Debug.Log("Deployed bullet " + i);
         }
