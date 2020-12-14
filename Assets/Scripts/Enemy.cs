@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 
     public event Action<Enemy> OnDie;
 
+    private int chosenAttack = 1;
+
     private Animator anim;
     private SpriteRenderer sprRend;
     private Rigidbody2D rb;   
@@ -20,8 +22,6 @@ public class Enemy : MonoBehaviour
     private float timerToDie;        
 
     [SerializeField] private int pointsToGive, extraTime;
-  
-
     public AIController AIController { get; private set; }
 
     [SerializeField] private float stunTimeStart;
@@ -112,11 +112,11 @@ public class Enemy : MonoBehaviour
 
             case EnemyStates.Attacking:
 
+                ChangeDetectionState(false);
 
-                if (Random.value <= 0.7f)
+                if (chosenAttack == 1)
                 {
-                    anim.SetTrigger("Attack1");
-                    AIController.Attack1();
+                    anim.SetTrigger("Attack1");                       
                 }
 
                 else
@@ -124,7 +124,6 @@ public class Enemy : MonoBehaviour
                     anim.SetTrigger("Attack2");
                     AIController.Attack2();
                 }
-                ChangeDetectionState(false);
 
                 break;
 
@@ -161,6 +160,10 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void ChangeNextAttack (int nextAttack)
+    {
+        chosenAttack = nextAttack;
+    }
 
     private void ChangeDetectionState(bool isDetecting)
     {
@@ -173,7 +176,7 @@ public class Enemy : MonoBehaviour
         LifeController.Update();
 
 
-        // Debug.Log($"out of attack {outOfAttackTime} with {outOfAttackTimeStart} as start");
+      
 
 
         switch (CurrentState)
