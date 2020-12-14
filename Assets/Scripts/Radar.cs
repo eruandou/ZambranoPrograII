@@ -15,6 +15,8 @@ public class Radar : MonoBehaviour
     [SerializeField] private GameObject radarUi;
     [SerializeField] private RectTransform radarPointer;
     [SerializeField] private float borderForPointer;
+    [SerializeField] private float timerToReloadClosestEnemyStart;
+    private float timerToReloadClosestEnemy;
 
 
     private void Start()
@@ -31,7 +33,7 @@ public class Radar : MonoBehaviour
            
             if (triggeredMap)
             {
-                closestEnemy = enemyCont.ReturnClosestEnemy();
+               closestEnemy = enemyCont.ReturnClosestEnemy();
                if (closestEnemy == null)
                 {
                     triggeredMap = !triggeredMap;
@@ -46,7 +48,15 @@ public class Radar : MonoBehaviour
             SetArrowRotation(closestEnemy);
         }
 
-        
+        timerToReloadClosestEnemy += Time.deltaTime;
+        if (timerToReloadClosestEnemy >= timerToReloadClosestEnemyStart)
+        {
+            closestEnemy = enemyCont.ReturnClosestEnemy();
+            timerToReloadClosestEnemy = 0;
+        }
+
+
+
     }
 
     private void SetArrowRotation(Enemy enemy)

@@ -21,13 +21,16 @@ public class EnemyBullet : MonoBehaviour
 
 
 
+
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();       
         if (followPlayer)
         {
             playerRef = Gamemanager.instance.enemiesController.playerRef;
         }
+
+   
     }
 
 
