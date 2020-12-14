@@ -11,7 +11,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private int attack1Damage;
     [SerializeField] private int attack2Damage;
 
-    [SerializeField] private Spores spores;
+    [SerializeField] private GameObject Projectile;
 
     [SerializeField] private int enemyLevel;
 
@@ -71,9 +71,6 @@ public class AIController : MonoBehaviour
 
         switch (enemyType)
         {
-
-            
-
             case EnemyType.Mushroom:
 
                 break;
@@ -94,20 +91,6 @@ public class AIController : MonoBehaviour
     {
         selectedAttack = 1;
         hurtBox.enabled = true;
-        
-        switch (enemyType)
-        {
-            case EnemyType.Mushroom:
-
-                
-                break;
-            case EnemyType.FlyingDemon:
-                break;
-            case EnemyType.Skeleton:
-                break;
-            default:
-                break;
-        }
     }
 
 
@@ -126,17 +109,22 @@ public class AIController : MonoBehaviour
                 float xo = transform.position.x -1;
                 float yo = transform.position.y;
 
-                float xd = 1;                
+                float xd = 1;
 
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 position = new Vector2(xo + i * xd, yo + Mathf.Sin(i * (Mathf.PI / 2)));
-                    Spores spore = Instantiate(spores, position, Quaternion.identity);
-                    spore.InitialDirection = new Vector2(-1 * Mathf.Cos(i * (Mathf.PI) / 2), 1 * Mathf.Sin(i * (Mathf.PI) / 2));
+                    GameObject spore = Instantiate(Projectile, position, Quaternion.identity);
+                    spore.GetComponent <Spores>().InitialDirection = new Vector2(-1 * Mathf.Cos(i * (Mathf.PI) / 2), 1 * Mathf.Sin(i * (Mathf.PI) / 2));
                 }
 
                 break;
             case EnemyType.FlyingDemon:
+
+                hurtBox.enabled = true;
+                StartCoroutine(SpawnBulletsWithDelays(0.6f, 3));
+
+
                 break;
             case EnemyType.Skeleton:
 
@@ -149,38 +137,34 @@ public class AIController : MonoBehaviour
         }
     }
 
+    private IEnumerator SpawnBulletsWithDelays(float delayBetweenBullets, int bulletAmount) 
+    {
+        bool setChaser = EnemyLevel >= 2;
+
+        for (int i = 0; i < bulletAmount; i++)
+        {
+
+            GameObject newBullet = Instantiate(Projectile, transform.position, Quaternion.identity);
+            EnemyBullet bulletRef = newBullet.GetComponent<EnemyBullet>();
+            bulletRef.SetChaser(setChaser);
+            bulletRef.ChangeDirection((Gamemanager.instance.enemiesController.playerRef.transform.position - transform.position).normalized);
+            
+            yield return new WaitForSeconds(delayBetweenBullets);
+            Debug.Log("Deployed bullet " + i);
+        }
+
+        
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
 
-        switch (enemyType)
+        if (player != null && hurtBox.enabled == true && !detectPlayerBoxEnabled)
         {
-            case EnemyType.Mushroom:
-
-                if (player != null && hurtBox.enabled == true && !detectPlayerBoxEnabled)
-                {
-                    if (selectedAttack == 1) player.lifeController.GetDamage(attack1Damage);
-                    else player.lifeController.GetDamage(attack2Damage);
-                }
-
-                break;
-            case EnemyType.FlyingDemon:
-                break;
-            case EnemyType.Skeleton:
-                if (player != null && hurtBox.enabled == true && !detectPlayerBoxEnabled)
-                {
-                    if (selectedAttack == 1) player.lifeController.GetDamage(attack1Damage);
-                    else player.lifeController.GetDamage(attack2Damage);
-                }
-                break;
-            default:
-                break;
+            if (selectedAttack == 1) player.lifeController.GetDamage(attack1Damage);
+            else player.lifeController.GetDamage(attack2Damage);
         }
-
-
-        
-        
     }
 
     public void DeactivateHurtBox()
