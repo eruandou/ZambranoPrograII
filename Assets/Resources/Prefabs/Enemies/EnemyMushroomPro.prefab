@@ -171,8 +171,10 @@ MonoBehaviour:
     type: 3}
   enemyLevel: 1
   hurtBox: {fileID: 5331460374499548300}
-  distanceToAttack: 1.7
+  distanceToAttack1: 2
+  distanceToAttack2: 6
   maxFollowDistance: 50
+  chanceToAttack1: 0
   detectPlayerBoxEnabled: 0
   enemyType: 0
 --- !u!61 &5331460374499548300

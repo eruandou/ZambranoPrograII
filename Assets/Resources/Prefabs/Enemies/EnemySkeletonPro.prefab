@@ -114,7 +114,7 @@ MonoBehaviour:
   stunTimeStart: 0.5
   checkNearPlayer: {fileID: 4543826461362319286}
   collisionBox: {fileID: 4543826462835213142}
-  outOfAttackTimeStart: 0.778
+  outOfAttackTimeStart: 0.8
   chanceToSpawnItem: 24
   dieSound: {fileID: 8300000, guid: 813e576ed899e4943b2e0e3e6312420a, type: 3}
   grunt: {fileID: 8300000, guid: 1fdc15a23b1b6ff4f93308e6e4398d9b, type: 3}
@@ -227,8 +227,10 @@ MonoBehaviour:
   Projectile: {fileID: 0}
   enemyLevel: 1
   hurtBox: {fileID: 4543826462835213143}
-  distanceToAttack: 1
+  distanceToAttack1: 1.5
+  distanceToAttack2: 1.5
   maxFollowDistance: 20
+  chanceToAttack1: 0
   detectPlayerBoxEnabled: 0
   enemyType: 2
 --- !u!61 &4543826462835213143
