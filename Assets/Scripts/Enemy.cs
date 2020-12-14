@@ -17,9 +17,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer sprRend;
     private Rigidbody2D rb;   
 
-    private float timerToDie;
-
-    public bool isActiveFramesOnAttack2 ;
+    private float timerToDie;        
 
     [SerializeField] private int pointsToGive, extraTime;
   
@@ -35,8 +33,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float outOfAttackTimeStart;
     private float outOfAttackTime;
 
-    [Range(0, 100)] public int chanceToSpawnItem;
-
+    [Range(0, 100)] public int chanceToSpawnItem;   
 
 
     [SerializeField] private AudioClip dieSound;
