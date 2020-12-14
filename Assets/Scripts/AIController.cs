@@ -20,6 +20,8 @@ public class AIController : MonoBehaviour
     [SerializeField] private float distanceToAttack;
     [SerializeField] private float maxFollowDistance;
 
+    private EnemiesController enemiesCont;
+
     private SpriteRenderer sprRend;
     public bool detectPlayerBoxEnabled;
 
@@ -46,25 +48,25 @@ public class AIController : MonoBehaviour
     private void Start()
     {
         enemyParentComponent = GetComponent<Enemy>();
-        hurtBox = GetComponent<BoxCollider2D>();
         sprRend = GetComponent<SpriteRenderer>();
+        enemiesCont = FindObjectOfType<EnemiesController>();
     }
 
     public void AIUpdate()
     {
-        Vector2 direction = (Gamemanager.instance.enemiesController.playerRef.transform.position - transform.position).normalized;
+        Vector2 direction = (enemiesCont.playerRef.transform.position - transform.position).normalized;
 
         if (direction.x < 0) sprRend.flipX = true;
         else if (direction.x > 0) sprRend.flipX = false;
 
         transform.position += new Vector3(direction.x, direction.y, 0) * speed * Time.deltaTime;
 
-        if (Vector2.Distance(Gamemanager.instance.enemiesController.playerRef.transform.position, transform.position) <= distanceToAttack)
+        if (Vector2.Distance(enemiesCont.playerRef.transform.position, transform.position) <= distanceToAttack)
         {
             enemyParentComponent.ChangeState(Enemy.EnemyStates.Attacking);
         }
 
-        if (Vector2.Distance(Gamemanager.instance.enemiesController.playerRef.transform.position, transform.position) >= maxFollowDistance)
+        if (Vector2.Distance(enemiesCont.playerRef.transform.position, transform.position) >= maxFollowDistance)
         {
             enemyParentComponent.ChangeState(Enemy.EnemyStates.Idle);
         }
@@ -147,7 +149,7 @@ public class AIController : MonoBehaviour
             GameObject newBullet = Instantiate(Projectile, transform.position, Quaternion.identity);
             EnemyBullet bulletRef = newBullet.GetComponent<EnemyBullet>();
             bulletRef.SetChaser(setChaser);
-            bulletRef.ChangeDirection((Gamemanager.instance.enemiesController.playerRef.transform.position - transform.position).normalized);
+            bulletRef.ChangeDirection((enemiesCont.playerRef.transform.position - transform.position).normalized);          
             
             yield return new WaitForSeconds(delayBetweenBullets);
             Debug.Log("Deployed bullet " + i);
