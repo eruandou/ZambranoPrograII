@@ -16,8 +16,6 @@ public class PlayerShootingController : MonoBehaviour
     private int extraDamage;
     private bool eightDirectionShooting;
 
-    [SerializeField] private GameObject potion1, potion2, potion3;
-
     [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField] private AudioSource audioSrc;
