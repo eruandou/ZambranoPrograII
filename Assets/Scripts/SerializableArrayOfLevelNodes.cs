@@ -15,7 +15,7 @@ public class SerializableArrayOfLevelNodes
         completedStates = new bool[11];       
     }
     
-       public void Reset()
+    public void Reset()
     {
         for (int i = 1; i < unlockStates.Length; i++)
         {

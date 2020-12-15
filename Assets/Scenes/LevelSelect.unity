@@ -39947,6 +39947,9 @@ MonoBehaviour:
   chanceToSpawnEnemy4: 0
   chanceToSpawnEnemy5: 0
   chanceToSpawnEnemy6: 0
+  chanceToSpawnEnemy7: 0
+  chanceToSpawnEnemy8: 0
+  chanceToSpawnEnemy9: 0
   enemiesController: {fileID: 0}
   lastAccessedLevel: 1
 --- !u!4 &1116800656
