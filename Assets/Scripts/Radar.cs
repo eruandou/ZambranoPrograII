@@ -14,7 +14,6 @@ public class Radar : MonoBehaviour
 
     [SerializeField] private GameObject radarUi;
     [SerializeField] private RectTransform radarPointer;
-    [SerializeField] private float borderForPointer;
     [SerializeField] private float timerToReloadClosestEnemyStart;
     private float timerToReloadClosestEnemy;
 
@@ -67,15 +66,4 @@ public class Radar : MonoBehaviour
         radarPointer.localEulerAngles = new Vector3(0, 0, angle);
     }
 
-    /*
-    private Vector2 CapPointerPosition (Vector2 pointerPos)
-    {
-        if (pointerPos.x < borderForPointer) pointerPos.x = borderForPointer;
-        if (pointerPos.x > Screen.width - borderForPointer) pointerPos.x = Screen.width - borderForPointer;
-
-        if (pointerPos.y < borderForPointer) pointerPos.y = borderForPointer;
-        if (pointerPos.y > Screen.height - borderForPointer) pointerPos.y = Screen.height - borderForPointer;
-
-        return pointerPos;
-    }*/
 }

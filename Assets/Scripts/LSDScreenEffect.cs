@@ -7,7 +7,6 @@ public class LSDScreenEffect : MonoBehaviour, IScreenEffect
 {
 
     private ColorGrading colorGradingDrunk;
-    public PostProcessProfile ppProf;
     private PostProcessVolume ppVol;
     private bool active;
     private FloatParameter hueShift;
