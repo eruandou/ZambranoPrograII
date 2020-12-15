@@ -141,9 +141,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpawner: {fileID: 6377410667780835689}
   timeBetweenBulletChange: 1.5
-  potion1: {fileID: 0}
-  potion2: {fileID: 0}
-  potion3: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -406,6 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radarUi: {fileID: 0}
   radarPointer: {fileID: 0}
+  timerToReloadClosestEnemyStart: 2
 --- !u!1 &3461010647737449777
 GameObject:
   m_ObjectHideFlags: 0
