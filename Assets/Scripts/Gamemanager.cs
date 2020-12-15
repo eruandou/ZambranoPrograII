@@ -11,6 +11,8 @@ public class Gamemanager : MonoBehaviour
 
     public MusicPlayer musicPlayer;
 
+    private Database dbLevels;
+
     public int chanceToSpawnEnemy1, chanceToSpawnEnemy2, chanceToSpawnEnemy3,chanceToSpawnEnemy4,
         chanceToSpawnEnemy5,chanceToSpawnEnemy6, chanceToSpawnEnemy7, chanceToSpawnEnemy8, chanceToSpawnEnemy9;
 
@@ -20,10 +22,14 @@ public class Gamemanager : MonoBehaviour
 
     private TextAsset levelData;
 
+    private List<LevelData> allLevelsData;
+
     //private bool activeLevel;
     private float tempTime;
 
     private const string LEVEL_SELECT_SCENE_PATH = "LevelSelect";
+
+    private const string LEVELDATA_DATABASE_NAME = "LevelDataTable";
 
     public int MaxEnemies { get; private set; }
 
@@ -50,6 +56,11 @@ public class Gamemanager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         levelData = Resources.Load<TextAsset>("LevelData");
+
+        dbLevels = new Database(LEVELDATA_DATABASE_NAME);
+        dbLevels.CreateLevelDataTable();
+
+        allLevelsData = dbLevels.ReadLevelData();
     }
 
     public void OnGameStart()
@@ -79,7 +90,7 @@ public class Gamemanager : MonoBehaviour
     {
         this.enabled = false;
 
-        if (LevelsSaver.GetLevelCompletitionState(lastAccessedLevel) == (false))
+        if (LevelsSaver.GetLevelCompletitionState(lastAccessedLevel) == false)
         {
             //Check level as complete
             LevelsSaver.SaveNewUnlockedLevel(lastAccessedLevel, true);
@@ -128,46 +139,37 @@ public class Gamemanager : MonoBehaviour
     {
         //Clear list from before the level
         levelsToUnlock.Clear();
-        //Get data from the CSV
+        //Get data from the database
 
-        string[] data = levelData.text.Split(new char[] { '\n' });
+        LevelData levelDataToLoad = allLevelsData[levelToLoad];
 
-        string[] row = data[levelToLoad].Split(new char[] { ',' });
-
+      
         //Pass that data into corresponding variables
-        int.TryParse(row[1], out int maxEnemies);
-        MaxEnemies = maxEnemies;
-        enemiesLeft = MaxEnemies;
 
-        int.TryParse(row[2], out int timeLimit);
-        TimeLimit = timeLimit;       
+        this.MaxEnemies = levelDataToLoad.MaxEnemies;
+        this.enemiesLeft = MaxEnemies;
+      
+
+        this.TimeLimit = levelDataToLoad.TimeLimit;
+      
 
         //Add levels to unlock to list      
+        
 
+        levelsToUnlock.Add(levelDataToLoad.UnlockLevel1);
+        levelsToUnlock.Add(levelDataToLoad.UnlockLevel2);
 
-        //Separate the multiple level values this could have
-        //in each cell, so that each value, individually,
-        //gets added to the corresponding list
-        string[] cell = row[3].Split(new char[] { ' ' });
+        //Add enemy spawn rate chances to current level manager
+        this.chanceToSpawnEnemy1 = levelDataToLoad.Mushroom1Chance;
+        this.chanceToSpawnEnemy2 = levelDataToLoad.Mushroom2Chance;
+        this.chanceToSpawnEnemy3 = levelDataToLoad.Mushroom3Chance;
+        this.chanceToSpawnEnemy4 = levelDataToLoad.Skeleton1Chance;
+        this.chanceToSpawnEnemy5 = levelDataToLoad.Skeleton2Chance;
+        this.chanceToSpawnEnemy6 = levelDataToLoad.Skeleton3Chance;
+        this.chanceToSpawnEnemy7 = levelDataToLoad.FlyingDemon1Chance;
+        this.chanceToSpawnEnemy8 = levelDataToLoad.FlyingDemon2Chance;
+        this.chanceToSpawnEnemy9 = levelDataToLoad.FlyingDemon3Chance;
 
-        for (int i = 0; i < cell.Length; i++)
-        {
-            int.TryParse(cell[i], out int level);
-            levelsToUnlock.Add(level);
-        }
-
-        int.TryParse(row[4], out chanceToSpawnEnemy1);
-        int.TryParse(row[5], out chanceToSpawnEnemy2);
-        int.TryParse(row[6], out chanceToSpawnEnemy3);
-        int.TryParse(row[7], out chanceToSpawnEnemy4);
-        int.TryParse(row[8], out chanceToSpawnEnemy5);
-        int.TryParse(row[9], out chanceToSpawnEnemy6);
-        int.TryParse(row[10], out chanceToSpawnEnemy7);
-        int.TryParse(row[11], out chanceToSpawnEnemy8);
-        int.TryParse(row[12], out chanceToSpawnEnemy9);
-
-        Debug.Log($"Chance to spawn 7 {chanceToSpawnEnemy7} and 8 {chanceToSpawnEnemy8} and 9 {chanceToSpawnEnemy9}");
-     
 
         lastAccessedLevel = levelToLoad;
 
