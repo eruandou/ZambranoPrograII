@@ -20,8 +20,6 @@ public class Gamemanager : MonoBehaviour
 
     public int lastAccessedLevel = 1;
 
-    private TextAsset levelData;
-
     private List<LevelData> allLevelsData;
 
     //private bool activeLevel;
@@ -54,8 +52,6 @@ public class Gamemanager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this);
-
-        levelData = Resources.Load<TextAsset>("LevelData");
 
         dbLevels = new Database(LEVELDATA_DATABASE_NAME);
         dbLevels.CreateLevelDataTable();
@@ -189,18 +185,17 @@ public class Gamemanager : MonoBehaviour
     private void Update()
     {       
         tempTime += Time.deltaTime;
+
         if (tempTime >= 1)
         {
             tempTime = 0;
             TimeLimit--;
-            Debug.Log(TimeLimit + " is time limit");
             if (TimeLimit <= 0)
             {
                 Lose();
             }
 
             UI.UpdateTimeUI(TimeLimit);
-
         }
     }
 

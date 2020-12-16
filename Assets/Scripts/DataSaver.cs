@@ -8,11 +8,8 @@ using System.IO;
 
 public static class DataSaver
 {
-    //private static SerializableListOfHighScores highscoreList;
 
     public static BST BSTHighscores = new BST();
-
-    //private const string SAVE_DATA_PATH = "/MyHighScores.json";
 
     private static Database scoresDatabase;
     private static string databaseName = "PlayerScoresDataTable";
