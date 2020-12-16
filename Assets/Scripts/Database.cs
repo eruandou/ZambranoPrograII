@@ -43,7 +43,7 @@ public class Database
         }
     }
 
-    public void UpdateLevelStateValue(int level, bool unlocked, bool completed)
+    public void UpdateLevelStateValue(int level, int unlocked, int completed)
     {
         string query = string.Format("UPDATE LevelStateTable SET Unlocked = {0}, Completed = {1} WHERE id = {2}", unlocked, completed, level);
         PostQuery(query);
@@ -65,10 +65,10 @@ public class Database
 
         for (int i = 1; i < 12; i++)
         {
-            InsertLevelState(i, false, false);
+            InsertLevelState(i, 0, 0);
         }
 
-        UpdateLevelStateValue(1, true, false);
+        UpdateLevelStateValue(1, 1, 0);
     }
 
     public (bool[], bool []) GetLevelsState()
@@ -91,13 +91,13 @@ public class Database
 
             int index = 0;
             while (reader.Read())
-            {
-                unlockedState[index] = reader.GetBoolean(1);
-                completedState[index] = reader.GetBoolean(2);
+            {           
+                unlockedState[index]  = reader.GetInt32(1) == 1;
+                completedState[index] = reader.GetInt32(2) == 1;
                 index++;
             }
 
-                reader.Close();
+            reader.Close();
             reader = null;
             dbCommand.Dispose();
             dbCommand = null;
@@ -128,7 +128,7 @@ public class Database
         PostQuery(query);     
     }
 
-    public void InsertLevelState (int levelId, bool unlocked, bool completed)
+    public void InsertLevelState (int levelId, int unlocked, int completed)
     {
         string query = string.Format("INSERT INTO LevelStateTable" +
             "(Id,Unlocked,Completed)" +
@@ -160,36 +160,15 @@ public class Database
         string query =
             "CREATE TABLE IF NOT EXISTS LevelStateTable ( " +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Unlocked BOOL NOT NULL, " +
-                "Completed BOOL NOT NULL)";
+                "Unlocked INTEGER NOT NULL, " +
+                "Completed INTEGER NOT NULL)";
 
         PostQuery(query);
-
-
-
-        
     }
 
 
     public void CreateLevelDataTable()
     {
-        /*
-       string query = "CREATE TABLE IF NOT EXISTS LevelDataTable ( " +
-            "LevelId INTEGER PRIMARY KEY  AUTOINCREMENT, " +
-            "MaxEnemies INTEGER NOT NULL, " +
-            "TimeLimit INTEGER NOT NULL, " +
-            "LevelsItUnlocks INTEGER NOT NULL, " +
-            "Mushroom1Chance INTEGER NOT NULL, " +
-            "Mushroom2Chance INTEGER NOT NULL, " +
-            "Mushroom3Chance INTEGER NOT NULL, " +
-            "Skeleton1Chance INTEGER NOT NULL, " +
-            "Skeleton2Chance INTEGER NOT NULL, " +
-            "Skeleton3Chance INTEGER NOT NULL, " +
-            "FlyingDemon1Chance INTEGER NOT NULL, " +
-            "FlyingDemon2Chance INTEGER NOT NULL, " +
-            "FlyingDemon3Chance INTEGER NOT NULL, ";
-        */
-
         string query =
            "CREATE TABLE IF NOT EXISTS LevelDataTable ( " +
                "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -205,7 +184,8 @@ public class Database
                "Skeleton3Chance INTEGER NOT NULL, " +
                "FlyingDemon1Chance INTEGER NOT NULL, " +
                "FlyingDemon2Chance INTEGER NOT NULL, " +
-               "FlyingDemon3Chance INTEGER NOT NULL)";             
+               "FlyingDemon3Chance INTEGER NOT NULL)";
+
         PostQuery(query);
     }
 
@@ -313,22 +293,4 @@ public class Database
 
         return levelData;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
