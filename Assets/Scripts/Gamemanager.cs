@@ -11,6 +11,8 @@ public class Gamemanager : MonoBehaviour
 
     public MusicPlayer musicPlayer;
 
+    public int SecretItemCount { get; private set; }
+
     private Database dbLevels;
 
     public int chanceToSpawnEnemy1, chanceToSpawnEnemy2, chanceToSpawnEnemy3,chanceToSpawnEnemy4,
@@ -199,5 +201,10 @@ public class Gamemanager : MonoBehaviour
         }
     }
 
+
+    public void GetSecretItem()
+    {
+        SecretItemCount++;
+    }
 
 }

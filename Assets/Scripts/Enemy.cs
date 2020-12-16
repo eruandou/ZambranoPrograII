@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
                 anim.SetBool("Move", false);
                 ChangeDetectionState(true);
                 AIController.DeactivateHurtBox();
-                rb.constraints = RigidbodyConstraints2D.None;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 anim.enabled = true;
                 sprRend.color = neutralColor;
                 
