@@ -32,7 +32,9 @@ public class Radar : MonoBehaviour
            
             if (triggeredMap)
             {
+
                closestEnemy = enemyCont.ReturnClosestEnemy();
+                              
                if (closestEnemy == null)
                 {
                     triggeredMap = !triggeredMap;

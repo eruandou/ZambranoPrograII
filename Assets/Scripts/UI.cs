@@ -185,7 +185,7 @@ public class UI : MonoBehaviour
 
         currentSelectedItem--;
 
-        Debug.Log($"{currentSelectedItem} is the current selected item");
+
 
         UpdateItemUI();
     }
@@ -202,7 +202,7 @@ public class UI : MonoBehaviour
         
 
 
-        Debug.Log($"{currentSelectedItem} is the current selected item");
+        
         UpdateItemUI();
     }
 
