@@ -126,15 +126,24 @@ public class EnemiesController : MonoBehaviour
 
     public Enemy ReturnClosestEnemy()
     {
-        Enemy closestEnemy = alreadySpawnedEnemies[0];
+        Enemy closestEnemy;
+
+        if (alreadySpawnedEnemies.Count == 0)
+        {
+            return null;
+        }
+
+       
+        closestEnemy = alreadySpawnedEnemies[0];
 
         foreach (Enemy enemy in alreadySpawnedEnemies)
         {
-            if  (Vector2.Distance (enemy.transform.position, playerRef.transform.position) < Vector2.Distance(closestEnemy.transform.position, playerRef.transform.position))
+            if (Vector2.Distance(enemy.transform.position, playerRef.transform.position) < Vector2.Distance(closestEnemy.transform.position, playerRef.transform.position))
             {
                 closestEnemy = enemy;
             }
         }
+    
 
         return closestEnemy;
     }
