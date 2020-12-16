@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     private Vector2 lastDirection;
 
-    public event Action<ActivateableItems> OnGetItem;   
+    public event Action<ActivateableItems> OnGetItem;
 
     private void Start()
     {
@@ -41,7 +41,6 @@ public class Player : MonoBehaviour
         sprRend = GetComponent<SpriteRenderer>();
         playerShootingController = GetComponent<PlayerShootingController>();
         Gamemanager.instance.UI.UpdateHealth(lifeController.CurrentLife);
-
     }
 
 
@@ -77,11 +76,6 @@ public class Player : MonoBehaviour
             playerShootingController.CombineBullets();
         }
         shootCooldown += Time.deltaTime;
-
-
-
-
-
     }
 
 
@@ -203,7 +197,4 @@ public class Player : MonoBehaviour
 
         speed -= extraSpeedValue;
     }
-
-   
-
 }

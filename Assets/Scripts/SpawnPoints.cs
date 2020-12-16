@@ -7,11 +7,13 @@ public class SpawnPoints : MonoBehaviour
 
 
     private Animator anim;
+    private SpriteRenderer sprRend;
 
 
     private void Start()
     {
-        anim = GetComponent<Animator>();        
+        anim = GetComponent<Animator>();
+        sprRend = GetComponent<SpriteRenderer>();
     }
 
     public void ActivatePortal()
@@ -21,7 +23,8 @@ public class SpawnPoints : MonoBehaviour
 
 
     private IEnumerator ActivateAnimation()
-    {        
+    {
+        sprRend.enabled = true;
         anim.enabled = true;
         anim.SetBool("Appear", true);
 
@@ -35,6 +38,8 @@ public class SpawnPoints : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
 
         anim.enabled = false;
+
+        sprRend.enabled = false;
 
     }
 
