@@ -15,13 +15,6 @@ public class LevelSelectionCanvas : MonoBehaviour
         ToMain();
     }
 
-
-
-
-
-
-
-
     public void ToConfirm()
     {
         clearPanel.SetActive(false);
@@ -39,7 +32,7 @@ public class LevelSelectionCanvas : MonoBehaviour
     {
         LevelsSaver.ClearData();
         ToMain();
-        Gamemanager.instance.LoadScene("LevelSelect");
+        StartCoroutine(Gamemanager.instance.LoadScene("LevelSelect"));
     }
 
 
