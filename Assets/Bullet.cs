@@ -37,7 +37,15 @@ public class Bullet : MonoBehaviour
 
         if (enemy != null)
         {
-            enemy.LifeController.GetDamage(damage);           
+            try
+            {
+                enemy.LifeController.GetDamage(damage);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+                  
         }
 
        if (!piercerBullet) Destroy(this.gameObject);
