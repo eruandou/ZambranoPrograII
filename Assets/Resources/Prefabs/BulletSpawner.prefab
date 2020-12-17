@@ -50,9 +50,9 @@ MonoBehaviour:
   - {fileID: 8134358779448262904, guid: 448c6392dec2bf346a82d41b52e7973c, type: 3}
   maxSpawnTime: 5
   minSpawnTime: 2
-  spawnPoints: []
   maxY: 34
   maxX: 42
   minY: -45
   minX: -39
   collectables: {fileID: 0}
+  offset: {x: 0, y: 0}

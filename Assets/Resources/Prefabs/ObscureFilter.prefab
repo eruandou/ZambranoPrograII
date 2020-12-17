@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3333370729865939056}
   - component: {fileID: 3333370729865939057}
   - component: {fileID: 3333370729865939070}
+  - component: {fileID: 7336564214223420506}
   m_Layer: 19
   m_Name: ObscureFilter
   m_TagString: Untagged
@@ -62,3 +63,15 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &7336564214223420506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3333370729865939071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722eeb415e9c49f4d970117dba6c5d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
