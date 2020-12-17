@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
             }
             catch (System.Exception)
             {
-                throw;
+                Debug.Log("Enemy not ok");
             }
                   
         }
