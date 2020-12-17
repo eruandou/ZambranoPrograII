@@ -13,7 +13,7 @@ public class Gamemanager : MonoBehaviour
 
     public int SecretItemCount { get; private set; }
 
-    
+    private ScreenBlackener screenBlackener;
 
     private Database dbLevels;
     public Database secretItemsDatabase;
@@ -76,7 +76,10 @@ public class Gamemanager : MonoBehaviour
         Debug.Log("On level load used");
     }
 
-
+    public void GetBlackenerReference (ScreenBlackener screenBlackenerInstance)
+    {
+        this.screenBlackener = screenBlackenerInstance;
+    }
 
     public void OnEnemyDieHandler(int pointsToRecieve, int extraTime)
     {
@@ -116,12 +119,15 @@ public class Gamemanager : MonoBehaviour
         {
             if (secretItemStates[0] && secretItemStates[1] && secretItemStates[2])
             {
-                LoadScene(SECRET_ENDING_SCENE_PATH);
+              StartCoroutine(LoadScene(SECRET_ENDING_SCENE_PATH));
             }
             else
             {
-                LoadScene(NORMAL_ENDING_SCENE_PATH);
+                StartCoroutine(LoadScene(NORMAL_ENDING_SCENE_PATH));
             }
+
+            LevelsSaver.ClearData();
+
 
             return;
             
@@ -129,7 +135,7 @@ public class Gamemanager : MonoBehaviour
 
         
 
-        LoadScene(LEVEL_SELECT_SCENE_PATH);
+        StartCoroutine(LoadScene(LEVEL_SELECT_SCENE_PATH));
 
     }
 
@@ -156,10 +162,17 @@ public class Gamemanager : MonoBehaviour
         UI.UpdatePoints();
     }
 
-    public void LoadScene(string levelToLoad)
+    public IEnumerator LoadScene(string levelToLoad)
     {
+        screenBlackener.CloseCurtains();
+
+        yield return new WaitForSeconds(1);
+
+        Debug.Log("Loading level");
         SceneManager.LoadSceneAsync(levelToLoad);
     }
+
+    
 
     public void LoadLevel(int levelToLoad)
     {
@@ -202,13 +215,13 @@ public class Gamemanager : MonoBehaviour
         this.enabled = true;
 
         //Load corresponding level        
-        LoadScene($"Level{levelToLoad}");
+        StartCoroutine(LoadScene($"Level{levelToLoad}"));
     }
        
     public void Lose()
     {
         this.enabled = false;
-        LoadScene("GameOverScene");       
+        StartCoroutine(LoadScene("GameOverScene"));       
     }
 
 
