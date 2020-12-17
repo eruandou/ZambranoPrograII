@@ -238,7 +238,10 @@ public class Gamemanager : MonoBehaviour
                 Lose();
             }
 
-            UI.UpdateTimeUI(TimeLimit);
+            if (UI != null)
+            {
+                UI.UpdateTimeUI(TimeLimit);
+            }
         }
     }
 
