@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectableSecretItem : MonoBehaviour
 {
+     private int itemNumber;
 
+   
+
+
+    public void GetItemNumber (int number)
+    {
+        this.itemNumber = number;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
@@ -13,7 +22,8 @@ public class CollectableSecretItem : MonoBehaviour
 
         if (player != null)
         {
-            Gamemanager.instance.GetSecretItem();
+          
+            Gamemanager.instance.GetSecretItem(itemNumber);
             Destroy(gameObject); 
         }
     }
