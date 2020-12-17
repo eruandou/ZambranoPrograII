@@ -43,6 +43,13 @@ public class Database
         }
     }
 
+    public void UpdateSecretItemsCollected (int itemCollected)
+    {
+        string query = string.Format("UPDATE SecretItemCollectedDataTable SET SecretItemGot = 1 WHERE Id = {0}", itemCollected);
+        PostQuery(query);
+       
+    }
+
     public void UpdateLevelStateValue(int level, int unlocked, int completed)
     {
         string query = string.Format("UPDATE LevelStateTable SET Unlocked = {0}, Completed = {1} WHERE id = {2}", unlocked, completed, level);
@@ -69,6 +76,47 @@ public class Database
         }
 
         UpdateLevelStateValue(1, 1, 0);
+    }
+
+    public bool [] GetSecretItemState()
+    {
+        bool[] itemsState = new bool[3];
+
+        try
+        {
+            dbConn.Open();
+
+            IDbCommand dbCommand = dbConn.CreateCommand();
+
+            string consultQuery = "SELECT * FROM SecretItemCollectedDataTable";
+
+            dbCommand.CommandText = consultQuery;
+
+            IDataReader reader = dbCommand.ExecuteReader();
+
+            int index = 0;
+            while (reader.Read())
+            {
+                itemsState[index] = reader.GetInt32(1) == 1;
+                index++;
+            }
+
+            reader.Close();
+            reader = null;
+            dbCommand.Dispose();
+            dbCommand = null;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+        finally
+        {
+            dbConn.Close();
+        }
+
+        return itemsState;
+
     }
 
     public (bool[], bool []) GetLevelsState()
@@ -128,6 +176,26 @@ public class Database
         PostQuery(query);     
     }
 
+    private void InsertCollectableItemSlots(int id)
+    {
+        string query = string.Format("INSERT INTO SecretItemCollectedDataTable+" +
+            "(id,SecretItemGot)" +
+           "VALUES ({0},'{1}')", id, 0);
+
+        PostQuery(query);
+    }
+
+    public void ResetCollectedSecretItems()
+    {
+        string query = "DROP TABLE IF EXISTS SecretItemCollectedDataTable";
+        PostQuery(query);
+        CreateSecretItemDataTable();
+        for (int i = 1; i < 4; i++)
+        {
+            InsertCollectableItemSlots(i);
+        }
+    }
+
     public void InsertLevelState (int levelId, int unlocked, int completed)
     {
         string query = string.Format("INSERT INTO LevelStateTable" +
@@ -138,11 +206,9 @@ public class Database
             completed);
 
         PostQuery(query);
-            
-
     }
 
-    //Create tables (level data, scores data)
+ 
 
     public void CreateScoresDataTable()
     {
@@ -189,7 +255,15 @@ public class Database
         PostQuery(query);
     }
 
+    private void CreateSecretItemDataTable()
+    {
+        string query =
+           "CREATE TABLE IF NOT EXISTS LevelDataTable ( " +
+               "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+               "SecretItemGot INTEGER NOT NULL)";
 
+        PostQuery(query);
+    }
 
 
 
