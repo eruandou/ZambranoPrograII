@@ -92,13 +92,13 @@ public class EnemiesController : MonoBehaviour
         playerRef = FindObjectOfType<Player>();
     }
 
-    private void OnEnemySpawnHandler(Enemy enemy)
+    public void OnEnemySpawnHandler(Enemy enemy)
     {
         alreadySpawnedEnemies.Add(enemy);
         enemy.OnDie += OnEnemyDieHandler;
     }
 
-    private void OnEnemyDieHandler (Enemy enemy)
+    public void OnEnemyDieHandler (Enemy enemy)
     {
         alreadySpawnedEnemies.Remove(enemy);
     }
