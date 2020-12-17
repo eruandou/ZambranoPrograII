@@ -32,7 +32,7 @@ public static class LevelsSaver
     {
         if (levelsDatabase == null) LoadDataBase();
         levelStates = levelsDatabase.GetLevelsState();
-        return levelStates;      
+        return levelStates;
     }
 
 
@@ -46,6 +46,7 @@ public static class LevelsSaver
     public static void ClearData()
     {    
         levelsDatabase.ResetLevelStatesTable();
+        Gamemanager.instance.secretItemsDatabase.ResetCollectedSecretItems();
     }
 
  
