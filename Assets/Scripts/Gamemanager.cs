@@ -13,7 +13,10 @@ public class Gamemanager : MonoBehaviour
 
     public int SecretItemCount { get; private set; }
 
+    
+
     private Database dbLevels;
+    public Database secretItemsDatabase;
 
     public int chanceToSpawnEnemy1, chanceToSpawnEnemy2, chanceToSpawnEnemy3,chanceToSpawnEnemy4,
         chanceToSpawnEnemy5,chanceToSpawnEnemy6, chanceToSpawnEnemy7, chanceToSpawnEnemy8, chanceToSpawnEnemy9;
@@ -28,8 +31,11 @@ public class Gamemanager : MonoBehaviour
     private float tempTime;
 
     private const string LEVEL_SELECT_SCENE_PATH = "LevelSelect";
+    private const string SECRET_ENDING_SCENE_PATH = "SecretEnding";
+    private const string NORMAL_ENDING_SCENE_PATH = "NormalEnding";
 
     private const string LEVELDATA_DATABASE_NAME = "LevelDataTable";
+    private const string SECRET_ITEM_COLLECTED_DATABASE_NAME = "SecretItemCollectedDataTable";
 
     public int MaxEnemies { get; private set; }
 
@@ -56,7 +62,10 @@ public class Gamemanager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         dbLevels = new Database(LEVELDATA_DATABASE_NAME);
+        secretItemsDatabase = new Database(SECRET_ITEM_COLLECTED_DATABASE_NAME);
+
         dbLevels.CreateLevelDataTable();
+
 
         allLevelsData = dbLevels.ReadLevelData();
     }
@@ -100,6 +109,25 @@ public class Gamemanager : MonoBehaviour
 
         }
         //return to Hub
+
+        bool[] secretItemStates = secretItemsDatabase.GetSecretItemState();
+
+        if (lastAccessedLevel == 11)
+        {
+            if (secretItemStates[0] && secretItemStates[1] && secretItemStates[2])
+            {
+                LoadScene(SECRET_ENDING_SCENE_PATH);
+            }
+            else
+            {
+                LoadScene(NORMAL_ENDING_SCENE_PATH);
+            }
+
+            return;
+            
+        }
+
+        
 
         LoadScene(LEVEL_SELECT_SCENE_PATH);
 
@@ -202,9 +230,9 @@ public class Gamemanager : MonoBehaviour
     }
 
 
-    public void GetSecretItem()
-    {
-        SecretItemCount++;
+    public void GetSecretItem(int itemNumber)
+    {  
+        secretItemsDatabase.UpdateSecretItemsCollected(itemNumber);
     }
 
 }
